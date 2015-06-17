@@ -1,7 +1,11 @@
 {
   "name": "family-dashboard",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Family dashboard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danesparza/Dashboard.git"
+  },
   "main": "js/app.js",
   "dependencies": {
     "flux": "^2.0.1",
