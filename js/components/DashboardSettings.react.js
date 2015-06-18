@@ -72,8 +72,8 @@ var DashboardSettings = React.createClass({
     e.preventDefault();
 
     //  Store the calendarId and zipcode
-    cookies.set('calendarId', this.state.calendarid);
-    cookies.set('zipcode', this.state.zipcode);
+    cookies.set('calendarId', this.state.calendarid, { expires: Infinity });
+    cookies.set('zipcode', this.state.zipcode, { expires: Infinity });
 
     //  Update the calendar data / pollen data:
     CalendarAPIUtils.getCurrentCalendarEvents(this.state.calendarid);
