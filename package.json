@@ -1,6 +1,6 @@
 {
   "name": "family-dashboard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Family dashboard",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "director": "^1.2.7",
     "moment": "^2.9.0",
     "moment-timezone": "^0.3.0",
-    "cookies-js" : "^1.0.0"
+    "cookies-js": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^6.2.0",
