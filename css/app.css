@@ -19,9 +19,14 @@ body{
 }
 
 #extended-summary {
-  font-size: 1.75em;
+  font-size: 2.50em;
   text-align: center;
   margin-top: 10px;
+}
+
+#sunrise-sunset{
+ font-size: 2.50em;
+  text-align: center; 
 }
 
 #hourlyforecast{

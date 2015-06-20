@@ -25,8 +25,12 @@ var WeatherDisplay = React.createClass({
     var alerts = []
     var feelslike = 0;
     var nextfewhours = [];
+    var sunrise = 0;
+    var formattedSunrise = "";
+    var sunset = 0;
+    var formattedSunset = "";
 
-    if(this.props.weather.currently != null) 
+    if(this.props.weather.currently) 
     {
       temperature = Math.round(this.props.weather.currently.temperature);
       windspeed = Math.round(this.props.weather.currently.windSpeed);
@@ -34,13 +38,17 @@ var WeatherDisplay = React.createClass({
       forecastdays = this.props.weather.daily.data;
       forecasticon = this.props.weather.currently.icon;
       feelslike = Math.round(this.props.weather.currently.apparentTemperature);
+      sunrise = this.props.weather.daily.data[0].sunriseTime;
+      formattedSunrise = Moment(sunrise * 1000).format("h:ma");
+      sunset = this.props.weather.daily.data[0].sunsetTime;
+      formattedSunset = Moment(sunset * 1000).format("h:ma");
 
       if(this.props.weather.alerts != null){
         alerts = this.props.weather.alerts;
       }
 
       //  Get the next few hours to display:
-      nextfewhours = this.props.weather.hourly.data.slice(0,7);
+      nextfewhours = this.props.weather.hourly.data.slice(0,10);
       
       //  Set the current temperature color:
       var tempColor = WeatherAPIUtils.getTempColor(temperature);
@@ -51,10 +59,12 @@ var WeatherDisplay = React.createClass({
 
         <div className="row">
           <div id="temp" style={{color: tempColor}}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
-          <div id="summary">{summary}</div>
 
           <div id="extended-summary">
-            Wind: {windspeed}mph • <span style={{color: feelslikeColor}}>Feels like: {feelslike} &deg;</span> • Pollen count: ??
+            Wind: {windspeed}mph • <span style={{color: feelslikeColor}}>Feels like: {feelslike} &deg;</span>
+          </div>
+          <div id="sunrise-sunset">
+            <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
           </div>
           
           <table id="hourlyforecast" className="table table-condensed">
