@@ -3,7 +3,7 @@ Weather and Google calendar dashboard built with [React](http://facebook.github.
 
 [![Build Status](https://drone.io/github.com/danesparza/Dashboard/status.png)](https://drone.io/github.com/danesparza/Dashboard/latest)
 
-*To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node isn't used for anything more than package management and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
+*To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node isn't used for anything more than [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
 ### Quick Start
 
