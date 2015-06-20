@@ -29,6 +29,7 @@ var WeatherDisplay = React.createClass({
     var formattedSunrise = "";
     var sunset = 0;
     var formattedSunset = "";
+    var pollendays = [];
 
     if(this.props.weather.currently) 
     {
@@ -53,6 +54,17 @@ var WeatherDisplay = React.createClass({
       //  Set the current temperature color:
       var tempColor = WeatherAPIUtils.getTempColor(temperature);
       var feelslikeColor = WeatherAPIUtils.getTempColor(feelslike);
+
+      //  Set pollen information
+      if(this.props.pollen.pollenForecast)
+      {
+        pollendays = this.props.pollen.pollenForecast.forecast;
+
+        //  Add the pollen data to the forecastdays
+        for (var i = pollendays.length - 1; i >= 0; i--) {
+          forecastdays[i].pollen = pollendays[i];
+        };
+      }
     }
 
   	return (

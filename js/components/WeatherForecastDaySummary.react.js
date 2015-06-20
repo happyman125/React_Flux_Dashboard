@@ -9,7 +9,7 @@ var WeatherForecastDaySummary = React.createClass({
     
   	return (
         <tr>
-          <td style={{"border": "none"}} className="forcast-summary" colSpan="4">{this.props.forecast.summary}</td>
+          <td style={{"border": "none"}} className="forcast-summary" colSpan="5">{this.props.forecast.summary}</td>
         </tr>
     );
   }
