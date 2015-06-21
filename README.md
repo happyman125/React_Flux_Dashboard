@@ -1,6 +1,10 @@
 # Dashboard
 Weather and Google calendar dashboard built with [React](http://facebook.github.io/react/) &amp; [Flux](https://facebook.github.io/flux/)
 
+Screenshot:
+
+![Dashboard screenshot](screen_dashboard_small.png?raw=true)
+
 [![Build Status](https://drone.io/github.com/danesparza/Dashboard/status.png)](https://drone.io/github.com/danesparza/Dashboard/latest)
 
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
@@ -45,9 +49,11 @@ npm start
 ### The dime tour
 The app is constructed using ReactJS and the Flux architecture.  
 
-[ReactJS](http://facebook.github.io/react/) is a new way of designing user interfaces on the web, written by the Facebook Engineering team. 
+[ReactJS](http://facebook.github.io/react/) is a new way of designing user interfaces on the web, written by the Facebook Engineering team. React lets you compose your UI with a collection of components.  If you're new to React, the [thinking in React](http://facebook.github.io/react/docs/thinking-in-react.html) tutorial is a good place to start.
 
 [Flux](http://facebook.github.io/flux/docs/overview.html) is a way of passing data around a web app.  In our case, we use Flux on the client side -- since this is a single page app.  
 
 Flux is best illustrated with this diagram:
+![Flux overview diagram](screen_flux.png?raw=true)
 
+A unidirectional data flow is central to the Flux pattern, and the above diagram should be **the primary mental model for the Flux programmer**. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
