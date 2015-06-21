@@ -42,4 +42,12 @@ npm install
 npm start
 ```
 
+### The dime tour
+The app is constructed using ReactJS and the Flux architecture.  
+
+[ReactJS](http://facebook.github.io/react/) is a new way of designing user interfaces on the web, written by the Facebook Engineering team. 
+
+[Flux](http://facebook.github.io/flux/docs/overview.html) is a way of passing data around a web app.  In our case, we use Flux on the client side -- since this is a single page app.  
+
+Flux is best illustrated with this diagram:
 
