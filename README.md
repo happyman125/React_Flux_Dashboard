@@ -54,6 +54,6 @@ The app is constructed using ReactJS and the Flux architecture.
 [Flux](http://facebook.github.io/flux/docs/overview.html) is a way of passing data around a web app.  In our case, we use Flux on the client side -- since this is a single page app.  
 
 Flux is best illustrated with this diagram:
-![Flux overview diagram](screen_flux.png?raw=true)
+![Flux overview diagram](screen_flux_simple.png?raw=true)
 
 A unidirectional data flow is central to the Flux pattern, and the above diagram should be **the primary mental model for the Flux programmer**. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
