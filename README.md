@@ -16,3 +16,30 @@ npm start
 
 This will also watch your local system for any changes.  If you make changes to any referenced components, the `bundle.js` file will automatically be rebuilt.
 
+#### How do I hack on this locally? 
+
+##### Install your editor
+I recommend getting [Sublime Text](http://www.sublimetext.com/) (with the [ReactJS plugins](https://github.com/reactjs/sublime-react)) to edit your source code locally.  Sublime does a great job with lots of different formats and with the React plugins it does a great job of formatting your components.  
+
+##### Install a simple web server
+You can get away with just opening local files in a browser for simple prototypes, but once you start calling external API's, running a local web server is a requirement.  I recommend [http-server](https://www.npmjs.com/package/http-server).  Setting it up is a snap once you have node installed.  Just run the following from a command line: 
+
+```bash
+npm install http-server -g
+```
+To start the server, navigate to the root of the project directory and type:
+```bash
+http-server .
+```
+This will start a server at http://localhost:8080 that serves content from your project directory.  
+
+##### Rebuild your source automagically
+If you're going to make changes locally, I recommend you have another command line window open automatically building bundle.js for you when you make changes. 
+
+Navigate to the project directory and type:
+```bash
+npm install
+npm start
+```
+
+
