@@ -9,7 +9,7 @@ Screenshot:
 
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
-### Quick Start
+## Quick Start
 
 After [cloning the repo](https://help.github.com/articles/fetching-a-remote/), run the following commands in the project directory to get the required Javascript package dependencies and build the `bundle.js` file:
 
@@ -20,7 +20,7 @@ npm start
 
 This will also watch your local system for any changes.  If you make changes to any referenced components, the `bundle.js` file will automatically be rebuilt.
 
-#### How do I hack on this locally? 
+### How do I hack on this locally? 
 
 ##### Install your editor
 I recommend getting [Sublime Text](http://www.sublimetext.com/) (with the [ReactJS plugins](https://github.com/reactjs/sublime-react)) to edit your source code locally.  Sublime does a great job with lots of different formats and with the React plugins it does a great job of formatting your components.  
