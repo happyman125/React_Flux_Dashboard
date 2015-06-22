@@ -59,3 +59,16 @@ Flux is best illustrated with this diagram:
 ![Flux overview diagram](screen_flux_simple.png?raw=true)
 
 A unidirectional data flow is central to the Flux pattern, and the above diagram should be **the primary mental model for the Flux programmer**. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
+
+##### How do you use React and Flux in the app?
+We use React for rendering parts of the UI and Flux for managing data in the application.  
+
+Piece                       | Found in these source files
+----------                  | -----------
+API utils         | Found in [js\utils](https://github.com/danesparza/Dashboard/tree/master/js/utils).  These fetch data using an Ajax call and pass it to an Action.
+Flux actions      | Found in [js\actions](https://github.com/danesparza/Dashboard/tree/master/js/actions). Actions are the entry point for data in the system.  
+Flux dispatcher   | [AppDispatcher](https://github.com/danesparza/Dashboard/blob/master/js/dispatcher/AppDispatcher.js) Taken verbatim from the Flux repo.  Take a look at it.  It's pretty simple.  It the app it just works as the 'spine' -- sending data from actions to stores that have asked for it.
+Flux stores       | Found in [js\stores](https://github.com/danesparza/Dashboard/tree/master/js/stores).  Stores manage the state of one type of data.  When that data is updated, they let any interested parties know about it.  Stores also provide helper methods to get to their data.
+Views             | Pretty much everything under [js\components](https://github.com/danesparza/Dashboard/tree/master/js/components).  These are all React comopnents.  The app is [DashboardApp.react](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardApp.react.js).  The two main pages are [DashboardHome](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardHome.react.js) and [DashboardSettings](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardSettings.react.js).  Everything else in that directory is a UI component that makes up the main dashboard screen.
+
+
