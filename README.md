@@ -75,4 +75,11 @@ Dispatcher   | Found in [js\dispatcher\AppDispatcher](https://github.com/danespa
 Stores       | Found in [js\stores](https://github.com/danesparza/Dashboard/tree/master/js/stores).  Stores manage the state of one type of data.  When that data is updated, they let any interested parties know about it.  Stores also provide helper methods to get to their data.
 Views             | Pretty much everything under [js\components](https://github.com/danesparza/Dashboard/tree/master/js/components).  These are all React comopnents.  The app is [DashboardApp.react](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardApp.react.js).  The two main pages are [DashboardHome](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardHome.react.js) and [DashboardSettings](https://github.com/danesparza/Dashboard/blob/master/js/components/DashboardSettings.react.js).  Everything else in that directory is a UI component that makes up the main dashboard screen.
 
+##### Where is the data coming from?
+There are 2 major data sources for the app:  [Forecast.io](https://developer.forecast.io/) and [Google calendar](https://developers.google.com/google-apps/calendar/). To make things a bit more straightforward to access, I have created 2 microservices that the app calls.  These microservices then fetch (and cache) data as needed:
+
+Service           | Description                           | Found here
+----------        | -------------                         | ------------
+forecast-service  | Gets weather and pollen information   | [https://github.com/danesparza/forecast-service](https://github.com/danesparza/forecast-service)
+calendar-service  | Gets Google calendar information      | [https://github.com/danesparza/calendar-service](https://github.com/danesparza/calendar-service)
 
