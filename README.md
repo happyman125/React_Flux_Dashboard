@@ -65,7 +65,7 @@ Flux is best illustrated with this diagram:
 A unidirectional data flow is central to the Flux pattern, and the above diagram should be **the primary mental model for the Flux programmer**. The dispatcher, stores and views are independent nodes with distinct inputs and outputs. The actions are simple objects containing the new data and an identifying type property.
 
 ##### How do you use React and Flux in the app?
-Basically **React = UI** and **Flux = data**.  Following the diagram, above ...
+Basically **React = UI** and **Flux = data flow**.  Following the diagram, above ...
 
 Piece                       | Found in these source files
 ----------                  | -----------
