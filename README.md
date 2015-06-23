@@ -42,7 +42,7 @@ http-server .
 This will start a server at http://localhost:8080 that serves content from your project directory.  
 
 ##### Rebuild your source automagically
-If you're going to make changes locally, I recommend you have another command line window open automatically building bundle.js for you when you make changes. 
+When making changes locally, I recommend you have another command line window open automatically building bundle.js for you when you make changes. 
 
 Navigate to the project directory and type:
 ```bash
