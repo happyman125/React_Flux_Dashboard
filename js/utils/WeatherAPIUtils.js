@@ -50,7 +50,7 @@ module.exports = {
     var rainbow = new Rainbow();
 
     //  Set our spectrum colors:
-    rainbow.setSpectrum("D0338D", "33D0C4", "337DD0", "33D035", "DAD82D", "F08E00", "D03333");  
+    rainbow.setSpectrum("FFC0E4", "D0338D", "33D0C4", "337DD0", "33D035", "DAD82D", "F08E00", "D03333");  
 
     //  Get the color for the given temperature:
     var appColor = "#" + rainbow.colorAt(temperature);
