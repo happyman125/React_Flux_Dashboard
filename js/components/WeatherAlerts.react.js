@@ -20,10 +20,7 @@ var WeatherAlerts = React.createClass({
   	return (
 
         <div className="alert alert-warning">
-          <b>{title}</b>
-          <div>
-            {description}
-          </div> 
+          <b>{title}</b> {description} 
         </div>
     );
   }
