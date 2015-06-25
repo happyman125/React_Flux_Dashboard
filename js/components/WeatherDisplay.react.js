@@ -56,9 +56,9 @@ var WeatherDisplay = React.createClass({
       var feelslikeColor = WeatherAPIUtils.getTempColor(feelslike);
 
       //  Set pollen information
-      if(this.props.pollen.pollenForecast)
+      if(this.props.pollen.PollenCount)
       {
-        pollendays = this.props.pollen.pollenForecast.forecast;
+        pollendays = this.props.pollen.PollenCount;
 
         //  Add the pollen data to the forecastdays
         for (var i = pollendays.length - 1; i >= 0; i--) {
