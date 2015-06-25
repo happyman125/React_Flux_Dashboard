@@ -21,7 +21,6 @@ body{
 #extended-summary {
   font-size: 2.50em;
   text-align: center;
-  margin-top: 10px;
 }
 
 #sunrise-sunset{
@@ -30,7 +29,7 @@ body{
 }
 
 #hourlyforecast{
-  margin-top: 20px;
+  margin-top: 15px;
   font-size: 1.3em;
 }
 
