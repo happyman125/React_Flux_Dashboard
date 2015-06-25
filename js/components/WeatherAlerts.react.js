@@ -14,7 +14,8 @@ var WeatherAlerts = React.createClass({
 
     //  If we have multiple, just display the first one:
     var title = this.props.alerts[0].title;
-    var description = this.props.alerts[0].description.substring(0, 400) + "...";
+    var description = this.props.alerts[0].description || "";
+    description = description.substring(0, 400) + "...";
 
   	return (
 
