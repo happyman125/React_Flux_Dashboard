@@ -45,6 +45,10 @@ body{
   font-size: .7em;
 }
 
+#forecast-alert{
+ font-size: 2em; 
+}
+
 /* Calendar display */
 #time {
   font-size: 13em;

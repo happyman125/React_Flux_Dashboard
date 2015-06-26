@@ -1,4 +1,5 @@
 var React = require('react');
+var Moment = require('moment');
 
 var WeatherAlerts = React.createClass({
 
@@ -13,14 +14,17 @@ var WeatherAlerts = React.createClass({
     }
 
     //  If we have multiple, just display the first one:
-    var title = this.props.alerts[0].title;
-    var description = this.props.alerts[0].description || "";
+    var alert = this.props.alerts[0];
+    var title = alert.title;
+    var expires = alert.expires;
+    var formattedexpires = Moment(expires * 1000).fromNow();
+    var description = alert.description || "";
     description = description.substring(0, 400) + "...";
 
   	return (
 
-        <div className="alert alert-warning">
-          <b>{title}</b> {description} 
+        <div id="forecast-alert" className="alert alert-info">
+          <b>{title}</b> expires {formattedexpires}
         </div>
     );
   }
