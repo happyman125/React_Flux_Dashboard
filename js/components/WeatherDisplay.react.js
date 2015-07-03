@@ -40,9 +40,9 @@ var WeatherDisplay = React.createClass({
       forecasticon = this.props.weather.currently.icon;
       feelslike = Math.round(this.props.weather.currently.apparentTemperature);
       sunrise = this.props.weather.daily.data[0].sunriseTime;
-      formattedSunrise = Moment(sunrise * 1000).format("h:ma");
+      formattedSunrise = Moment(sunrise * 1000).format("h:mma");
       sunset = this.props.weather.daily.data[0].sunsetTime;
-      formattedSunset = Moment(sunset * 1000).format("h:ma");
+      formattedSunset = Moment(sunset * 1000).format("h:mma");
 
       if(this.props.weather.alerts != null){
         alerts = this.props.weather.alerts;

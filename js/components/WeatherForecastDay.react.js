@@ -38,7 +38,7 @@ var WeatherForecastDay = React.createClass({
 
         <tr className="forcast-datarow">
           <td>{formattedDay}</td>
-          <td><WeatherForecastIcon icon={forcastIcon} /> {formattedPercentage}</td>
+          <td><WeatherForecastIcon icon={forcastIcon} /> <span style={{color: '#7595AD'}}>{formattedPercentage}</span></td>
           <td>{tempHigh} • {tempLow}</td>
           <td></td>
           <td><span className={pollenCountClass}>{pollenCount}</span></td>

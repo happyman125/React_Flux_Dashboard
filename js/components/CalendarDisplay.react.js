@@ -15,7 +15,7 @@ var CalendarDisplay = React.createClass({
     if(this.props.calendar.items == null) {
       return (<div id="calendar-empty">No calendar events left for today</div>);
     }
-    
+
     //  If we do, display them:
   	return (
         <table id="calendar" className="table">
