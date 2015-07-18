@@ -30,6 +30,7 @@ var WeatherDisplay = React.createClass({
     var sunset = 0;
     var formattedSunset = "";
     var pollendays = [];
+    var formattedHumidity = "";
 
     if(this.props.weather.currently) 
     {
@@ -43,6 +44,8 @@ var WeatherDisplay = React.createClass({
       formattedSunrise = Moment(sunrise * 1000).format("h:mma");
       sunset = this.props.weather.daily.data[0].sunsetTime;
       formattedSunset = Moment(sunset * 1000).format("h:mma");
+      formattedHumidity = Math.floor((this.props.weather.currently.humidity * 100)); 
+      formattedHumidity = formattedHumidity + "%"
 
       if(this.props.weather.alerts != null){
         alerts = this.props.weather.alerts;
@@ -73,7 +76,7 @@ var WeatherDisplay = React.createClass({
           <div id="temp" style={{color: tempColor}}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
           <div id="extended-summary">
-            Wind: {windspeed}mph • <span style={{color: feelslikeColor}}>Feels like: {feelslike} &deg;</span>
+            Wind: {windspeed}mph • {formattedHumidity} humidity • <span style={{color: feelslikeColor}}>Feels like: {feelslike} &deg;</span>
           </div>
           <div id="sunrise-sunset">
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
