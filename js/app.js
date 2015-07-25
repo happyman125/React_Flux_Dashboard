@@ -10,6 +10,7 @@ var cookies = require('cookies-js');
 //	The API utils
 var WeatherAPIUtils = require('./utils/WeatherAPIUtils');
 var CalendarAPIUtils = require('./utils/CalendarAPIUtils');
+var NewsAPIUtils = require('./utils/NewsAPIUtils');
 
 //	The app component
 var DashboardApp = require('./components/DashboardApp.react');
@@ -64,6 +65,9 @@ function showApp(position) {
     if(!(calendarId && zipcode)) {
         window.location.hash ="#/settings";
     }
+
+    //  Get the news information:
+    NewsAPIUtils.getTwitterFeed('cnnbrk', '10')
 
     //	Start the app
     React.render(<DashboardApp position={position} calendarid={calendarId} zipcode={zipcode} />, appElement);	
