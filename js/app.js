@@ -67,10 +67,11 @@ function showApp(position) {
     }
 
     //  Get the news information:
-    NewsAPIUtils.getTwitterFeed('cnnbrk', '10')
+    var newsUser = 'cnnbrk';
+    NewsAPIUtils.getTwitterFeed(newsUser)
 
     //	Start the app
-    React.render(<DashboardApp position={position} calendarid={calendarId} zipcode={zipcode} />, appElement);	
+    React.render(<DashboardApp position={position} calendarid={calendarId} zipcode={zipcode} breakingnewsuser={newsUser} />, appElement);	
 }
 
 /**

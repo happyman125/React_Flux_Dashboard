@@ -40,9 +40,10 @@ var DashboardApp = React.createClass({
     //  Determine what page to show
     var ComponentToLoad = this.state.page;
 
-    //  Set the current page
+    //  Set the current page and use spread attributes to propigate our current props 
+    //  (see https://facebook.github.io/react/docs/jsx-spread.html for more info)
   	return (
-      <ComponentToLoad position={this.props.position} calendarid={this.props.calendarid} zipcode={this.props.zipcode} />
+      <ComponentToLoad {...this.props} />
   	);
   },
 

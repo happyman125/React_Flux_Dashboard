@@ -1,7 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var DashboardConstants = require('../constants/DashboardConstants');
 
-var WeatherActions = {
+var NewsActions = {
 
   recieveNewsData: function(newsData) {
     AppDispatcher.dispatch({
@@ -12,4 +12,4 @@ var WeatherActions = {
 
 };
 
-module.exports = WeatherActions;
+module.exports = NewsActions;

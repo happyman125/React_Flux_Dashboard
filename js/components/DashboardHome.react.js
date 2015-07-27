@@ -5,14 +5,17 @@ var React = require('react');
 var DateTimeDisplay = require('./DateTimeDisplay.react');
 var WeatherDisplay = require('./WeatherDisplay.react');
 var CalendarDisplay = require('./CalendarDisplay.react');
+var NewsDisplay = require('./NewsDisplay.react')
 
 //  The API utils
 var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
 var CalendarAPIUtils = require('../utils/CalendarAPIUtils');
+var NewsAPIUtils = require('../utils/NewsAPIUtils');
 
 //  The stores
 var WeatherStore = require('../stores/WeatherStore');
 var CalendarStore = require('../stores/CalendarStore');
+var NewsStore = require('../stores/NewsStore');
 
 /*
   Get the current state
@@ -23,7 +26,8 @@ function getAppState()
     weather: WeatherStore.getWeather(),
     pollen: WeatherStore.getPollen(),
     calendarinfo: CalendarStore.getCalendarData(),
-    calendarid: CalendarStore.getCalendarId()
+    calendarid: CalendarStore.getCalendarId(),
+    news: NewsStore.getBreakingNews()
   };
 }
 
@@ -40,6 +44,9 @@ var DashboardHome = React.createClass({
 
     //  Get the latest calendar information:
     CalendarAPIUtils.getCurrentCalendarEvents(this.props.calendarid);
+
+    //  Get the latest breaking news:
+    NewsAPIUtils.getTwitterFeed(this.props.breakingnewsuser);
   },
 
   componentDidMount: function() {
@@ -51,6 +58,7 @@ var DashboardHome = React.createClass({
     //  Add store listeners ... and notify ME of changes
     WeatherStore.addChangeListener(this._onChange);
     CalendarStore.addChangeListener(this._onChange);
+    NewsStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -60,6 +68,7 @@ var DashboardHome = React.createClass({
     //  Remove store listeners
     WeatherStore.removeChangeListener(this._onChange);
     CalendarStore.removeChangeListener(this._onChange);
+    NewsStore.removeChangeListener(this._onChange);
   },
 
   /**
@@ -81,6 +90,8 @@ var DashboardHome = React.createClass({
           </div>
 
         </div>
+
+        <NewsDisplay news={this.state.news} />
       </div>
   	);
   },
