@@ -15,6 +15,11 @@ Screenshot:
 npm install -g browserify
 ```
 
+[Uglify](https://github.com/mishoo/UglifyJS2) is used for script minimization/compression.  If you don't have it installed, just run this: 
+```bash
+npm install uglify-js -g
+```
+
 After [cloning the repo](https://help.github.com/articles/fetching-a-remote/), run the following commands in the project directory to get the required Javascript package dependencies and build the `bundle.js` file:
 
 ```bash
