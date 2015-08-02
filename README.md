@@ -27,7 +27,13 @@ npm install
 npm start
 ```
 
-This will also watch your local system for any changes.  If you make changes to any referenced components, the `bundle.js` file will automatically be rebuilt.
+This will also watch your local system for any changes.  If you make changes to any referenced components, the `bundle.js` file will automatically be rebuilt.  
+
+For a production-use minified bundle.js, run the following command:
+
+```bash
+npm run build
+```
 
 ### How do I hack on this locally? 
 
