@@ -82,11 +82,19 @@ body{
   bottom: 0;
   right: 0;
   padding: 10px;
-  width: 520px;
+  width: 750px;
 }
 
 #breaking-news-image{
     background: no-repeat center center;
     height: 300px; /* Visible height */
-    width: 500px; /* Visible width */
+    width: 350px; /* Visible width */
+}
+
+#breaking-news-headline{
+    font-size: 1.4em;
+}
+
+#breaking-news-text{
+    font-size: 2.5em;
 }
