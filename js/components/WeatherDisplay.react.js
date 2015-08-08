@@ -56,7 +56,12 @@ var WeatherDisplay = React.createClass({
       
       //  Set the current temperature color:
       var tempColor = WeatherAPIUtils.getTempColor(temperature);
-      var feelslikeColor = WeatherAPIUtils.getTempColor(feelslike);
+
+      var feelsLikeStyles = {};
+      if(temperature != feelslike)
+      {
+        feelsLikeStyles.color = WeatherAPIUtils.getTempColor(feelslike);  
+      }
 
       //  Set pollen information
       if(this.props.pollen.PollenCount)
@@ -76,7 +81,7 @@ var WeatherDisplay = React.createClass({
           <div id="temp" style={{color: tempColor}}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
           <div id="extended-summary">
-            Wind: {windspeed}mph • {formattedHumidity} humidity • <span style={{color: feelslikeColor}}>Feels like: {feelslike} &deg;</span>
+            Wind: {windspeed}mph • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
           </div>
           <div id="sunrise-sunset">
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
