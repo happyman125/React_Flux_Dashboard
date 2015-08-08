@@ -39,14 +39,13 @@ var NewsDisplay = React.createClass({
     var formattedTime = newsCreatedTime.fromNow();
 
   	return (
-        <div id='breaking-news'>
-          <div id="breaking-news-headline"><b>Breaking news</b> {formattedTime}</div>
+        <div id='breaking-news'>          
           <div className="media">
             <div className="media-left">
               <div id='breaking-news-image' style={newsImageStyle} />
             </div>
             <div className="media-body">
-              
+              <div id="breaking-news-headline"><b>Breaking news</b> {formattedTime}</div>
               <span id="breaking-news-text">{newsText}</span>
             </div>
           </div>

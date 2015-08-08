@@ -93,6 +93,8 @@ body{
 
 #breaking-news-headline{
     font-size: 1.4em;
+    background-color: #737373;
+    padding: 2px 5px;
 }
 
 #breaking-news-text{
