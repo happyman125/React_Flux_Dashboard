@@ -4,13 +4,13 @@ FROM ubuntu:15.04
 ENV AWS_ACCESS_KEY_ID YOUR_ACCESS_KEY
 ENV AWS_SECRET_ACCESS_KEY YOUR_SECRET_KEY
 
-# Install s3cmd
-RUN apt-get install -y s3cmd
-
 # Make sure node and npm are installed
 RUN apt-get install -y curl
 RUN curl --silent --location https://deb.nodesource.com/setup_0.12 | bash -
 RUN apt-get install -y nodejs
+
+# Install s3cmd
+RUN apt-get install -y s3cmd
 
 # Make sure the toolset is installed
 RUN npm install -g browserify uglify-js
