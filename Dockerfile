@@ -25,4 +25,4 @@ RUN npm install
 RUN npm run build
 
 # Run the deploy script by default when the container starts
-ENTRYPOINT /root/dashboard/deployscript.sh
+CMD /root/dashboard/deployscript.sh
