@@ -23,3 +23,6 @@ WORKDIR /root/dashboard
 # Build the app inside the container.
 RUN npm install
 RUN npm run build
+
+# Run the deploy script by default when the container starts
+ENTRYPOINT /root/dashboard/deployscript.sh
