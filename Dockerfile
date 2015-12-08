@@ -24,5 +24,8 @@ WORKDIR /root/dashboard
 RUN npm install
 RUN npm run build
 
+# Run the staging script 
+RUN ./stagingscript.sh
+
 # Run the deploy script by default when the container starts
 CMD /root/dashboard/deployscript.sh
