@@ -13,7 +13,7 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y s3cmd
 
 # Make sure the toolset is installed
-RUN npm install -g browserify uglify-js babelify
+RUN npm install -g browserify uglify-js
 
 # Copy the local package files to the container's workspace.
 ADD . /root/dashboard
@@ -24,7 +24,7 @@ WORKDIR /root/dashboard
 RUN npm install
 RUN npm run build
 
-# Run the staging script to get just the required files in place for deploy
+# Run the staging script 
 RUN ./stagingscript.sh
 
 # Run the deploy script by default when the container starts
