@@ -59,15 +59,15 @@ AppDispatcher.register(function(action) {
   
   switch(action.actionType) {
     case DashboardConstants.RECIEVE_RAW_WEATHER:      
-      weatherData = action.weatherData;
+      var weatherData = action.weatherData;
       console.log('Refreshing weather..');
       setWeather(weatherData);
       WeatherStore.emitChange();
       break;
 
     case DashboardConstants.RECIEVE_RAW_POLLEN:
-      pollenData = action.pollenData;
-      zipcode = action.zipcode;
+      var pollenData = action.pollenData;
+      var zipcode = action.zipcode;
       console.log('Refreshing pollen..');
       setPollen(pollenData);
       console.log('Updating zipcode..');

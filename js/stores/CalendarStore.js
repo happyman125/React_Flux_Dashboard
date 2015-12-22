@@ -47,8 +47,8 @@ AppDispatcher.register(function(action) {
   
   switch(action.actionType) {
     case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:      
-      calendarData = action.calendarData;
-      calendarId = action.calendarId;
+      var calendarData = action.calendarData;
+      var calendarId = action.calendarId;
       console.log('Refreshing calendar info..');
       setCalendarData(calendarData, calendarId);
       CalendarStore.emitChange();

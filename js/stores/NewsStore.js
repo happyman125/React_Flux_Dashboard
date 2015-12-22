@@ -41,7 +41,7 @@ AppDispatcher.register(function(action) {
   
   switch(action.actionType) {
     case DashboardConstants.RECIEVE_RAW_NEWS_EVENTS:      
-      newsdata = action.newsData;
+      var newsdata = action.newsData;
       console.log('Refreshing news info..');
       setNewsData(newsdata);
       NewsStore.emitChange();

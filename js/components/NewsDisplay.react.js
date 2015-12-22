@@ -14,7 +14,7 @@ var NewsDisplay = React.createClass({
     }
 
     //  If we do, get the first one:
-    newsItem = this.props.news[0];
+    var newsItem = this.props.news[0];
 
     //  If we have an item, but it's not in the last 6 hours, don't display it:
     var newsCreatedTime = Moment(newsItem.createtime * 1000);
@@ -31,7 +31,7 @@ var NewsDisplay = React.createClass({
     }
 
     //  Set the breaking news image:    
-    newsImageStyle = {      
+    var newsImageStyle = {      
       backgroundImage: 'url(' + newsItem.MediaUrl + ')'
     };
 
