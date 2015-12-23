@@ -13,7 +13,7 @@ RUN apt-get install -y nodejs
 RUN apt-get install -y s3cmd
 
 # Make sure the toolset is installed
-RUN npm install -g browserify uglify-js
+RUN npm install -g browserify uglify-js babel
 
 # Copy the local package files to the container's workspace.
 ADD . /root/dashboard
