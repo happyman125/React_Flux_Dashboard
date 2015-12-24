@@ -10,7 +10,7 @@ Screenshot:
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
 ## Quick Start
-[Browserify](http://browserify.org/) is used for dependency management. [Uglify](https://github.com/mishoo/UglifyJS2) is used for script minimization/compression.  [Babel](https://babeljs.io/) is used for [ES6](https://babeljs.io/docs/learn-es2015/) transpiling.  If you don't have these installed, just run:
+[Browserify](http://browserify.org/) is used for dependency management. [Uglify](https://github.com/mishoo/UglifyJS2) is used for script minification/compression.  [Babel](https://babeljs.io/) is used for [ES6](https://babeljs.io/docs/learn-es2015/) transpiling.  If you don't have these installed, just run:
 ```bash
 npm install -g browserify uglify-js babel
 ```
