@@ -1,16 +1,15 @@
-
-var React = require('react');
+import React from 'react';
 
 //  Cookie manager
-var cookies = require('cookies-js');
+import cookies from 'cookies-js';
 
 //  The stores
-var WeatherStore = require('../stores/WeatherStore');
-var CalendarStore = require('../stores/CalendarStore');
+import WeatherStore from '../stores/WeatherStore';
+import CalendarStore from '../stores/CalendarStore';
 
 //  The API utils
-var CalendarAPIUtils = require('../utils/CalendarAPIUtils');
-var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
+import CalendarAPIUtils from '../utils/CalendarAPIUtils';
+import WeatherAPIUtils from '../utils/WeatherAPIUtils';
 
 /*
   Get the current settings
@@ -23,30 +22,36 @@ function getSettings()
   };
 }
 
-var DashboardSettings = React.createClass({
+class DashboardSettings extends React.Component {
+  
+  constructor(){
+    super();
 
-  getInitialState: function() {
-    return getSettings();
-  },
+    //  Set initial state:
+    this.state = getSettings();
 
-  componentDidMount: function() {
+    //  Bind our events:
+    this._onChange = this._onChange.bind(this);
+    this._onZipcodeChange = this._onZipcodeChange.bind(this);
+    this._onCalendarIdChange = this._onCalendarIdChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  componentDidMount() {
     //  Add store listeners ... and notify ME of changes
     WeatherStore.addChangeListener(this._onChange);
     CalendarStore.addChangeListener(this._onChange);
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     //  Remove store listeners
     WeatherStore.removeChangeListener(this._onChange);
     CalendarStore.removeChangeListener(this._onChange);
-  },
+  }
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
 
-  	return (
+    return (
       <div className="container">
         <div className="row">
           <h1>Dashboard settings</h1>
@@ -65,10 +70,10 @@ var DashboardSettings = React.createClass({
           </div>
         </div>
       </div>
-  	);
-  },
+    );
+  }
 
-  handleSave: function(e) {
+  handleSave(e) {
     e.preventDefault();
 
     //  Store the calendarId and zipcode
@@ -81,20 +86,20 @@ var DashboardSettings = React.createClass({
     
     //  Navigate to the main page
     window.location.hash = "#/";
-  },
+  }
 
-  _onCalendarIdChange: function(event){
+  _onCalendarIdChange(event){
     this.setState({calendarid: event.target.value});
-  },
+  }
 
-  _onZipcodeChange: function(event){
+  _onZipcodeChange(event){
     this.setState({zipcode: event.target.value});
-  },
+  }
 
-  _onChange: function() {
+  _onChange() {
     this.setState(getSettings());
   }
 
-});
+}
 
-module.exports = DashboardSettings;
+export default DashboardSettings;
