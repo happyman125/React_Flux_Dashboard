@@ -10,14 +10,9 @@ Screenshot:
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
 ## Quick Start
-[Browserify](http://browserify.org/) is used for dependency management.  If you don't have it installed, just run this:
+[Browserify](http://browserify.org/) is used for dependency management. [Uglify](https://github.com/mishoo/UglifyJS2) is used for script minification/compression.  [Babel](https://babeljs.io/) is used for [ES6](https://babeljs.io/docs/learn-es2015/) transpiling.  If you don't have these installed, just run:
 ```bash
-npm install -g browserify
-```
-
-[Uglify](https://github.com/mishoo/UglifyJS2) is used for script minimization/compression.  If you don't have it installed, just run this: 
-```bash
-npm install uglify-js -g
+npm install -g browserify uglify-js babel
 ```
 
 After [cloning the repo](https://help.github.com/articles/fetching-a-remote/), run the following commands in the project directory to get the required Javascript package dependencies and build the `bundle.js` file:
@@ -48,7 +43,7 @@ npm install http-server -g
 ```
 To start the server, navigate to the root of the project directory and type:
 ```bash
-http-server .
+http-server
 ```
 This will start a server at http://localhost:8080 that serves content from your project directory.  
 
