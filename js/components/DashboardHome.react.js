@@ -1,5 +1,5 @@
 
-var React = require('react');
+import React from 'react';
 
 //  The components
 var DateTimeDisplay = require('./DateTimeDisplay.react');
@@ -13,7 +13,7 @@ var CalendarAPIUtils = require('../utils/CalendarAPIUtils');
 var NewsAPIUtils = require('../utils/NewsAPIUtils');
 
 //  The stores
-var WeatherStore = require('../stores/WeatherStore');
+import WeatherStore from '../stores/WeatherStore';
 var CalendarStore = require('../stores/CalendarStore');
 var NewsStore = require('../stores/NewsStore');
 
@@ -56,7 +56,7 @@ var DashboardHome = React.createClass({
     this.interval = setInterval(this.tick, 300000);
 
     //  Add store listeners ... and notify ME of changes
-    WeatherStore.addChangeListener(this._onChange);
+    this.weatherListener = WeatherStore.addListener(this._onChange);
     CalendarStore.addChangeListener(this._onChange);
     NewsStore.addChangeListener(this._onChange);
   },
@@ -66,7 +66,7 @@ var DashboardHome = React.createClass({
     clearInterval(this.interval);
 
     //  Remove store listeners
-    WeatherStore.removeChangeListener(this._onChange);
+    this.weatherListener.remove();
     CalendarStore.removeChangeListener(this._onChange);
     NewsStore.removeChangeListener(this._onChange);
   },

@@ -1,83 +1,51 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+import {Store} from 'flux/utils';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var DashboardConstants = require('../constants/DashboardConstants');
-var CHANGE_EVENT = 'weather-change';
+class WeatherStore extends Store {
 
-var _weatherdata = {};
-var _pollendata = {};
-var _pollenZipcode = "";
+  constructor(dispatcher){
+    super(dispatcher);
 
-function setWeather(weather) {
-  _weatherdata = weather;
-}
-
-function setPollen(pollen){
-  _pollendata = pollen;
-}
-
-function setPollenZipcode(zipcode){
-  _pollenZipcode = zipcode;
-}
-
-var WeatherStore = assign({}, EventEmitter.prototype, {
-
-  getWeather: function() {
-    return _weatherdata;
-  },
-
-  getPollen: function(){
-    return _pollendata;
-  },
-
-  getPollenZipcode: function(){
-    return _pollenZipcode;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+    this.weatherdata = {};
+    this.pollendata = {};
+    this.pollenZipcode = "";
   }
-});
 
-// Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  
-  switch(action.actionType) {
-    case DashboardConstants.RECIEVE_RAW_WEATHER:      
-      var weatherData = action.weatherData;
-      console.log('Refreshing weather..');
-      setWeather(weatherData);
-      WeatherStore.emitChange();
-      break;
-
-    case DashboardConstants.RECIEVE_RAW_POLLEN:
-      var pollenData = action.pollenData;
-      var zipcode = action.zipcode;
-      console.log('Refreshing pollen..');
-      setPollen(pollenData);
-      console.log('Updating zipcode..');
-      setPollenZipcode(zipcode);
-      WeatherStore.emitChange();
-      break;
-
-    default:
-      // no op
+  getWeather() {
+    return this.weatherdata;
   }
-});
 
-module.exports = WeatherStore;
+  getPollen() {
+    return this.pollendata;
+  }
+
+  getPollenZipcode() {
+    return this.pollenZipcode;
+  }
+
+  __onDispatch(action) {
+    
+    switch(action.actionType) {
+      case DashboardConstants.RECIEVE_RAW_WEATHER:
+        console.log('Refreshing weather..');
+        this.weatherdata = action.weatherData;
+        this.__emitChange();
+        break;
+
+      case DashboardConstants.RECIEVE_RAW_POLLEN:
+        console.log('Refreshing pollen..');
+        this.pollendata = action.pollenData;
+        console.log('Updating zipcode..');
+        this.pollenZipcode = action.zipcode;
+        this.__emitChange();
+        break;
+
+      default:
+        // no op
+    }
+  }
+
+}
+
+module.exports = new WeatherStore(AppDispatcher);
