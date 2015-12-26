@@ -1,8 +1,8 @@
 
-var React = require('react');
+import React from 'react';
 
 //  The stores
-var PageStore = require('../stores/PageStore');
+import PageStore from '../stores/PageStore';
 
 /*
   Get the current state from the GistStore
@@ -24,13 +24,13 @@ var DashboardApp = React.createClass({
     var setState = this.setState;    
 
     //  Add store listeners ... and notify ME of changes
-    PageStore.addChangeListener(this._onChange);
+    this.pageListener = PageStore.addListener(this._onChange);
   },
 
   componentWillUnmount: function() {
 
     //  Remove store listeners
-    PageStore.removeChangeListener(this._onChange);
+    this.pageListener.remove();
   },
 
   /**

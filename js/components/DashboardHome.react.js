@@ -14,8 +14,8 @@ var NewsAPIUtils = require('../utils/NewsAPIUtils');
 
 //  The stores
 import WeatherStore from '../stores/WeatherStore';
-var CalendarStore = require('../stores/CalendarStore');
-var NewsStore = require('../stores/NewsStore');
+import CalendarStore from '../stores/CalendarStore';
+import NewsStore from '../stores/NewsStore';
 
 /*
   Get the current state
@@ -57,8 +57,8 @@ var DashboardHome = React.createClass({
 
     //  Add store listeners ... and notify ME of changes
     this.weatherListener = WeatherStore.addListener(this._onChange);
-    CalendarStore.addChangeListener(this._onChange);
-    NewsStore.addChangeListener(this._onChange);
+    this.calendarListener = CalendarStore.addListener(this._onChange);
+    this.newsListener = NewsStore.addListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -67,8 +67,8 @@ var DashboardHome = React.createClass({
 
     //  Remove store listeners
     this.weatherListener.remove();
-    CalendarStore.removeChangeListener(this._onChange);
-    NewsStore.removeChangeListener(this._onChange);
+    this.calendarListener.remove();
+    this.newsListener.remove();
   },
 
   /**

@@ -40,13 +40,13 @@ class DashboardSettings extends React.Component {
   componentDidMount() {
     //  Add store listeners ... and notify ME of changes
     this.weatherListener = WeatherStore.addListener(this._onChange);
-    CalendarStore.addChangeListener(this._onChange);
+    this.calendarListener = CalendarStore.addListener(this._onChange);
   }
 
   componentWillUnmount() {
     //  Remove store listeners
     this.weatherListener.remove();
-    CalendarStore.removeChangeListener(this._onChange);
+    this.calendarListener.remove();
   }
 
   render() {

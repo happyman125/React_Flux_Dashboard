@@ -1,55 +1,34 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+import {Store} from 'flux/utils';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var DashboardConstants = require('../constants/DashboardConstants');
-var CHANGE_EVENT = 'news-change';
+class NewsStore extends Store {
 
-var _newsdata = [];
+  constructor(dispatcher) {
+    super(dispatcher);
 
-function setNewsData(newsdata) {
-  _newsdata = newsdata;
+    this.newsdata = [];
+  }
+
+  getBreakingNews() {
+    return this.newsdata;
+  }
+
+  __onDispatch(action) {
+    
+    switch(action.actionType) {
+
+      case DashboardConstants.RECIEVE_RAW_NEWS_EVENTS:
+        console.log('Refreshing news info..');
+        this.newsdata = action.newsData;
+        this.__emitChange();
+        break;
+
+      default:
+        // no op
+    }
+  }
+
 }
 
-var NewsStore = assign({}, EventEmitter.prototype, {
-
-  getBreakingNews: function() {
-    return _newsdata;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
-});
-
-// Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  
-  switch(action.actionType) {
-    case DashboardConstants.RECIEVE_RAW_NEWS_EVENTS:      
-      var newsdata = action.newsData;
-      console.log('Refreshing news info..');
-      setNewsData(newsdata);
-      NewsStore.emitChange();
-      break;
-
-    default:
-      // no op
-  }
-});
-
-module.exports = NewsStore;
+module.exports = new NewsStore(AppDispatcher);

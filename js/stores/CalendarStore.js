@@ -1,62 +1,40 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
+import {Store} from 'flux/utils';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var DashboardConstants = require('../constants/DashboardConstants');
-var CHANGE_EVENT = 'calendar-change';
+class CalendarStore extends Store {
 
-var _calendardata = {};
-var _calendarId = "";
+  constructor(dispatcher) {
+    super(dispatcher);
 
-function setCalendarData(calendardata, calendarid) {
-  _calendardata = calendardata;
-  _calendarId = calendarid;
+    this.calendardata = {};
+    this.calendarId = "";
+  }
+
+  getCalendarData() {
+    return this.calendardata;
+  }
+
+  getCalendarId() {
+    return this.calendarId;
+  }
+
+  __onDispatch(action) {
+    
+    switch(action.actionType) {
+
+      case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:
+        console.log('Refreshing calendar info..');
+        this.calendardata = action.calendarData;
+        this.calendarId = action.calendarId;        
+        this.__emitChange();
+        break;
+
+      default:
+        // no op
+    }
+  }
+
 }
 
-var CalendarStore = assign({}, EventEmitter.prototype, {
-
-  getCalendarData: function() {
-    return _calendardata;
-  },
-
-  getCalendarId: function(){
-    return _calendarId;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
-});
-
-// Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  
-  switch(action.actionType) {
-    case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:      
-      var calendarData = action.calendarData;
-      var calendarId = action.calendarId;
-      console.log('Refreshing calendar info..');
-      setCalendarData(calendarData, calendarId);
-      CalendarStore.emitChange();
-      break;
-
-    default:
-      // no op
-  }
-});
-
-module.exports = CalendarStore;
+module.exports = new CalendarStore(AppDispatcher);

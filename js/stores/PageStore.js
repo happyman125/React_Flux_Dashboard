@@ -1,69 +1,43 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var assign = require('object-assign');
-
-var DashboardConstants = require('../constants/DashboardConstants');
-var CHANGE_EVENT = 'page-change';
+import {Store} from 'flux/utils';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
 //  The page components
-var DashboardHome = require('../components/DashboardHome.react');
-var DashboardSettings = require('../components/DashboardSettings.react');
+import DashboardHome from '../components/DashboardHome.react';
+import DashboardSettings from '../components/DashboardSettings.react';
 
-//  Set to 'home' initially
-var _currentPage = DashboardHome;
+class PageStore extends Store {
 
-/**
- * Sets the current page
- * @param {[type]} page [description]
- */
-function setPage(page) {
-  _currentPage = page;
+  constructor(dispatcher){
+    super(dispatcher);
+
+    //  Default to the home page
+    this.currentPage = DashboardHome;
+  }
+
+  getPage() {
+    return this.currentPage;
+  }
+
+  __onDispatch(action) {
+    
+    switch(action.actionType) {
+      case DashboardConstants.SHOW_SETTINGS:      
+        console.log('Loading settings page...');
+        this.currentPage = DashboardSettings;
+        this.__emitChange();
+        break;
+
+      case DashboardConstants.SHOW_HOME:      
+        console.log('Loading home page...');
+        this.currentPage = DashboardHome;
+        this.__emitChange();
+        break;
+
+      default:
+        // no op
+    }
+  }
 }
 
-var PageStore = assign({}, EventEmitter.prototype, {
-
-  getPage: function() {
-    return _currentPage;
-  },
-
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  /**
-   * @param {function} callback
-   */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  }
-});
-
-// Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  
-  switch(action.actionType) {
-    case DashboardConstants.SHOW_SETTINGS:      
-      console.log('Loading settings page...');
-      setPage(DashboardSettings);
-      PageStore.emitChange();
-      break;
-
-    case DashboardConstants.SHOW_HOME:      
-      console.log('Loading home page...');
-      setPage(DashboardHome);
-      PageStore.emitChange();
-      break;
-
-    default:
-      // no op
-  }
-});
-
-module.exports = PageStore;
+module.exports = new PageStore(AppDispatcher);
