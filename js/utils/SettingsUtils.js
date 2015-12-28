@@ -21,10 +21,15 @@ class SettingsUtils {
 	getSettings() {
 
 		//	Cookie operations to read and deserialize
-		let settings = JSON.parse(cookies.get(this.settings_cookie));
-		 
-		//  Call the action to receive the data:
-		SettingsActions.recieveSettingsData(settings);
+		try{
+			let settings = JSON.parse(cookies.get(this.settings_cookie));
+			
+			//  Call the action to receive the data:
+			SettingsActions.recieveSettingsData(settings);	
+		}
+		catch (ex) {
+			console.log("There was a problem reading the cookie: " + ex);
+		}
 	}
 }
 
