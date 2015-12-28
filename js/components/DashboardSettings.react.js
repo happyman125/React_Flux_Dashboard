@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component} from 'react';
 
 //  Cookie manager
 import cookies from 'cookies-js';
@@ -6,29 +6,20 @@ import cookies from 'cookies-js';
 //  The stores
 import WeatherStore from '../stores/WeatherStore';
 import CalendarStore from '../stores/CalendarStore';
+import SettingsStore from '../stores/SettingsStore';
 
 //  The API utils
 import CalendarAPIUtils from '../utils/CalendarAPIUtils';
 import WeatherAPIUtils from '../utils/WeatherAPIUtils';
+import SettingsUtils from '../utils/SettingsUtils';
 
-/*
-  Get the current settings
- */
-function getSettings()
-{
-  return{
-    calendarid: CalendarStore.getCalendarId(),
-    zipcode: WeatherStore.getPollenZipcode()
-  };
-}
-
-class DashboardSettings extends React.Component {
+class DashboardSettings extends Component {
   
   constructor(){
     super();
 
     //  Set initial state:
-    this.state = getSettings();
+    this.state = SettingsStore.getSettings();
 
     //  Bind our events:
     this._onChange = this._onChange.bind(this);
@@ -41,12 +32,14 @@ class DashboardSettings extends React.Component {
     //  Add store listeners ... and notify ME of changes
     this.weatherListener = WeatherStore.addListener(this._onChange);
     this.calendarListener = CalendarStore.addListener(this._onChange);
+    this.settingsListener = SettingsStore.addListener(this._onChange);
   }
 
   componentWillUnmount() {
     //  Remove store listeners
     this.weatherListener.remove();
     this.calendarListener.remove();
+    this.settingsListener.remove();
   }
 
   render() {
@@ -76,14 +69,13 @@ class DashboardSettings extends React.Component {
   handleSave(e) {
     e.preventDefault();
 
-    //  Store the calendarId and zipcode
-    cookies.set('calendarId', this.state.calendarid, { expires: Infinity });
-    cookies.set('zipcode', this.state.zipcode, { expires: Infinity });
-
     //  Update the calendar data / pollen data:
     CalendarAPIUtils.getCurrentCalendarEvents(this.state.calendarid);
     WeatherAPIUtils.getPollen(this.state.zipcode);
     
+    //  Save the settings:
+    SettingsUtils.saveSettings(this.state);
+
     //  Navigate to the main page
     window.location.hash = "#/";
   }
@@ -97,7 +89,7 @@ class DashboardSettings extends React.Component {
   }
 
   _onChange() {
-    this.setState(getSettings());
+    this.setState(SettingsStore.getSettings());
   }
 
 }

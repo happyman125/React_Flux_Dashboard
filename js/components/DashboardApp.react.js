@@ -3,6 +3,7 @@ import React from 'react';
 
 //  The stores
 import PageStore from '../stores/PageStore';
+import SettingsStore from '../stores/SettingsStore';
 
 /*
   Get the current state from the GistStore
@@ -10,7 +11,8 @@ import PageStore from '../stores/PageStore';
 function getAppState()
 {
   return{
-    page: PageStore.getPage()
+    page: PageStore.getPage(),
+    settings: SettingsStore.getSettings()
   };
 }
 
@@ -25,12 +27,14 @@ var DashboardApp = React.createClass({
 
     //  Add store listeners ... and notify ME of changes
     this.pageListener = PageStore.addListener(this._onChange);
+    this.settingsListener = SettingsStore.addListener(this._onChange);
   },
 
   componentWillUnmount: function() {
 
     //  Remove store listeners
     this.pageListener.remove();
+    this.settingsListener.remove();
   },
 
   /**
@@ -43,7 +47,7 @@ var DashboardApp = React.createClass({
     //  Set the current page and use spread attributes to propigate our current props 
     //  (see https://facebook.github.io/react/docs/jsx-spread.html for more info)
   	return (
-      <ComponentToLoad {...this.props} />
+      <ComponentToLoad settings={this.state.settings} {...this.props} />
   	);
   },
 

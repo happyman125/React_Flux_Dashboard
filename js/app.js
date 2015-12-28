@@ -1,22 +1,26 @@
-var React = require('react');
+import React from 'react';
 window.React = React; // export for http://fb.me/react-devtools
 
 //  Flat iron director
-var director = require('director');
+import director from 'director';
 
 //  Cookie manager
 var cookies = require('cookies-js');
 
 //	The API utils
-var WeatherAPIUtils = require('./utils/WeatherAPIUtils');
-var CalendarAPIUtils = require('./utils/CalendarAPIUtils');
-var NewsAPIUtils = require('./utils/NewsAPIUtils');
+import WeatherAPIUtils from './utils/WeatherAPIUtils';
+import CalendarAPIUtils from './utils/CalendarAPIUtils';
+import NewsAPIUtils from './utils/NewsAPIUtils';
+import SettingsUtils from './utils/SettingsUtils';
 
 //	The app component
-var DashboardApp = require('./components/DashboardApp.react');
+import DashboardApp from './components/DashboardApp.react';
 
 //  The actions
-var PageActions = require('./actions/PageActions');
+import PageActions from './actions/PageActions';
+
+//  The stores
+import SettingsStore from './stores/SettingsStore';
 
 //  Router setup
 var router = director.Router({
@@ -40,12 +44,15 @@ if (navigator.geolocation)
  * @return {[type]}          [description]
  */
 function showApp(position) {
+    //  Read the settings (and update the stores):
+    SettingsUtils.getSettings(SettingsUtils.settings_cookie);
+    let settings = SettingsStore.getSettings();
     
     //  Get the calendarId and zipcode from cookies:
-    var calendarId = cookies.get('calendarId');
+    var calendarId = settings.calendarid;
     console.log("CalendarId from cookie: " + calendarId);
     
-    var zipcode = cookies.get('zipcode');
+    var zipcode = settings.zipcode;
     console.log("Zipcode from cookie: " + zipcode)
 
     //  We have coordinates -- get the weather data
@@ -67,7 +74,7 @@ function showApp(position) {
     }
 
     //  Get the news information:
-    var newsUser = 'cnnbrk';
+    var newsUser = settings.newsuser;
     NewsAPIUtils.getTwitterFeed(newsUser)
 
     //	Start the app
