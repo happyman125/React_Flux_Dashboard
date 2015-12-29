@@ -29,6 +29,11 @@ var router = director.Router({
 });
 router.init('/');
 
+//  'Google client loaded' handler 
+window.handleGoogleClientLoad = function(){
+    CalendarAPIUtils.authorizeCalendar();
+}
+
 //  Application element
 var appElement = document.getElementById("dashboardapp");
 

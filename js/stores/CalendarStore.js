@@ -9,6 +9,7 @@ class CalendarStore extends Store {
 
     this.calendardata = {};
     this.calendarId = "";
+    this.calendarlist = {};
   }
 
   getCalendarData() {
@@ -19,6 +20,10 @@ class CalendarStore extends Store {
     return this.calendarId;
   }
 
+  getCalendarList() {
+    return this.calendarlist;
+  }
+
   __onDispatch(action) {
     
     switch(action.actionType) {
@@ -26,7 +31,8 @@ class CalendarStore extends Store {
       case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:
         console.log('Refreshing calendar info..');
         this.calendardata = action.calendarData;
-        this.calendarId = action.calendarId;        
+        this.calendarId = action.calendarId;
+        this.calendarlist = action.calendarList;        
         this.__emitChange();
         break;
 
