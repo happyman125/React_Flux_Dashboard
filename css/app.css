@@ -7,6 +7,15 @@ body{
   margin: 0;
 }
 
+/* Global form helpers */
+.inline-radio label {
+    vertical-align: middle
+}
+.inline-radio input[type=text] {
+    width: 200px;
+    display:inline-block;
+}
+
 /* Weather display */
 #temp{
   font-size: 13em;

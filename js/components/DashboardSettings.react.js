@@ -50,15 +50,54 @@ class DashboardSettings extends Component {
           <h1>Dashboard settings</h1>
           <div className="col-md-6">
             <form>
+
               <div className="form-group">
-                <label htmlFor="calendarId">Google Calendar Id</label>
+                <label htmlFor="calendarId">Calendar to display</label>
                 <input id="calendarId" value={this.state.calendarid} onChange={this._onCalendarIdChange} type="text" className="form-control" placeholder="Enter your calendarId" />
               </div>
+
+              <div className="form-group">
+                <label htmlFor="weathersource">Get weather forecast from</label>
+                <div className="radio">
+                  <label>
+                    <input type="radio" id="radYahoo" name="weathersource" value="Yahoo"/>
+                    Yahoo
+                  </label>
+                </div>
+                <div className="radio">
+                  <label>
+                    <input type="radio" id="radForecastio" name="weathersource" value="Forecastio"/>
+                    Forecast.io
+                  </label>
+                </div>
+              </div>
+
               <div className="form-group">
                 <label htmlFor="zipcode">Zipcode for pollen information</label>
                 <input id="zipcode" value={this.state.zipcode} onChange={this._onZipcodeChange} type="text" className="form-control" placeholder="Enter zipcode" />
-              </div>            
-              <button className="btn btn-primary" onClick={this.handleSave}>Save</button> <a href="#/" className="btn btn-default">Cancel</a>
+              </div>
+
+              <div className="form-group">
+                <label>Location data</label>
+                <div className="radio">
+                  <label>
+                    <input type="radio" name="locationsource" value="browser"/>
+                    Use the browser
+                  </label>
+                </div>
+                <div className="radio inline-radio">
+                  <label>
+                    <input type="radio" name="locationsource" value="staticLocation"/>
+                    Always use this location:
+                  </label>
+                  &nbsp;<input id="staticLocation" type="text" className="form-control" placeholder="Enter location coordinates" />
+                </div>
+              </div>
+
+
+              <div className="form-group">
+                <button className="btn btn-primary" onClick={this.handleSave}>Save</button> <a href="#/" className="btn btn-default">Cancel</a>
+              </div>
             </form>
           </div>
         </div>
