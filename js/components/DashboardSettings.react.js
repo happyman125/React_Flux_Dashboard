@@ -133,10 +133,9 @@ class DashboardSettings extends React.Component {
   }
 
   handleAuth(e) {
-    console.log("In handleAuth");
     e.preventDefault();
 
-    console.log("Calling calendar utils...");
+    console.log("Handling Calendar authorization in settings.  Calling calendar utils...");
     CalendarAPIUtils.handleCalendarAuthClick(e);
   }
 

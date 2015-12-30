@@ -39,31 +39,22 @@ class CalendarStore extends Store {
     switch(action.actionType) {
 
       case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:
-        console.log('Refreshing calendar events..');
+        console.log('Updating calendar store: ', action);
         this.calendardata = action.calendarData;
         this.calendarId = action.calendarId; 
         this.__emitChange();
         break;
 
       case DashboardConstants.RECIEVE_RAW_CALENDAR_LIST:
-        console.log('Refreshing calendar lists..');
+        console.log('Updating calendar store: ', action);
         this.calendarlist = action.calendarList;
         this.__emitChange();
         break;
 
       case DashboardConstants.RECIEVE_CALENDAR_AUTH_CHECK_RESULT:
+        console.log('Updating calendar store: ', action);
         this.auth_check_finished = true;
         this.gapi_authorized = action.authorized;
-
-        console.log("GAPI auth check complete");
-
-        if(action.authorized){
-          console.log("GAPI successfully authorized");
-        }
-        else{
-          console.log("GAPI NOT authorized");
-        }
-
         this.__emitChange();
         break;
 

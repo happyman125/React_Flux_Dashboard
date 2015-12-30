@@ -28,7 +28,7 @@ class SettingsUtils {
 			SettingsActions.recieveSettingsData(settings);	
 		}
 		catch (ex) {
-			console.log("There was a problem reading the cookie: " + ex);
+			console.log("There was a problem reading the cookie: ", ex);
 		}
 	}
 }

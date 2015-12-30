@@ -24,7 +24,7 @@ class SettingsStore extends Store {
     
     switch(action.actionType) {
       case DashboardConstants.RECIEVE_SETTINGS:
-        console.log('Refreshing settings..');
+        console.log('Updating settings store: ', action);
         this.settings = action.settingsData;
         this.__emitChange();
         break;

@@ -224,12 +224,10 @@ function showApp(position) {
 
     //  Get the calendarId and zipcode from cookies:
     var calendarId = settings.calendarid;
-    console.log("CalendarId from cookie: " + calendarId);
-
     var zipcode = settings.zipcode;
-    console.log("Zipcode from cookie: " + zipcode);
 
     //  We have coordinates -- get the weather data
+    console.log("Using browser geocoordinates: ", position);
     _utilsWeatherAPIUtils2['default'].getCurrentWeather(position.coords.latitude, position.coords.longitude);
 
     //  If we have a calendarId, get data:
@@ -710,10 +708,9 @@ var DashboardSettings = (function (_React$Component) {
   }, {
     key: 'handleAuth',
     value: function handleAuth(e) {
-      console.log("In handleAuth");
       e.preventDefault();
 
-      console.log("Calling calendar utils...");
+      console.log("Handling Calendar authorization in settings.  Calling calendar utils...");
       _utilsCalendarAPIUtils2['default'].handleCalendarAuthClick(e);
     }
   }, {
@@ -1315,30 +1312,22 @@ var CalendarStore = (function (_Store) {
       switch (action.actionType) {
 
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_CALENDAR_EVENTS:
-          console.log('Refreshing calendar events..');
+          console.log('Updating calendar store: ', action);
           this.calendardata = action.calendarData;
           this.calendarId = action.calendarId;
           this.__emitChange();
           break;
 
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_CALENDAR_LIST:
-          console.log('Refreshing calendar lists..');
+          console.log('Updating calendar store: ', action);
           this.calendarlist = action.calendarList;
           this.__emitChange();
           break;
 
         case _constantsDashboardConstants2['default'].RECIEVE_CALENDAR_AUTH_CHECK_RESULT:
+          console.log('Updating calendar store: ', action);
           this.auth_check_finished = true;
           this.gapi_authorized = action.authorized;
-
-          console.log("GAPI auth check complete");
-
-          if (action.authorized) {
-            console.log("GAPI successfully authorized");
-          } else {
-            console.log("GAPI NOT authorized");
-          }
-
           this.__emitChange();
           break;
 
@@ -1435,7 +1424,7 @@ var NewsStore = (function (_Store) {
       switch (action.actionType) {
 
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_NEWS_EVENTS:
-          console.log('Refreshing news info..');
+          console.log('Updating news store: ', action);
           this.newsdata = action.newsData;
           this.__emitChange();
           break;
@@ -1652,7 +1641,7 @@ var SettingsStore = (function (_Store) {
 
 			switch (action.actionType) {
 				case _constantsDashboardConstants2['default'].RECIEVE_SETTINGS:
-					console.log('Refreshing settings..');
+					console.log('Updating settings store: ', action);
 					this.settings = action.settingsData;
 					this.__emitChange();
 					break;
@@ -1761,15 +1750,14 @@ var WeatherStore = (function (_Store) {
 
       switch (action.actionType) {
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_WEATHER:
-          console.log('Refreshing weather..');
+          console.log('Updating weather store: ', action);
           this.weatherdata = action.weatherData;
           this.__emitChange();
           break;
 
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_POLLEN:
-          console.log('Refreshing pollen..');
+          console.log('Updating weather store: ', action);
           this.pollendata = action.pollenData;
-          console.log('Updating zipcode..');
           this.pollenZipcode = action.zipcode;
           this.__emitChange();
           break;
@@ -1837,8 +1825,6 @@ var CalendarAPIUtils = (function () {
             //  Get the calendar events for the given Google calendarid
             var url = this.baseurl + calendarId;
 
-            console.log("Requesting calendar information for: " + calendarId);
-
             $.ajax(url).done((function (data) {
                 //  Call the action to receive the data:
                 _actionsCalendarActions2['default'].recieveCalendarData(data, calendarId);
@@ -1853,8 +1839,10 @@ var CalendarAPIUtils = (function () {
         key: 'getCalendarList',
         value: function getCalendarList() {
 
+            //  Create the request
             var request = gapi.client.calendar.calendarList.list();
 
+            //  Execute the request and get the response
             request.execute(function (resp) {
                 var cals = resp.items;
                 if (cals.length > 0) {
@@ -1869,13 +1857,41 @@ var CalendarAPIUtils = (function () {
         /* Call the google API to get the list of events for a calendarid */
     }, {
         key: 'getCalendarEvents',
-        value: function getCalendarEvents(calendarId) {}
+        value: function getCalendarEvents(calendarId) {
 
-        //  Call the action to receive the data:
-        //  CalendarActions.recieveCalendarData(data, calendarId);
+            //  Create the request
+            var request = gapi.client.calendar.events.list({
+                'calendarId': 'primary', /* Can be 'primary' or a given calendarid */
+                'timeMin': new Date().toISOString(),
+                'showDeleted': false,
+                'singleEvents': true,
+                'maxResults': 10,
+                'orderBy': 'startTime'
+            });
+
+            //  Execute the request and get the response
+            request.execute(function (resp) {
+                var events = resp.items;
+
+                if (events.length > 0) {
+                    for (i = 0; i < events.length; i++) {
+                        var event = events[i];
+                        var when = event.start.dateTime;
+                        if (!when) {
+                            when = event.start.date;
+                        }
+                        // appendPre(event.summary + ' (' + when + ')')
+                    }
+                } else {
+                        appendPre('No upcoming events found.');
+                    }
+            });
+
+            //  Call the action to receive the data:
+            //  CalendarActions.recieveCalendarData(data, calendarId);
+        }
 
         /* Get authorization from the google API for the given scope(s) */
-
     }, {
         key: 'authorizeCalendar',
         value: function authorizeCalendar() {
@@ -2017,7 +2033,7 @@ var SettingsUtils = (function () {
 				//  Call the action to receive the data:
 				_actionsSettingsActions2['default'].recieveSettingsData(settings);
 			} catch (ex) {
-				console.log("There was a problem reading the cookie: " + ex);
+				console.log("There was a problem reading the cookie: ", ex);
 			}
 		}
 	}]);

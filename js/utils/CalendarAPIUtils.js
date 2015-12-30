@@ -22,8 +22,6 @@ class CalendarAPIUtils {
         //  Get the calendar events for the given Google calendarid
         var url = this.baseurl + calendarId;
 
-        console.log("Requesting calendar information for: " + calendarId);
-
         $.ajax( url )
         .done(function(data) {
             //  Call the action to receive the data:
@@ -38,8 +36,10 @@ class CalendarAPIUtils {
     /* Call the google API to get the list of calendars */
     getCalendarList(){
 
+        //  Create the request
         let request = gapi.client.calendar.calendarList.list();
 
+        //  Execute the request and get the response
         request.execute(function(resp) {            
             let cals = resp.items;
             if (cals.length > 0) {
@@ -54,6 +54,36 @@ class CalendarAPIUtils {
 
     /* Call the google API to get the list of events for a calendarid */
     getCalendarEvents(calendarId){
+
+        //  Create the request
+        var request = gapi.client.calendar.events.list({
+          'calendarId': 'primary', /* Can be 'primary' or a given calendarid */
+          'timeMin': (new Date()).toISOString(),
+          'showDeleted': false,
+          'singleEvents': true,
+          'maxResults': 10,
+          'orderBy': 'startTime'
+        });
+
+        //  Execute the request and get the response
+        request.execute(function(resp) {
+          var events = resp.items;
+
+          if (events.length > 0) {
+            for (i = 0; i < events.length; i++) {
+              var event = events[i];
+              var when = event.start.dateTime;
+              if (!when) {
+                when = event.start.date;
+              }
+              // appendPre(event.summary + ' (' + when + ')')
+            }
+          } else {
+            appendPre('No upcoming events found.');
+          }
+
+        });
+
 
         //  Call the action to receive the data:
         //  CalendarActions.recieveCalendarData(data, calendarId);

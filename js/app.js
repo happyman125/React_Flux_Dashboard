@@ -55,12 +55,10 @@ function showApp(position) {
     
     //  Get the calendarId and zipcode from cookies:
     var calendarId = settings.calendarid;
-    console.log("CalendarId from cookie: " + calendarId);
-    
     var zipcode = settings.zipcode;
-    console.log("Zipcode from cookie: " + zipcode)
 
     //  We have coordinates -- get the weather data
+    console.log("Using browser geocoordinates: ", position);
     WeatherAPIUtils.getCurrentWeather(position.coords.latitude, position.coords.longitude);
 
     //  If we have a calendarId, get data:
