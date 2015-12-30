@@ -1,5 +1,4 @@
 var React = require('react');
-var Moment = require('moment');
 
 //  The components
 var CalendarEventItem = require('./CalendarEventItem.react');

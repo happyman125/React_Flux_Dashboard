@@ -23,7 +23,8 @@ var DashboardApp = React.createClass({
   },
 
   componentDidMount: function() {
-    var setState = this.setState;    
+    //  If we don't have a calendarid or a zipcode set, we should
+    //  try to redirect here (instead of using app.js)
 
     //  Add store listeners ... and notify ME of changes
     this.pageListener = PageStore.addListener(this._onChange);

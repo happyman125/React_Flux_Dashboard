@@ -1,4 +1,10 @@
+import moment from 'moment';
+
+//  Actions
 import CalendarActions from '../actions/CalendarActions';
+
+//  Stores
+import SettingsStore from '../stores/SettingsStore';
 
 var utils;
 
@@ -11,26 +17,6 @@ class CalendarAPIUtils {
         // Developer Console, https://console.developers.google.com
         this.client_id = '737977399720-tj5tl7jvqmt5jh3kp72j02i62uetlkkn.apps.googleusercontent.com';
         this.scopes = ["https://www.googleapis.com/auth/calendar.readonly"];
-        
-        //  Deprecated. The base url for the service - change this to your service location:
-        //  You can get this microservice for free at https://github.com/danesparza/calendar-service
-        this.baseurl = "http://service.cagedtornado.com:3000/calendar/";
-    }
-
-    getCurrentCalendarEvents(calendarId) {
-    
-        //  Get the calendar events for the given Google calendarid
-        var url = this.baseurl + calendarId;
-
-        $.ajax( url )
-        .done(function(data) {
-            //  Call the action to receive the data:
-            CalendarActions.recieveCalendarData(data, calendarId);
-        }.bind(this))
-        .fail(function() {
-            //  Something bad happened
-            console.log("There was a problem getting calendar data");
-        });
     }
 
     /* Call the google API to get the list of calendars */
@@ -55,38 +41,32 @@ class CalendarAPIUtils {
     /* Call the google API to get the list of events for a calendarid */
     getCalendarEvents(calendarId){
 
+        //  Set the min/max times for event display:
+        let timeMin = (new Date()).toISOString();
+        let tempTime = moment().endOf('day').toDate();
+        let timeMax = tempTime.toISOString();
+
         //  Create the request
-        var request = gapi.client.calendar.events.list({
-          'calendarId': 'primary', /* Can be 'primary' or a given calendarid */
-          'timeMin': (new Date()).toISOString(),
+        let request = gapi.client.calendar.events.list({
+          'calendarId': calendarId, /* Can be 'primary' or a given calendarid */
+          'timeMin': timeMin,
+          'timeMax': timeMax,
           'showDeleted': false,
           'singleEvents': true,
-          'maxResults': 10,
           'orderBy': 'startTime'
         });
 
         //  Execute the request and get the response
         request.execute(function(resp) {
-          var events = resp.items;
 
-          if (events.length > 0) {
-            for (i = 0; i < events.length; i++) {
-              var event = events[i];
-              var when = event.start.dateTime;
-              if (!when) {
-                when = event.start.date;
-              }
-              // appendPre(event.summary + ' (' + when + ')')
+            if (resp.items.length > 0) {
+                //  Call the action to receive the data:
+                CalendarActions.recieveCalendarData(resp, calendarId);
+            } 
+            else{
+                console.log("There was a problem getting the calendar events");
             }
-          } else {
-            appendPre('No upcoming events found.');
-          }
-
         });
-
-
-        //  Call the action to receive the data:
-        //  CalendarActions.recieveCalendarData(data, calendarId);
     }
 
     /* Get authorization from the google API for the given scope(s) */
@@ -122,9 +102,12 @@ class CalendarAPIUtils {
                 //  Then load the list of calendars
                 utils.getCalendarList();
 
-                //  If we have a calendarId selected already,
-                //  get the calendar events?
-                //  this.getCalendarEvents(calendarid);
+                //  Get the latest calendar information if we have a calendar selected:
+                let settings = SettingsStore.getSettings();
+                console.log("Evaluating if we should load events: ", settings);
+                if(settings.calendarid != "") {
+                  utils.getCalendarEvents(settings.calendarid);
+                }
             });
 
         } else {

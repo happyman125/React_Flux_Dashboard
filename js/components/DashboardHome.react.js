@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 //  The components
@@ -16,6 +15,7 @@ var NewsAPIUtils = require('../utils/NewsAPIUtils');
 import WeatherStore from '../stores/WeatherStore';
 import CalendarStore from '../stores/CalendarStore';
 import NewsStore from '../stores/NewsStore';
+import SettingsStore from '../stores/SettingsStore';
 
 /*
   Get the current state
@@ -26,8 +26,10 @@ function getAppState()
     weather: WeatherStore.getWeather(),
     pollen: WeatherStore.getPollen(),
     calendarinfo: CalendarStore.getCalendarData(),
-    calendarid: CalendarStore.getCalendarId(),
-    news: NewsStore.getBreakingNews()
+    news: NewsStore.getBreakingNews(),
+    settings: SettingsStore.getSettings(),
+    cal_authcheckfinished: CalendarStore.authCheckFinished(),
+    cal_authorized: CalendarStore.areAuthorized()
   };
 }
 
@@ -42,16 +44,17 @@ var DashboardHome = React.createClass({
     WeatherAPIUtils.getCurrentWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
     WeatherAPIUtils.getPollen(this.props.zipcode);
 
-    //  Get the latest calendar information:
-    CalendarAPIUtils.getCurrentCalendarEvents(this.props.calendarid);
+    //  Get the latest calendar information if the API is loaded, 
+    //  we're authorized, and we have a calendar selected:
+    if(this.state.cal_authcheckfinished && this.state.cal_authorized && this.state.settings.calendarid != "") {
+      CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
+    }
 
     //  Get the latest breaking news:
     NewsAPIUtils.getTwitterFeed(this.props.breakingnewsuser);
   },
 
   componentDidMount: function() {
-    var setState = this.setState;    
-
     //  Add an interval tick for every 5 minutes:
     this.interval = setInterval(this.tick, 300000);
 

@@ -4,9 +4,6 @@ window.React = React; // export for http://fb.me/react-devtools
 //  Flat iron director
 import director from 'director';
 
-//  Cookie manager
-var cookies = require('cookies-js');
-
 //	The API utils
 import WeatherAPIUtils from './utils/WeatherAPIUtils';
 import CalendarAPIUtils from './utils/CalendarAPIUtils';
@@ -61,11 +58,6 @@ function showApp(position) {
     console.log("Using browser geocoordinates: ", position);
     WeatherAPIUtils.getCurrentWeather(position.coords.latitude, position.coords.longitude);
 
-    //  If we have a calendarId, get data:
-    if(calendarId) {        
-        CalendarAPIUtils.getCurrentCalendarEvents(calendarId);
-    } 
-
     //  If we have a zipcode, get pollen data:
     if(zipcode){
         WeatherAPIUtils.getPollen(zipcode);
@@ -81,7 +73,7 @@ function showApp(position) {
     NewsAPIUtils.getTwitterFeed(newsUser)
 
     //	Start the app
-    React.render(<DashboardApp position={position} calendarid={calendarId} zipcode={zipcode} breakingnewsuser={newsUser} />, appElement);	
+    React.render(<DashboardApp position={position} zipcode={zipcode} breakingnewsuser={newsUser} />, appElement);	
 }
 
 /**

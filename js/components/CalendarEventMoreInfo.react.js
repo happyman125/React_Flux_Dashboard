@@ -1,5 +1,4 @@
 var React = require('react');
-var Moment = require('moment');
 
 var CalendarEventMoreInfo = React.createClass({
 

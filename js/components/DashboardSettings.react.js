@@ -1,8 +1,5 @@
 import React from 'react/addons';
 
-//  Cookie manager
-import cookies from 'cookies-js';
-
 //  The stores
 import WeatherStore from '../stores/WeatherStore';
 import CalendarStore from '../stores/CalendarStore';
@@ -122,7 +119,7 @@ class DashboardSettings extends React.Component {
     e.preventDefault();
 
     //  Update the calendar data / pollen data:
-    CalendarAPIUtils.getCurrentCalendarEvents(this.state.settings.calendarid);
+    CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
     WeatherAPIUtils.getPollen(this.state.settings.zipcode);
     
     //  Save the settings:
@@ -160,7 +157,9 @@ class DashboardSettings extends React.Component {
   _onChange() {
     this.setState({
       settings: SettingsStore.getSettings(),
-      calendarList: CalendarStore.getCalendarList() 
+      calendarList: CalendarStore.getCalendarList(),
+      auth_check_complete: CalendarStore.authCheckFinished(),
+      authorized: CalendarStore.areAuthorized()
     });
   }
 
