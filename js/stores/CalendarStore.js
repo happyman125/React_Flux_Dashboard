@@ -9,7 +9,7 @@ class CalendarStore extends Store {
 
     this.calendardata = {};
     this.calendarId = "";
-    this.calendarlist = {};
+    this.calendarlist = [];
   }
 
   getCalendarData() {
@@ -29,10 +29,15 @@ class CalendarStore extends Store {
     switch(action.actionType) {
 
       case DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS:
-        console.log('Refreshing calendar info..');
+        console.log('Refreshing calendar events..');
         this.calendardata = action.calendarData;
-        this.calendarId = action.calendarId;
-        this.calendarlist = action.calendarList;        
+        this.calendarId = action.calendarId; 
+        this.__emitChange();
+        break;
+
+      case DashboardConstants.RECIEVE_RAW_CALENDAR_LIST:
+        console.log('Refreshing calendar lists..');
+        this.calendarlist = action.calendarList;
         this.__emitChange();
         break;
 

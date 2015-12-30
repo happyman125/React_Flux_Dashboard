@@ -9,6 +9,13 @@ var CalendarActions = {
       calendarData: calendarData,
       calendarId: calendarId
     });
+  },
+
+  recieveCalendarList: function(calendarList) {
+    AppDispatcher.dispatch({
+      actionType: DashboardConstants.RECIEVE_RAW_CALENDAR_LIST,
+      calendarList: calendarList
+    });
   }
 
 };

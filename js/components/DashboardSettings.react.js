@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React from 'react/addons';
 
 //  Cookie manager
 import cookies from 'cookies-js';
@@ -13,13 +13,16 @@ import CalendarAPIUtils from '../utils/CalendarAPIUtils';
 import WeatherAPIUtils from '../utils/WeatherAPIUtils';
 import SettingsUtils from '../utils/SettingsUtils';
 
-class DashboardSettings extends Component {
+class DashboardSettings extends React.Component {
   
   constructor(){
     super();
 
     //  Set initial state:
-    this.state = SettingsStore.getSettings();
+    this.state = {
+      settings: SettingsStore.getSettings(),
+      calendarList: CalendarStore.getCalendarList() 
+    };
 
     //  Bind our events:
     this._onChange = this._onChange.bind(this);
@@ -44,6 +47,9 @@ class DashboardSettings extends Component {
 
   render() {
 
+    //  Shorten the calendarlist name for now:
+    var calendarList = this.state.calendarList;
+
     return (
       <div className="container">
         <div className="row">
@@ -53,7 +59,11 @@ class DashboardSettings extends Component {
 
               <div className="form-group">
                 <label htmlFor="calendarId">Calendar to display</label>
-                <input id="calendarId" value={this.state.calendarid} onChange={this._onCalendarIdChange} type="text" className="form-control" placeholder="Enter your calendarId" />
+                <select id="calendarIdTest" className="form-control" value={this.state.settings.calendarid} onChange={this._onCalendarIdChange}>
+                  {calendarList.map(function(cal) {
+                    return <option key={cal.id} value={cal.id}>{cal.summary}</option>;
+                  })}
+                </select>
               </div>
 
               <div className="form-group">
@@ -74,7 +84,7 @@ class DashboardSettings extends Component {
 
               <div className="form-group">
                 <label htmlFor="zipcode">Zipcode for pollen information</label>
-                <input id="zipcode" value={this.state.zipcode} onChange={this._onZipcodeChange} type="text" className="form-control" placeholder="Enter zipcode" />
+                <input id="zipcode" value={this.state.settings.zipcode} onChange={this._onZipcodeChange} type="text" className="form-control" placeholder="Enter zipcode" />
               </div>
 
               <div className="form-group">
@@ -109,26 +119,39 @@ class DashboardSettings extends Component {
     e.preventDefault();
 
     //  Update the calendar data / pollen data:
-    CalendarAPIUtils.getCurrentCalendarEvents(this.state.calendarid);
-    WeatherAPIUtils.getPollen(this.state.zipcode);
+    CalendarAPIUtils.getCurrentCalendarEvents(this.state.settings.calendarid);
+    WeatherAPIUtils.getPollen(this.state.settings.zipcode);
     
     //  Save the settings:
-    SettingsUtils.saveSettings(this.state);
+    SettingsUtils.saveSettings(this.state.settings);
 
     //  Navigate to the main page
     window.location.hash = "#/";
   }
 
   _onCalendarIdChange(event){
-    this.setState({calendarid: event.target.value});
+    //  Using new Immutability helpers from 
+    //  https://facebook.github.io/react/docs/update.html
+    var newState = React.addons.update(this.state, {
+      settings: {calendarid: {$set: event.target.value}}
+    });
+    this.setState(newState);
   }
 
   _onZipcodeChange(event){
-    this.setState({zipcode: event.target.value});
+    //  Using new Immutability helpers from 
+    //  https://facebook.github.io/react/docs/update.html
+    var newState = React.addons.update(this.state, {
+      settings: {zipcode: {$set: event.target.value}}
+    });
+    this.setState(newState);
   }
 
   _onChange() {
-    this.setState(SettingsStore.getSettings());
+    this.setState({
+      settings: SettingsStore.getSettings(),
+      calendarList: CalendarStore.getCalendarList() 
+    });
   }
 
 }

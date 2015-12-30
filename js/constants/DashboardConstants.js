@@ -4,8 +4,9 @@ module.exports = keyMirror({
   RECIEVE_RAW_WEATHER: null,
   RECIEVE_RAW_POLLEN: null,
   RECIEVE_RAW_CALENDAR_EVENTS: null,
+  RECIEVE_RAW_CALENDAR_LIST: null,
   RECIEVE_RAW_NEWS_EVENTS: null,
+  RECIEVE_SETTINGS: null,
   SHOW_SETTINGS: null,
-  SHOW_HOME: null,
-  RECIEVE_SETTINGS: null
+  SHOW_HOME: null
 });
