@@ -14,6 +14,13 @@ var CalendarActions = {
     });
   },
 
+  recieveCalendarAuthCheckResult: function recieveCalendarAuthCheckResult(authorized) {
+    AppDispatcher.dispatch({
+      actionType: DashboardConstants.RECIEVE_CALENDAR_AUTH_CHECK_RESULT,
+      authorized: authorized
+    });
+  },
+
   recieveCalendarList: function recieveCalendarList(calendarList) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_CALENDAR_LIST,
@@ -646,7 +653,9 @@ var DashboardSettings = (function (_React$Component) {
     //  Set initial state:
     this.state = {
       settings: _storesSettingsStore2['default'].getSettings(),
-      calendarList: _storesCalendarStore2['default'].getCalendarList()
+      calendarList: _storesCalendarStore2['default'].getCalendarList(),
+      auth_check_complete: _storesCalendarStore2['default'].authCheckFinished(),
+      authorized: _storesCalendarStore2['default'].areAuthorized()
     };
 
     //  Bind our events:
@@ -681,7 +690,7 @@ var DashboardSettings = (function (_React$Component) {
 
       return _reactAddons2['default'].createElement('div', { className: 'container' }, _reactAddons2['default'].createElement('div', { className: 'row' }, _reactAddons2['default'].createElement('h1', null, 'Dashboard settings'), _reactAddons2['default'].createElement('div', { className: 'col-md-6' }, _reactAddons2['default'].createElement('form', null, _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'calendarId' }, 'Calendar to display'), _reactAddons2['default'].createElement('select', { id: 'calendarIdTest', className: 'form-control', value: this.state.settings.calendarid, onChange: this._onCalendarIdChange }, calendarList.map(function (cal) {
         return _reactAddons2['default'].createElement('option', { key: cal.id, value: cal.id }, cal.summary);
-      }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'weathersource' }, 'Get weather forecast from'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radYahoo', name: 'weathersource', value: 'Yahoo' }), 'Yahoo')), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radForecastio', name: 'weathersource', value: 'Forecastio' }), 'Forecast.io'))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'zipcode' }, 'Zipcode for pollen information'), _reactAddons2['default'].createElement('input', { id: 'zipcode', value: this.state.settings.zipcode, onChange: this._onZipcodeChange, type: 'text', className: 'form-control', placeholder: 'Enter zipcode' })), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', null, 'Location data'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'browser' }), 'Use the browser')), _reactAddons2['default'].createElement('div', { className: 'radio inline-radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'staticLocation' }), 'Always use this location:'), ' ', _reactAddons2['default'].createElement('input', { id: 'staticLocation', type: 'text', className: 'form-control', placeholder: 'Enter location coordinates' }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('button', { className: 'btn btn-primary', onClick: this.handleSave }, 'Save'), ' ', _reactAddons2['default'].createElement('a', { href: '#/', className: 'btn btn-default' }, 'Cancel'))))));
+      })), _reactAddons2['default'].createElement('button', { className: 'btn btn-default', onClick: this.handleAuth }, 'Authorize')), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'weathersource' }, 'Get weather forecast from'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radYahoo', name: 'weathersource', value: 'Yahoo' }), 'Yahoo')), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radForecastio', name: 'weathersource', value: 'Forecastio' }), 'Forecast.io'))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'zipcode' }, 'Zipcode for pollen information'), _reactAddons2['default'].createElement('input', { id: 'zipcode', value: this.state.settings.zipcode, onChange: this._onZipcodeChange, type: 'text', className: 'form-control', placeholder: 'Enter zipcode' })), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', null, 'Location data'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'browser' }), 'Use the browser')), _reactAddons2['default'].createElement('div', { className: 'radio inline-radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'staticLocation' }), 'Always use this location:'), ' ', _reactAddons2['default'].createElement('input', { id: 'staticLocation', type: 'text', className: 'form-control', placeholder: 'Enter location coordinates' }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('button', { className: 'btn btn-primary', onClick: this.handleSave }, 'Save'), ' ', _reactAddons2['default'].createElement('a', { href: '#/', className: 'btn btn-default' }, 'Cancel'))))));
     }
   }, {
     key: 'handleSave',
@@ -697,6 +706,15 @@ var DashboardSettings = (function (_React$Component) {
 
       //  Navigate to the main page
       window.location.hash = "#/";
+    }
+  }, {
+    key: 'handleAuth',
+    value: function handleAuth(e) {
+      console.log("In handleAuth");
+      e.preventDefault();
+
+      console.log("Calling calendar utils...");
+      _utilsCalendarAPIUtils2['default'].handleCalendarAuthClick(e);
     }
   }, {
     key: '_onCalendarIdChange',
@@ -1171,6 +1189,7 @@ module.exports = keyMirror({
   RECIEVE_RAW_POLLEN: null,
   RECIEVE_RAW_CALENDAR_EVENTS: null,
   RECIEVE_RAW_CALENDAR_LIST: null,
+  RECIEVE_CALENDAR_AUTH_CHECK_RESULT: null,
   RECIEVE_RAW_NEWS_EVENTS: null,
   RECIEVE_SETTINGS: null,
   SHOW_SETTINGS: null,
@@ -1260,6 +1279,8 @@ var CalendarStore = (function (_Store) {
     this.calendardata = {};
     this.calendarId = "";
     this.calendarlist = [];
+    this.gapi_authorized = false;
+    this.auth_check_finished = false;
   }
 
   _createClass(CalendarStore, [{
@@ -1278,6 +1299,16 @@ var CalendarStore = (function (_Store) {
       return this.calendarlist;
     }
   }, {
+    key: 'authCheckFinished',
+    value: function authCheckFinished() {
+      return this.auth_check_finished;
+    }
+  }, {
+    key: 'areAuthorized',
+    value: function areAuthorized() {
+      return this.gapi_authorized;
+    }
+  }, {
     key: '__onDispatch',
     value: function __onDispatch(action) {
 
@@ -1293,6 +1324,21 @@ var CalendarStore = (function (_Store) {
         case _constantsDashboardConstants2['default'].RECIEVE_RAW_CALENDAR_LIST:
           console.log('Refreshing calendar lists..');
           this.calendarlist = action.calendarList;
+          this.__emitChange();
+          break;
+
+        case _constantsDashboardConstants2['default'].RECIEVE_CALENDAR_AUTH_CHECK_RESULT:
+          this.auth_check_finished = true;
+          this.gapi_authorized = action.authorized;
+
+          console.log("GAPI auth check complete");
+
+          if (action.authorized) {
+            console.log("GAPI successfully authorized");
+          } else {
+            console.log("GAPI NOT authorized");
+          }
+
           this.__emitChange();
           break;
 
@@ -1837,7 +1883,19 @@ var CalendarAPIUtils = (function () {
                 'client_id': this.client_id,
                 'scope': this.scopes,
                 'immediate': true
-            }, this.handleCalendarAuthResult);
+            }, utils.handleCalendarAuthResult);
+        }
+
+        /* Initiate auth flow in response to user clicking authorize button. */
+    }, {
+        key: 'handleCalendarAuthClick',
+        value: function handleCalendarAuthClick(event) {
+            gapi.auth.authorize({
+                'client_id': this.client_id,
+                'scope': this.scopes,
+                'immediate': false
+            }, utils.handleCalendarAuthResult);
+            return false;
         }
 
         /* Handle the google API authorization response */
@@ -1846,7 +1904,7 @@ var CalendarAPIUtils = (function () {
         value: function handleCalendarAuthResult(authResult) {
 
             if (authResult && !authResult.error) {
-                console.log("GAPI successfully authorized");
+                _actionsCalendarActions2['default'].recieveCalendarAuthCheckResult(true);
 
                 // Load the calendar API ...
                 gapi.client.load('calendar', 'v3', function () {
@@ -1859,9 +1917,9 @@ var CalendarAPIUtils = (function () {
                     //  this.getCalendarEvents(calendarid);
                 });
             } else {
-                    console.log("GAPI NOT authorized");
                     // We're not authorized yet.  We should
                     // allow the user to authorize
+                    _actionsCalendarActions2['default'].recieveCalendarAuthCheckResult(false);
                 }
         }
     }]);

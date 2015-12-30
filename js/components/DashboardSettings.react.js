@@ -21,7 +21,9 @@ class DashboardSettings extends React.Component {
     //  Set initial state:
     this.state = {
       settings: SettingsStore.getSettings(),
-      calendarList: CalendarStore.getCalendarList() 
+      calendarList: CalendarStore.getCalendarList(),
+      auth_check_complete: CalendarStore.authCheckFinished(),
+      authorized: CalendarStore.areAuthorized()
     };
 
     //  Bind our events:
@@ -57,13 +59,14 @@ class DashboardSettings extends React.Component {
           <div className="col-md-6">
             <form>
 
-              <div className="form-group">
-                <label htmlFor="calendarId">Calendar to display</label>
+              <div className="form-group">                
+                <label htmlFor="calendarId">Calendar to display</label>                
                 <select id="calendarIdTest" className="form-control" value={this.state.settings.calendarid} onChange={this._onCalendarIdChange}>
                   {calendarList.map(function(cal) {
                     return <option key={cal.id} value={cal.id}>{cal.summary}</option>;
                   })}
                 </select>
+                <button className="btn btn-default" onClick={this.handleAuth}>Authorize</button>
               </div>
 
               <div className="form-group">
@@ -127,6 +130,14 @@ class DashboardSettings extends React.Component {
 
     //  Navigate to the main page
     window.location.hash = "#/";
+  }
+
+  handleAuth(e) {
+    console.log("In handleAuth");
+    e.preventDefault();
+
+    console.log("Calling calendar utils...");
+    CalendarAPIUtils.handleCalendarAuthClick(e);
   }
 
   _onCalendarIdChange(event){

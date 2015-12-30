@@ -66,15 +66,26 @@ class CalendarAPIUtils {
             'client_id': this.client_id,
             'scope': this.scopes,
             'immediate': true
-          }, this.handleCalendarAuthResult);
+          }, utils.handleCalendarAuthResult);
+    }
+
+    /* Initiate auth flow in response to user clicking authorize button. */
+    handleCalendarAuthClick(event) {
+        gapi.auth.authorize(
+          {
+            'client_id': this.client_id,
+            'scope': this.scopes,
+            'immediate': false
+          }, utils.handleCalendarAuthResult);
+        return false;
     }
 
     /* Handle the google API authorization response */
     handleCalendarAuthResult(authResult) {
 
         if (authResult && !authResult.error) {
-            console.log("GAPI successfully authorized");
-
+            CalendarActions.recieveCalendarAuthCheckResult(true);
+            
             // Load the calendar API ...
             gapi.client.load('calendar', 'v3', function(){
 
@@ -87,9 +98,9 @@ class CalendarAPIUtils {
             });
 
         } else {
-            console.log("GAPI NOT authorized");            
             // We're not authorized yet.  We should
             // allow the user to authorize
+            CalendarActions.recieveCalendarAuthCheckResult(false);
         }
     }
 }

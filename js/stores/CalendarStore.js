@@ -10,6 +10,8 @@ class CalendarStore extends Store {
     this.calendardata = {};
     this.calendarId = "";
     this.calendarlist = [];
+    this.gapi_authorized = false;
+    this.auth_check_finished = false;
   }
 
   getCalendarData() {
@@ -22,6 +24,14 @@ class CalendarStore extends Store {
 
   getCalendarList() {
     return this.calendarlist;
+  }
+
+  authCheckFinished() {
+    return this.auth_check_finished;
+  }
+
+  areAuthorized() {
+    return this.gapi_authorized;
   }
 
   __onDispatch(action) {
@@ -38,6 +48,22 @@ class CalendarStore extends Store {
       case DashboardConstants.RECIEVE_RAW_CALENDAR_LIST:
         console.log('Refreshing calendar lists..');
         this.calendarlist = action.calendarList;
+        this.__emitChange();
+        break;
+
+      case DashboardConstants.RECIEVE_CALENDAR_AUTH_CHECK_RESULT:
+        this.auth_check_finished = true;
+        this.gapi_authorized = action.authorized;
+
+        console.log("GAPI auth check complete");
+
+        if(action.authorized){
+          console.log("GAPI successfully authorized");
+        }
+        else{
+          console.log("GAPI NOT authorized");
+        }
+
         this.__emitChange();
         break;
 
