@@ -822,10 +822,10 @@ var NewsDisplay = React.createClass({
       return null;
     }
 
-    //  Clean up the text (remove the links)
+    //  Clean up the text (remove the links - both http and https)
     var newsText = newsItem.Text;
-    if (newsText.indexOf("http:")) {
-      newsText = newsText.substring(0, newsText.indexOf("http:"));
+    if (newsText.indexOf("http")) {
+      newsText = newsText.substring(0, newsText.indexOf("http"));
     }
 
     //  Set the breaking news image:  
