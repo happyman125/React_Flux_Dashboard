@@ -27,6 +27,8 @@ class DashboardSettings extends React.Component {
     this._onChange = this._onChange.bind(this);
     this._onZipcodeChange = this._onZipcodeChange.bind(this);
     this._onCalendarIdChange = this._onCalendarIdChange.bind(this);
+    this._onWeatherSourceChange = this._onWeatherSourceChange.bind(this);
+    this._onLocationSourceChange = this._onLocationSourceChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
@@ -47,7 +49,19 @@ class DashboardSettings extends React.Component {
   render() {
 
     //  Shorten the calendarlist name for now:
-    var calendarList = this.state.calendarList;
+    let calendarList = [{id: "unknown", summary: "Loading..."}];
+    let authButton = {};
+
+    //  If the auth check is complete and the user IS authorized,
+    //  show the dropdown list of calendars to choose from:
+    if(this.state.auth_check_complete && this.state.authorized){
+      calendarList = this.state.calendarList;
+    }
+
+    //  If the auth check is complete and the user isn't authorized, show the 'authorize' button
+    if(this.state.auth_check_complete && !this.state.authorized){
+      authButton = <button className="btn btn-default" onClick={this.handleAuth}>Authorize</button>;
+    }
 
     return (
       <div className="container">
@@ -63,20 +77,21 @@ class DashboardSettings extends React.Component {
                     return <option key={cal.id} value={cal.id}>{cal.summary}</option>;
                   })}
                 </select>
-                <button className="btn btn-default" onClick={this.handleAuth}>Authorize</button>
+
+                {authButton}
               </div>
 
               <div className="form-group">
                 <label htmlFor="weathersource">Get weather forecast from</label>
                 <div className="radio">
                   <label>
-                    <input type="radio" id="radYahoo" name="weathersource" value="Yahoo"/>
+                    <input type="radio" id="radYahoo" name="weathersource" value="Yahoo" onChange={this._onWeatherSourceChange} checked={this.state.settings.weathersource === "Yahoo"} />
                     Yahoo
                   </label>
                 </div>
                 <div className="radio">
                   <label>
-                    <input type="radio" id="radForecastio" name="weathersource" value="Forecastio"/>
+                    <input type="radio" id="radForecastio" name="weathersource" value="Forecastio" onChange={this._onWeatherSourceChange} checked={this.state.settings.weathersource === "Forecastio"}/>
                     Forecast.io
                   </label>
                 </div>
@@ -91,13 +106,13 @@ class DashboardSettings extends React.Component {
                 <label>Location data</label>
                 <div className="radio">
                   <label>
-                    <input type="radio" name="locationsource" value="browser"/>
+                    <input type="radio" name="locationsource" value="browser" onChange={this._onLocationSourceChange} checked={this.state.settings.locationsource === "browser"}/>
                     Use the browser
                   </label>
                 </div>
                 <div className="radio inline-radio">
                   <label>
-                    <input type="radio" name="locationsource" value="staticLocation"/>
+                    <input type="radio" name="locationsource" value="staticLocation" onChange={this._onLocationSourceChange} checked={this.state.settings.locationsource === "staticLocation"}/>
                     Always use this location:
                   </label>
                   &nbsp;<input id="staticLocation" type="text" className="form-control" placeholder="Enter location coordinates" />
@@ -151,6 +166,26 @@ class DashboardSettings extends React.Component {
     var newState = React.addons.update(this.state, {
       settings: {zipcode: {$set: event.target.value}}
     });
+    this.setState(newState);
+  }
+
+  _onWeatherSourceChange(event){
+    //  Using new Immutability helpers from 
+    //  https://facebook.github.io/react/docs/update.html
+    var newState = React.addons.update(this.state, {
+      settings: {weathersource: {$set: event.target.value}}
+    });
+
+    this.setState(newState);
+  }
+
+  _onLocationSourceChange(event){
+    //  Using new Immutability helpers from 
+    //  https://facebook.github.io/react/docs/update.html
+    var newState = React.addons.update(this.state, {
+      settings: {locationsource: {$set: event.target.value}}
+    });
+
     this.setState(newState);
   }
 

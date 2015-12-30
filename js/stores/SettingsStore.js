@@ -14,6 +14,8 @@ class SettingsStore extends Store {
 		this.settings.calendarid = "";
 		this.settings.zipcode = "";
 		this.settings.newsuser = "cnnbrk";
+		this.settings.locationsource = "browser";
+		this.settings.locationsource_staticlocation = "";
 	}
 
 	getSettings() {

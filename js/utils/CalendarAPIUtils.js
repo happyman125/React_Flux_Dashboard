@@ -58,14 +58,8 @@ class CalendarAPIUtils {
 
         //  Execute the request and get the response
         request.execute(function(resp) {
-
-            if (resp.items.length > 0) {
-                //  Call the action to receive the data:
-                CalendarActions.recieveCalendarData(resp, calendarId);
-            } 
-            else{
-                console.log("There was a problem getting the calendar events");
-            }
+            //  Call the action to receive the data:
+            CalendarActions.recieveCalendarData(resp, calendarId);
         });
     }
 
@@ -104,7 +98,6 @@ class CalendarAPIUtils {
 
                 //  Get the latest calendar information if we have a calendar selected:
                 let settings = SettingsStore.getSettings();
-                console.log("Evaluating if we should load events: ", settings);
                 if(settings.calendarid != "") {
                   utils.getCalendarEvents(settings.calendarid);
                 }
