@@ -47,14 +47,17 @@ class CalendarAPIUtils {
         let timeMax = tempTime.toISOString();
 
         //  Create the request
-        let request = gapi.client.calendar.events.list({
+        let requestParams = {
           'calendarId': calendarId, /* Can be 'primary' or a given calendarid */
           'timeMin': timeMin,
           'timeMax': timeMax,
           'showDeleted': false,
           'singleEvents': true,
           'orderBy': 'startTime'
-        });
+        };
+
+        console.log("Requesting calendar events: ", requestParams);
+        let request = gapi.client.calendar.events.list(requestParams);
 
         //  Execute the request and get the response
         request.execute(function(resp) {
