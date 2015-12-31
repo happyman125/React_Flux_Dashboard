@@ -7,7 +7,32 @@ class WeatherStore extends Store {
   constructor(dispatcher){
     super(dispatcher);
 
-    this.weatherdata = {};
+    this.weatherdata = {
+      /*
+
+      currently: {
+        temperature: 0,
+        sunrise: "",
+        sunset: "",
+        humidity: 0,
+        windspeed: 0,
+        wind_direction: 0,
+        apparent_temp: 0,
+        code: 0,
+        summary: ""
+      }, 
+      daily: { 
+        data: []
+      },
+
+      /* Hourly is deprecated */
+      /*
+      hourly: {
+        summary: "",
+        data: []} 
+      */
+    };
+
     this.pollendata = {};
     this.pollenZipcode = "";
   }
