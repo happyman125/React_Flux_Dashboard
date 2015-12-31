@@ -32,7 +32,9 @@ var NewsDisplay = React.createClass({
 
     //  Set the breaking news image:    
     var newsImageStyle = {      
-      backgroundImage: 'url(' + newsItem.MediaUrl + ')'
+      backgroundImage: 'url(' + newsItem.MediaUrl + ')',
+      backgroundSize: 'contain',
+      backgroundPosition: '0 0'
     };
 
     //  Set the time format:

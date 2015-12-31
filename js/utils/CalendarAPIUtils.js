@@ -61,6 +61,8 @@ class CalendarAPIUtils {
 
         //  Execute the request and get the response
         request.execute(function(resp) {
+            //  If we get a code == 403 here, should we attempt to re-authenticate or something?
+
             //  Call the action to receive the data:
             CalendarActions.recieveCalendarData(resp, calendarId);
         });
