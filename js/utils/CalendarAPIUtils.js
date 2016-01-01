@@ -65,9 +65,14 @@ class CalendarAPIUtils {
         //  Execute the request and get the response
         request.execute(function(resp) {
             //  If we get a code == 403 here, should we attempt to re-authenticate or something?
-
-            //  Call the action to receive the data:
-            CalendarActions.recieveCalendarData(resp, calendarId);
+            if(resp.code == 403)
+            {
+                console.log("Got a strange response: ", resp, " - Trying to re-authenticate");
+                utils.authorizeCalendar();
+            }else{
+                //  Call the action to receive the data:
+                CalendarActions.recieveCalendarData(resp, calendarId);
+            }
         });
     }
 
