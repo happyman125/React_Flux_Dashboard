@@ -16,9 +16,6 @@ class CalendarAPIUtils {
         // Your Client ID and API key can be retrieved from your project in the Google
         // Developer Console, https://console.developers.google.com
         this.client_id = '737977399720-tj5tl7jvqmt5jh3kp72j02i62uetlkkn.apps.googleusercontent.com';
-        //  Updated to include api_key (both this article: https://developers.google.com/api-client-library/javascript/features/authentication
-        //  and this SO answer http://stackoverflow.com/a/9410253/19020 mention this )
-        this.api_key = 'AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM';
         this.scopes = ["https://www.googleapis.com/auth/calendar.readonly"];
     }
 
@@ -78,8 +75,6 @@ class CalendarAPIUtils {
 
     /* Get authorization from the google API for the given scope(s) */
     authorizeCalendar() {
-        gapi.client.setApiKey(utils.api_key);
-
         gapi.auth.authorize(
           {
             'client_id': this.client_id,
@@ -90,8 +85,6 @@ class CalendarAPIUtils {
 
     /* Initiate auth flow in response to user clicking authorize button. */
     handleCalendarAuthClick(event) {
-        gapi.client.setApiKey(utils.api_key);
-
         gapi.auth.authorize(
           {
             'client_id': this.client_id,
