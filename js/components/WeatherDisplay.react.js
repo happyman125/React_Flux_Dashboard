@@ -1,5 +1,5 @@
-var React = require('react');
-var Moment = require('moment');
+import React from 'react';
+import Moment from 'moment';
 
 //  The components
 var WeatherForecastHour = require('./WeatherForecastHour.react');
@@ -19,12 +19,10 @@ var WeatherDisplay = React.createClass({
     
     var temperature = 0;
     var windspeed = 0;
-    var summary = "Loading...";
     var forecastdays = [];
     var forecasticon = "";
     var alerts = []
     var feelslike = 0;
-    var nextfewhours = [];
     var sunrise = 0;
     var formattedSunrise = "";
     var sunset = 0;
@@ -34,29 +32,31 @@ var WeatherDisplay = React.createClass({
 
     if(this.props.weather.currently) 
     {
-      temperature = Math.round(this.props.weather.currently.temperature);
-      windspeed = Math.round(this.props.weather.currently.windSpeed);
-      summary = this.props.weather.hourly.summary;
-      forecastdays = this.props.weather.daily.data;
+      //  Format the current weather summary:
       forecasticon = this.props.weather.currently.icon;
+      temperature = Math.round(this.props.weather.currently.temperature);
+      
+      windspeed = Math.round(this.props.weather.currently.windSpeed);
+      formattedHumidity = Math.floor((this.props.weather.currently.humidity * 100)); 
+      formattedHumidity = formattedHumidity + "%"
       feelslike = Math.round(this.props.weather.currently.apparentTemperature);
+
       sunrise = this.props.weather.daily.data[0].sunriseTime;
       formattedSunrise = Moment(sunrise * 1000).format("h:mma");
       sunset = this.props.weather.daily.data[0].sunsetTime;
       formattedSunset = Moment(sunset * 1000).format("h:mma");
-      formattedHumidity = Math.floor((this.props.weather.currently.humidity * 100)); 
-      formattedHumidity = formattedHumidity + "%"
 
+      forecastdays = this.props.weather.daily.data;
+
+      //  If we have alerts, use them
       if(this.props.weather.alerts != null){
         alerts = this.props.weather.alerts;
       }
 
-      //  Get the next few hours to display:
-      nextfewhours = this.props.weather.hourly.data.slice(0,10);
-      
       //  Set the current temperature color:
       var tempColor = WeatherAPIUtils.getTempColor(temperature);
 
+      //  Set the feels like color (if it's different from the current temp):
       var feelsLikeStyles = {};
       if(temperature != feelslike)
       {
@@ -86,14 +86,6 @@ var WeatherDisplay = React.createClass({
           <div id="sunrise-sunset">
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
           </div>
-          
-          <table id="hourlyforecast" className="table table-condensed">
-            <tbody>
-              {nextfewhours.map(function(forecasthour) {
-                return <WeatherForecastHour key={forecasthour.time} forecast={forecasthour}/>;
-              })}
-            </tbody>
-          </table>
 
           <WeatherForecast forecastdays={forecastdays} />
 
