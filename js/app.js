@@ -56,7 +56,7 @@ function showApp(position) {
 
     //  We have coordinates -- get the weather data
     console.log("Using browser geocoordinates: ", position);
-    WeatherAPIUtils.getCurrentWeather(position.coords.latitude, position.coords.longitude);
+    WeatherAPIUtils.getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
 
     //  If we have a zipcode, get pollen data:
     if(zipcode){

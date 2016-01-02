@@ -226,7 +226,7 @@ function showApp(position) {
 
     //  We have coordinates -- get the weather data
     console.log("Using browser geocoordinates: ", position);
-    _utilsWeatherAPIUtils2['default'].getCurrentWeather(position.coords.latitude, position.coords.longitude);
+    _utilsWeatherAPIUtils2['default'].getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
 
     //  If we have a zipcode, get pollen data:
     if (zipcode) {
@@ -499,7 +499,7 @@ var DashboardHome = _react2['default'].createClass({
 
   tick: function tick() {
     //  Get the latest weather:
-    WeatherAPIUtils.getCurrentWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+    WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
     WeatherAPIUtils.getPollen(this.props.zipcode);
 
     //  Get the latest calendar information if the API is loaded,
@@ -1836,25 +1836,26 @@ var WeatherStore = (function (_Store) {
 
     this.weatherdata = {
       /*
-        currently: {
+      currently: {
+        icon: "",
         temperature: 0,
-        sunrise: "",
-        sunset: "",
-        humidity: 0,
         windspeed: 0,
         wind_direction: 0,
-        apparent_temp: 0,
-        code: 0,
-        summary: ""
+        humidity: 0,
+        apparent_temp: 0
+        sunrise: "",
+        sunset: "",        
       }, 
       daily: { 
-        data: []
+        data: [{
+          date: "",
+          icon: "",
+          summary: "",
+          high: 0,
+          low: 0,
+          }]
       },
-        /* Hourly is deprecated */
-      /*
-      hourly: {
-        summary: "",
-        data: []} 
+      alerts: []
       */
     };
 
@@ -2172,64 +2173,121 @@ var SettingsUtils = (function () {
 module.exports = new SettingsUtils();
 
 },{"../actions/SettingsActions":4,"cookies-js":33}],32:[function(require,module,exports){
-"use strict";
+//  Actions
+'use strict';
 
-var WeatherActions = require('../actions/WeatherActions');
+var _createClass = (function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }return function (Constructor, protoProps, staticProps) {
+        if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+    };
+})();
 
-module.exports = {
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
 
-    getCurrentWeather: function getCurrentWeather(latitude, longitude) {
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
 
-        //  The base url for the service - change this to your service location:
-        //  You can get this microservice for free at https://github.com/danesparza/forecast-service
-        var baseurl = "http://service.cagedtornado.com:3030/forecast/";
+var _actionsWeatherActions = require('../actions/WeatherActions');
 
-        //  Get the weather for the given lat/long coordinates
-        var url = baseurl + latitude + "," + longitude;
+var _actionsWeatherActions2 = _interopRequireDefault(_actionsWeatherActions);
 
-        $.ajax(url).done((function (data) {
-            //	Call the action to receive the data:
-            WeatherActions.recieveWeatherData(data);
-        }).bind(this)).fail(function () {
-            //	Something bad happened
-            console.log("There was a problem getting weather");
-        });
-    },
+var WeatherAPIUtils = (function () {
+    function WeatherAPIUtils() {
+        _classCallCheck(this, WeatherAPIUtils);
 
-    getPollen: function getPollen(zipcode) {
-
-        //  The base url for the service - change this to your service location:
-        //  You can get this microservice for free at https://github.com/danesparza/forecast-service
-        var baseurl = "http://service.cagedtornado.com:3030/pollen/";
-
-        //  Get the pollen for the given zipcode
-        var url = baseurl + zipcode;
-
-        $.ajax(url).done((function (data) {
-            //  Call the action to receive the data:
-            WeatherActions.recievePollenData(data, zipcode);
-        }).bind(this)).fail(function () {
-            //  Something bad happened
-            console.log("There was a problem getting pollen data");
-        });
-    },
-
-    /* Get the color for the given temperature */
-    getTempColor: function getTempColor(temperature) {
-
-        //  Create a new spectrum:
-        var rainbow = new Rainbow();
-
-        //  Set our spectrum colors:
-        rainbow.setSpectrum("FFC0E4", "D0338D", "33D0C4", "337DD0", "33D035", "DAD82D", "F08E00", "D03333");
-
-        //  Get the color for the given temperature:
-        var appColor = "#" + rainbow.colorAt(temperature);
-
-        return appColor;
+        //  We should try formatting this with an ES6 template string.  See
+        //  https://babeljs.io/docs/learn-es2015/#template-strings for more info
+        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")';
     }
 
-};
+    _createClass(WeatherAPIUtils, [{
+        key: 'getCurrentForecastIOWeather',
+        value: function getCurrentForecastIOWeather(latitude, longitude) {
+            //  Deprecated.  We will be calling forecastio directly (and storing the API key in settings)
+
+            //  The base url for the service - change this to your service location:
+            //  You can get this microservice for free at https://github.com/danesparza/forecast-service
+            var baseurl = "http://service.cagedtornado.com:3030/forecast/";
+
+            //  Get the weather for the given lat/long coordinates
+            var url = baseurl + latitude + "," + longitude;
+
+            $.ajax(url).done((function (data) {
+                //  Convert the data to the common weather format
+
+                //	Call the action to receive the data:
+                _actionsWeatherActions2['default'].recieveWeatherData(data);
+            }).bind(this)).fail(function () {
+                //	Something bad happened
+                console.log("There was a problem getting weather");
+            });
+        }
+    }, {
+        key: 'getCurrentYahooWeather',
+        value: function getCurrentYahooWeather(latitude, longitude) {
+            //  Format the yahoo url
+            var url = this.yahoobaseurl;
+
+            $.ajax(url).done((function (data) {
+                //  Convert the data to the common weather format
+
+                //  Call the action to receive the data:
+                //  WeatherActions.recieveWeatherData(data);
+            }).bind(this)).fail(function () {
+                //  Something bad happened
+                console.log("There was a problem getting weather");
+            });
+        }
+    }, {
+        key: 'getPollen',
+        value: function getPollen(zipcode) {
+            //  The base url for the service - change this to your service location:
+            //  You can get this microservice for free at https://github.com/danesparza/forecast-service
+            var baseurl = "http://service.cagedtornado.com:3030/pollen/";
+
+            //  Get the pollen for the given zipcode
+            var url = baseurl + zipcode;
+
+            $.ajax(url).done((function (data) {
+                //  Call the action to receive the data:
+                _actionsWeatherActions2['default'].recievePollenData(data, zipcode);
+            }).bind(this)).fail(function () {
+                //  Something bad happened
+                console.log("There was a problem getting pollen data");
+            });
+        }
+
+        /* Get the color for the given temperature */
+    }, {
+        key: 'getTempColor',
+        value: function getTempColor(temperature) {
+
+            //  Create a new spectrum:
+            var rainbow = new Rainbow();
+
+            //  Set our spectrum colors:
+            rainbow.setSpectrum("FFC0E4", "D0338D", "33D0C4", "337DD0", "33D035", "DAD82D", "F08E00", "D03333");
+
+            //  Get the color for the given temperature:
+            var appColor = "#" + rainbow.colorAt(temperature);
+
+            return appColor;
+        }
+    }]);
+
+    return WeatherAPIUtils;
+})();
+
+module.exports = new WeatherAPIUtils();
 
 },{"../actions/WeatherActions":5}],33:[function(require,module,exports){
 /*

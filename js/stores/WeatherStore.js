@@ -9,27 +9,27 @@ class WeatherStore extends Store {
 
     this.weatherdata = {
       /*
-
       currently: {
+        icon: "",
         temperature: 0,
-        sunrise: "",
-        sunset: "",
-        humidity: 0,
         windspeed: 0,
         wind_direction: 0,
-        apparent_temp: 0,
-        code: 0,
-        summary: ""
+        humidity: 0,
+        apparent_temp: 0
+        sunrise: "",
+        sunset: "",        
       }, 
       daily: { 
-        data: []
-      },
+        data: [{
+          date: "",
+          icon: "",
+          summary: "",
+          high: 0,
+          low: 0,
 
-      /* Hourly is deprecated */
-      /*
-      hourly: {
-        summary: "",
-        data: []} 
+        }]
+      },
+      alerts: []
       */
     };
 
