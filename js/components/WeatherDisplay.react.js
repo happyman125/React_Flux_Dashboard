@@ -1,21 +1,18 @@
-import React from 'react';
+import {Component} from 'react';
 import Moment from 'moment';
 
 //  The components
-var WeatherForecastHour = require('./WeatherForecastHour.react');
-var WeatherForecast = require('./WeatherForecast.react');
-var WeatherForecastIcon = require('./WeatherForecastIcon.react');
-var WeatherAlerts = require('./WeatherAlerts.react');
+import WeatherForecastHour from './WeatherForecastHour.react';
+import WeatherForecast from './WeatherForecast.react';
+import WeatherForecastIcon from './WeatherForecastIcon.react';
+import WeatherAlerts from './WeatherAlerts.react';
 
 //  The API utils
-var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
+import WeatherAPIUtils from '../utils/WeatherAPIUtils';
 
-var WeatherDisplay = React.createClass({
+class WeatherDisplay extends Component {
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
     var temperature = 0;
     var windspeed = 0;
@@ -93,6 +90,6 @@ var WeatherDisplay = React.createClass({
         </div>
     );
   }
-});
+}
 
-module.exports = WeatherDisplay;
+export default WeatherDisplay;

@@ -924,95 +924,163 @@ module.exports = WeatherAlerts;
 },{"moment":55,"react":228}],16:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+  var _again = true;_function: while (_again) {
+    var object = _x,
+        property = _x2,
+        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);if (parent === null) {
+        return undefined;
+      } else {
+        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+      }
+    } else if ('value' in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;if (getter === undefined) {
+        return undefined;
+      }return getter.call(receiver);
+    }
+  }
+};
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { 'default': obj };
 }
 
-var _react = require('react');
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
 
-var _react2 = _interopRequireDefault(_react);
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = require('react');
 
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
 //  The components
-var WeatherForecastHour = require('./WeatherForecastHour.react');
-var WeatherForecast = require('./WeatherForecast.react');
-var WeatherForecastIcon = require('./WeatherForecastIcon.react');
-var WeatherAlerts = require('./WeatherAlerts.react');
+
+var _WeatherForecastHourReact = require('./WeatherForecastHour.react');
+
+var _WeatherForecastHourReact2 = _interopRequireDefault(_WeatherForecastHourReact);
+
+var _WeatherForecastReact = require('./WeatherForecast.react');
+
+var _WeatherForecastReact2 = _interopRequireDefault(_WeatherForecastReact);
+
+var _WeatherForecastIconReact = require('./WeatherForecastIcon.react');
+
+var _WeatherForecastIconReact2 = _interopRequireDefault(_WeatherForecastIconReact);
+
+var _WeatherAlertsReact = require('./WeatherAlerts.react');
+
+var _WeatherAlertsReact2 = _interopRequireDefault(_WeatherAlertsReact);
 
 //  The API utils
-var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
 
-var WeatherDisplay = _react2['default'].createClass({
-  displayName: 'WeatherDisplay',
+var _utilsWeatherAPIUtils = require('../utils/WeatherAPIUtils');
 
-  /**
-   * @return {object}
-   */
-  render: function render() {
+var _utilsWeatherAPIUtils2 = _interopRequireDefault(_utilsWeatherAPIUtils);
 
-    var temperature = 0;
-    var windspeed = 0;
-    var forecastdays = [];
-    var forecasticon = "";
-    var alerts = [];
-    var feelslike = 0;
-    var sunrise = 0;
-    var formattedSunrise = "";
-    var sunset = 0;
-    var formattedSunset = "";
-    var pollendays = [];
-    var formattedHumidity = "";
+var WeatherDisplay = (function (_Component) {
+  _inherits(WeatherDisplay, _Component);
 
-    if (this.props.weather.currently) {
-      //  Format the current weather summary:
-      forecasticon = this.props.weather.currently.icon;
-      temperature = Math.round(this.props.weather.currently.temperature);
+  function WeatherDisplay() {
+    _classCallCheck(this, WeatherDisplay);
 
-      windspeed = Math.round(this.props.weather.currently.windSpeed);
-      formattedHumidity = Math.floor(this.props.weather.currently.humidity * 100);
-      formattedHumidity = formattedHumidity + "%";
-      feelslike = Math.round(this.props.weather.currently.apparentTemperature);
-
-      sunrise = this.props.weather.daily.data[0].sunriseTime;
-      formattedSunrise = (0, _moment2['default'])(sunrise * 1000).format("h:mma");
-      sunset = this.props.weather.daily.data[0].sunsetTime;
-      formattedSunset = (0, _moment2['default'])(sunset * 1000).format("h:mma");
-
-      forecastdays = this.props.weather.daily.data;
-
-      //  If we have alerts, use them
-      if (this.props.weather.alerts != null) {
-        alerts = this.props.weather.alerts;
-      }
-
-      //  Set the current temperature color:
-      var tempColor = WeatherAPIUtils.getTempColor(temperature);
-
-      //  Set the feels like color (if it's different from the current temp):
-      var feelsLikeStyles = {};
-      if (temperature != feelslike) {
-        feelsLikeStyles.color = WeatherAPIUtils.getTempColor(feelslike);
-      }
-
-      //  Set pollen information
-      if (this.props.pollen.PollenCount) {
-        pollendays = this.props.pollen.PollenCount;
-
-        //  Add the pollen data to the forecastdays
-        for (var i = pollendays.length - 1; i >= 0; i--) {
-          forecastdays[i].pollen = pollendays[i];
-        };
-      }
-    }
-
-    return _react2['default'].createElement('div', { className: 'row' }, _react2['default'].createElement('div', { id: 'temp', style: { color: tempColor } }, _react2['default'].createElement(WeatherForecastIcon, { icon: forecasticon }), ' ', temperature, '°'), _react2['default'].createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', _react2['default'].createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), _react2['default'].createElement('div', { id: 'sunrise-sunset' }, _react2['default'].createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', _react2['default'].createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), _react2['default'].createElement(WeatherForecast, { forecastdays: forecastdays }), _react2['default'].createElement(WeatherAlerts, { alerts: alerts }));
+    _get(Object.getPrototypeOf(WeatherDisplay.prototype), 'constructor', this).apply(this, arguments);
   }
-});
 
-module.exports = WeatherDisplay;
+  _createClass(WeatherDisplay, [{
+    key: 'render',
+    value: function render() {
+
+      var temperature = 0;
+      var windspeed = 0;
+      var forecastdays = [];
+      var forecasticon = "";
+      var alerts = [];
+      var feelslike = 0;
+      var sunrise = 0;
+      var formattedSunrise = "";
+      var sunset = 0;
+      var formattedSunset = "";
+      var pollendays = [];
+      var formattedHumidity = "";
+
+      if (this.props.weather.currently) {
+        //  Format the current weather summary:
+        forecasticon = this.props.weather.currently.icon;
+        temperature = Math.round(this.props.weather.currently.temperature);
+
+        windspeed = Math.round(this.props.weather.currently.windSpeed);
+        formattedHumidity = Math.floor(this.props.weather.currently.humidity * 100);
+        formattedHumidity = formattedHumidity + "%";
+        feelslike = Math.round(this.props.weather.currently.apparentTemperature);
+
+        sunrise = this.props.weather.daily.data[0].sunriseTime;
+        formattedSunrise = (0, _moment2['default'])(sunrise * 1000).format("h:mma");
+        sunset = this.props.weather.daily.data[0].sunsetTime;
+        formattedSunset = (0, _moment2['default'])(sunset * 1000).format("h:mma");
+
+        forecastdays = this.props.weather.daily.data;
+
+        //  If we have alerts, use them
+        if (this.props.weather.alerts != null) {
+          alerts = this.props.weather.alerts;
+        }
+
+        //  Set the current temperature color:
+        var tempColor = _utilsWeatherAPIUtils2['default'].getTempColor(temperature);
+
+        //  Set the feels like color (if it's different from the current temp):
+        var feelsLikeStyles = {};
+        if (temperature != feelslike) {
+          feelsLikeStyles.color = _utilsWeatherAPIUtils2['default'].getTempColor(feelslike);
+        }
+
+        //  Set pollen information
+        if (this.props.pollen.PollenCount) {
+          pollendays = this.props.pollen.PollenCount;
+
+          //  Add the pollen data to the forecastdays
+          for (var i = pollendays.length - 1; i >= 0; i--) {
+            forecastdays[i].pollen = pollendays[i];
+          };
+        }
+      }
+
+      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }));
+    }
+  }]);
+
+  return WeatherDisplay;
+})(_react.Component);
+
+exports['default'] = WeatherDisplay;
+module.exports = exports['default'];
 
 },{"../utils/WeatherAPIUtils":32,"./WeatherAlerts.react":15,"./WeatherForecast.react":17,"./WeatherForecastHour.react":20,"./WeatherForecastIcon.react":21,"moment":55,"react":228}],17:[function(require,module,exports){
 'use strict';
