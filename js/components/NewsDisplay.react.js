@@ -30,25 +30,15 @@ var NewsDisplay = React.createClass({
       newsText = newsText.substring(0, newsText.indexOf("http"));
     }
 
-    //  Set the breaking news image:    
-    var newsImageStyle = {      
-      backgroundImage: 'url(' + newsItem.MediaUrl + ')',
-      backgroundSize: 'contain',
-      backgroundPosition: '0 0'
-    };
-
     //  Set the time format:
     var formattedTime = newsCreatedTime.fromNow();
 
   	return (
-        <div id='breaking-news'>          
-          <div className="media">
-            <div className="media-left">
-              <div id='breaking-news-image' style={newsImageStyle} />
-            </div>
-            <div className="media-body">
-              <div id="breaking-news-headline"><b>Breaking news</b> {formattedTime}</div>
-              <span id="breaking-news-text">{newsText}</span>
+        <div id='breaking-news'>
+          <div id='breaking-wrapper'>
+            <img id='breaking-news-image' src={newsItem.MediaUrl} />
+            <div id='breaking-news-caption-wrapper'>
+              <div id='breaking-news-caption'><span id='breaking-news-caption-intro'>Breaking news {formattedTime}:</span> {newsText}</div>
             </div>
           </div>
         </div>

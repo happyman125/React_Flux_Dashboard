@@ -2,7 +2,6 @@ import {Component} from 'react';
 import Moment from 'moment';
 
 //  The components
-import WeatherForecastHour from './WeatherForecastHour.react';
 import WeatherForecast from './WeatherForecast.react';
 import WeatherForecastIcon from './WeatherForecastIcon.react';
 import WeatherAlerts from './WeatherAlerts.react';
