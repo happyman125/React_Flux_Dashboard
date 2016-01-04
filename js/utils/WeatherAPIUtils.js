@@ -1,3 +1,5 @@
+import Moment from 'moment';
+
 //  Actions
 import WeatherActions from '../actions/WeatherActions';
 
@@ -6,7 +8,10 @@ class WeatherAPIUtils {
     constructor() {
         //  We should try formatting this with an ES6 template string.  See 
         //  https://babeljs.io/docs/learn-es2015/#template-strings for more info 
-        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")';
+        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")&format=json';
+        
+        //  We should try formatting this with an ES6 template string as well
+        this.forecastiobaseurl = 'https://api.forecast.io/forecast/';
     }
 
     getCurrentForecastIOWeather(latitude, longitude) {
@@ -21,7 +26,8 @@ class WeatherAPIUtils {
 
         $.ajax( url )
         .done(function(data) {
-            //  Convert the data to the common weather format
+
+            let weatherdata = this.convertForecastIOToWeather(data);
 
         	//	Call the action to receive the data:
         	WeatherActions.recieveWeatherData(data);
@@ -32,6 +38,41 @@ class WeatherAPIUtils {
         });
     }
 
+    convertForecastIOToWeather(fdata){
+
+        //  Map the daily data to the common format
+        var dailyData = [];
+        fdata.daily.data.map(function(day) {
+            dailyData.push({
+                summary: day.summary,
+                date: day.time,
+                icon: day.icon,
+                high: day.temperatureMax,
+                low: day.temperatureMin
+            });
+        });
+        
+        //  Convert the rest of the data to the common weather format
+        let weatherdata = {    
+          currently: {
+            icon: fdata.currently.icon, /* We should convert this to a set of standard icons here */
+            temperature: fdata.currently.temperature,
+            windspeed: fdata.currently.windSpeed,
+            wind_direction: fdata.currently.windBearing,
+            humidity: fdata.currently.humidity,
+            apparent_temp: fdata.currently.apparentTemperature,
+            sunrise: fdata.daily.data[0].sunriseTime,
+            sunset: fdata.daily.data[0].sunsetTime,     
+          }, 
+          daily: { 
+            data: dailyData
+          },
+          alerts: []
+        };
+
+        return weatherdata;
+    }
+
     getCurrentYahooWeather(latitude, longitude) {
         //  Format the yahoo url
         let url = this.yahoobaseurl;
@@ -39,14 +80,52 @@ class WeatherAPIUtils {
         $.ajax( url )
         .done(function(data) {
             //  Convert the data to the common weather format
+            let weatherdata = this.convertYahooToWeather(data);
 
             //  Call the action to receive the data:
-            //  WeatherActions.recieveWeatherData(data);
+            WeatherActions.recieveWeatherData(weatherdata);
         }.bind(this))
         .fail(function() {
             //  Something bad happened
             console.log("There was a problem getting weather");
         });
+    }
+
+    convertYahooToWeather(ydata){
+
+        let yw = ydata.query.results.channel;
+
+        //  Map the daily data to the common format
+        var dailyData = [];
+        yw.item.forecast.map(function(day) {
+            dailyData.push({
+                summary: day.text,
+                date: Moment(day.date).unix(), /* Need to parse with moment */
+                icon: day.code, /* Convert to standard icon here*/
+                high: parseInt(day.high), 
+                low: parseInt(day.low)
+            });
+        });
+        
+        //  Convert the rest of the data to the common weather format
+        let weatherdata = {    
+          currently: {
+            icon: yw.item.condition.code, /* Convert to standard icon */
+            temperature: parseInt(yw.item.condition.temp),
+            windspeed: parseInt(yw.wind.speed),
+            wind_direction: parseInt(yw.wind.direction),
+            humidity: parseInt(yw.atmosphere.humidity),
+            apparent_temp: parseInt(yw.wind.chill),
+            sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
+            sunset: yw.astronomy.sunset, /* Need to parse with moment */    
+          }, 
+          daily: { 
+            data: dailyData
+          },
+          alerts: []
+        };
+
+        return weatherdata;
     }
 
     getPollen(zipcode){

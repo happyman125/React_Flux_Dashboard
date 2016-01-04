@@ -2122,7 +2122,6 @@ var SettingsUtils = (function () {
 module.exports = new SettingsUtils();
 
 },{"../actions/SettingsActions":4,"cookies-js":32}],31:[function(require,module,exports){
-//  Actions
 'use strict';
 
 var _createClass = (function () {
@@ -2145,6 +2144,12 @@ function _classCallCheck(instance, Constructor) {
     }
 }
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+//  Actions
+
 var _actionsWeatherActions = require('../actions/WeatherActions');
 
 var _actionsWeatherActions2 = _interopRequireDefault(_actionsWeatherActions);
@@ -2155,7 +2160,10 @@ var WeatherAPIUtils = (function () {
 
         //  We should try formatting this with an ES6 template string.  See
         //  https://babeljs.io/docs/learn-es2015/#template-strings for more info
-        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")';
+        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")&format=json';
+
+        //  We should try formatting this with an ES6 template string as well
+        this.forecastiobaseurl = 'https://api.forecast.io/forecast/';
     }
 
     _createClass(WeatherAPIUtils, [{
@@ -2171,7 +2179,8 @@ var WeatherAPIUtils = (function () {
             var url = baseurl + latitude + "," + longitude;
 
             $.ajax(url).done((function (data) {
-                //  Convert the data to the common weather format
+
+                var weatherdata = this.convertForecastIOToWeather(data);
 
                 //	Call the action to receive the data:
                 _actionsWeatherActions2['default'].recieveWeatherData(data);
@@ -2181,6 +2190,42 @@ var WeatherAPIUtils = (function () {
             });
         }
     }, {
+        key: 'convertForecastIOToWeather',
+        value: function convertForecastIOToWeather(fdata) {
+
+            //  Map the daily data to the common format
+            var dailyData = [];
+            fdata.daily.data.map(function (day) {
+                dailyData.push({
+                    summary: day.summary,
+                    date: day.time,
+                    icon: day.icon,
+                    high: day.temperatureMax,
+                    low: day.temperatureMin
+                });
+            });
+
+            //  Convert the rest of the data to the common weather format
+            var weatherdata = {
+                currently: {
+                    icon: fdata.currently.icon, /* We should convert this to a set of standard icons here */
+                    temperature: fdata.currently.temperature,
+                    windspeed: fdata.currently.windSpeed,
+                    wind_direction: fdata.currently.windBearing,
+                    humidity: fdata.currently.humidity,
+                    apparent_temp: fdata.currently.apparentTemperature,
+                    sunrise: fdata.daily.data[0].sunriseTime,
+                    sunset: fdata.daily.data[0].sunsetTime
+                },
+                daily: {
+                    data: dailyData
+                },
+                alerts: []
+            };
+
+            return weatherdata;
+        }
+    }, {
         key: 'getCurrentYahooWeather',
         value: function getCurrentYahooWeather(latitude, longitude) {
             //  Format the yahoo url
@@ -2188,13 +2233,52 @@ var WeatherAPIUtils = (function () {
 
             $.ajax(url).done((function (data) {
                 //  Convert the data to the common weather format
+                var weatherdata = this.convertYahooToWeather(data);
 
                 //  Call the action to receive the data:
-                //  WeatherActions.recieveWeatherData(data);
+                _actionsWeatherActions2['default'].recieveWeatherData(weatherdata);
             }).bind(this)).fail(function () {
                 //  Something bad happened
                 console.log("There was a problem getting weather");
             });
+        }
+    }, {
+        key: 'convertYahooToWeather',
+        value: function convertYahooToWeather(ydata) {
+
+            var yw = ydata.query.results.channel;
+
+            //  Map the daily data to the common format
+            var dailyData = [];
+            yw.item.forecast.map(function (day) {
+                dailyData.push({
+                    summary: day.text,
+                    date: (0, _moment2['default'])(day.date).unix(), /* Need to parse with moment */
+                    icon: day.code, /* Convert to standard icon here*/
+                    high: parseInt(day.high),
+                    low: parseInt(day.low)
+                });
+            });
+
+            //  Convert the rest of the data to the common weather format
+            var weatherdata = {
+                currently: {
+                    icon: yw.item.condition.code, /* Convert to standard icon */
+                    temperature: parseInt(yw.item.condition.temp),
+                    windspeed: parseInt(yw.wind.speed),
+                    wind_direction: parseInt(yw.wind.direction),
+                    humidity: parseInt(yw.atmosphere.humidity),
+                    apparent_temp: parseInt(yw.wind.chill),
+                    sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
+                    sunset: yw.astronomy.sunset },
+                /* Need to parse with moment */
+                daily: {
+                    data: dailyData
+                },
+                alerts: []
+            };
+
+            return weatherdata;
         }
     }, {
         key: 'getPollen',
@@ -2238,7 +2322,7 @@ var WeatherAPIUtils = (function () {
 
 module.exports = new WeatherAPIUtils();
 
-},{"../actions/WeatherActions":5}],32:[function(require,module,exports){
+},{"../actions/WeatherActions":5,"moment":54}],32:[function(require,module,exports){
 /*
  * Cookies.js - 1.2.2
  * https://github.com/ScottHamper/Cookies
