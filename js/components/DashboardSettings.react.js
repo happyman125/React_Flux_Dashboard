@@ -28,6 +28,7 @@ class DashboardSettings extends React.Component {
     this._onZipcodeChange = this._onZipcodeChange.bind(this);
     this._onCalendarIdChange = this._onCalendarIdChange.bind(this);
     this._onWeatherSourceChange = this._onWeatherSourceChange.bind(this);
+    this._onForecastioAPIChange = this._onForecastioAPIChange.bind(this);
     this._onLocationSourceChange = this._onLocationSourceChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
@@ -89,11 +90,12 @@ class DashboardSettings extends React.Component {
                     Yahoo
                   </label>
                 </div>
-                <div className="radio">
+                <div className="radio inline-radio">
                   <label>
                     <input type="radio" id="radForecastio" name="weathersource" value="Forecastio" onChange={this._onWeatherSourceChange} checked={this.state.settings.weathersource === "Forecastio"}/>
-                    Forecast.io
+                    Forecast.io - <a href='https://developer.forecast.io/'>API key</a>: 
                   </label>
+                  &nbsp;<input id="forecastio_apikey" value={this.state.settings.weathersource_apikey} onChange={this._onForecastioAPIChange} type="text" className="form-control" placeholder="Enter your API key" />                  
                 </div>
               </div>
 
@@ -167,6 +169,15 @@ class DashboardSettings extends React.Component {
       settings: {zipcode: {$set: event.target.value}}
     });
     this.setState(newState);
+  }
+
+  _onForecastioAPIChange(event){
+    //  Using new Immutability helpers from 
+    //  https://facebook.github.io/react/docs/update.html
+    var newState = React.addons.update(this.state, {
+      settings: {weathersource_apikey: {$set: event.target.value}}
+    });
+    this.setState(newState); 
   }
 
   _onWeatherSourceChange(event){

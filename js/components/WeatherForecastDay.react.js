@@ -1,23 +1,20 @@
-var React = require('react');
-var Moment = require('moment');
+import {Component} from 'react';
+import Moment from 'moment';
 
 //  The components
-var WeatherForecastIcon = require('./WeatherForecastIcon.react');
+import WeatherForecastIcon from './WeatherForecastIcon.react';
 
-var WeatherForecastDay = React.createClass({
+class WeatherForecastDay extends Component {
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
     //  Format the display:
-    var tempHigh = Math.round(this.props.forecast.temperatureMax);
-    var tempLow = Math.round(this.props.forecast.temperatureMin);
-    var forecastDay = this.props.forecast.time;
+    var tempHigh = Math.round(this.props.forecast.high);
+    var tempLow = Math.round(this.props.forecast.low);
+    var forecastDay = this.props.forecast.date;
     var formattedDay = Moment(forecastDay * 1000).format("dddd");
     var forcastIcon = this.props.forecast.icon;
-    var formattedPercentage = ""
+    var formattedPercentage = "";
     var pollenCount = this.props.forecast.pollen || "";
     var pollenCountClass = "label";
 
@@ -25,7 +22,16 @@ var WeatherForecastDay = React.createClass({
     if(forcastIcon.indexOf("clear") < 0 && forcastIcon.indexOf("partly") < 0)
     {
       formattedPercentage = Math.floor((this.props.forecast.precipProbability * 100)); 
-      formattedPercentage = formattedPercentage + "%"
+
+      //  If we have a percentage and it's greater than 10.. proceed
+      if(formattedPercentage > 10)
+      { 
+        formattedPercentage = formattedPercentage + "%" 
+      } 
+      else 
+      {
+        formattedPercentage = "";
+      }
     }
 
     //  Format the pollen count display:
@@ -34,7 +40,7 @@ var WeatherForecastDay = React.createClass({
     if(pollenCount >= 7 && pollenCount < 10){pollenCountClass = pollenCountClass + " label-warning";}
     if(pollenCount >= 10){pollenCountClass = pollenCountClass + " label-danger";}
 
-  	return (
+    return (
 
         <tr className="forcast-datarow">
           <td>{formattedDay}</td>
@@ -45,6 +51,6 @@ var WeatherForecastDay = React.createClass({
         </tr>
     );
   }
-});
+}
 
-module.exports = WeatherForecastDay;
+export default WeatherForecastDay;

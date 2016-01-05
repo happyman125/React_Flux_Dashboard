@@ -3,34 +3,31 @@ import Moment from 'moment';
 //  Actions
 import WeatherActions from '../actions/WeatherActions';
 
+//  The stores
+import SettingsStore from '../stores/SettingsStore';
+
 class WeatherAPIUtils {
 
     constructor() {
-        //  We should try formatting this with an ES6 template string.  See 
-        //  https://babeljs.io/docs/learn-es2015/#template-strings for more info 
-        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")&format=json';
         
-        //  We should try formatting this with an ES6 template string as well
-        this.forecastiobaseurl = 'https://api.forecast.io/forecast/';
     }
 
+    /* Get the Forecast.io weather for the given coordiates */
     getCurrentForecastIOWeather(latitude, longitude) {
-        //  Deprecated.  We will be calling forecastio directly (and storing the API key in settings)
 
-        //  The base url for the service - change this to your service location:
-        //  You can get this microservice for free at https://github.com/danesparza/forecast-service
-        let baseurl = "http://service.cagedtornado.com:3030/forecast/";
+        let settings = SettingsStore.getSettings();
+        let apikey = settings.weathersource_apikey;
 
         //  Get the weather for the given lat/long coordinates
-        let url = baseurl + latitude + "," + longitude;
+        let url = `https://api.forecast.io/forecast/${apikey}/${latitude},${longitude}?callback=?`;
 
-        $.ajax( url )
+        $.ajax({ url: url, dataType: 'json', async: false})
         .done(function(data) {
 
             let weatherdata = this.convertForecastIOToWeather(data);
 
         	//	Call the action to receive the data:
-        	WeatherActions.recieveWeatherData(data);
+        	WeatherActions.recieveWeatherData(weatherdata);
         }.bind(this))
         .fail(function() {
         	//	Something bad happened
@@ -38,6 +35,7 @@ class WeatherAPIUtils {
         });
     }
 
+    /* Convert Forecast.io data to the standard model */
     convertForecastIOToWeather(fdata){
 
         //  Map the daily data to the common format
@@ -48,7 +46,8 @@ class WeatherAPIUtils {
                 date: day.time,
                 icon: day.icon,
                 high: day.temperatureMax,
-                low: day.temperatureMin
+                low: day.temperatureMin,
+                precipProbability: day.precipProbability
             });
         });
         
@@ -67,15 +66,19 @@ class WeatherAPIUtils {
           daily: { 
             data: dailyData
           },
-          alerts: []
+          alerts: [],
+          source: "Forecast.io",
+          lastupdated: new Date()
         };
 
         return weatherdata;
     }
 
+    /* Get Yahoo weather for the given coordinates */
     getCurrentYahooWeather(latitude, longitude) {
+        
         //  Format the yahoo url
-        let url = this.yahoobaseurl;
+        let url = `https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="${latitude},${longitude}" and gflags="R")&format=json`;
 
         $.ajax( url )
         .done(function(data) {
@@ -91,6 +94,7 @@ class WeatherAPIUtils {
         });
     }
 
+    /* Convert Yahoo data format to the standard model */
     convertYahooToWeather(ydata){
 
         let yw = ydata.query.results.channel;
@@ -100,10 +104,11 @@ class WeatherAPIUtils {
         yw.item.forecast.map(function(day) {
             dailyData.push({
                 summary: day.text,
-                date: Moment(day.date).unix(), /* Need to parse with moment */
+                date: Moment(day.date).unix(),
                 icon: day.code, /* Convert to standard icon here*/
                 high: parseInt(day.high), 
-                low: parseInt(day.low)
+                low: parseInt(day.low),
+                precipProbability: 0
             });
         });
         
@@ -114,7 +119,7 @@ class WeatherAPIUtils {
             temperature: parseInt(yw.item.condition.temp),
             windspeed: parseInt(yw.wind.speed),
             wind_direction: parseInt(yw.wind.direction),
-            humidity: parseInt(yw.atmosphere.humidity),
+            humidity: parseInt(yw.atmosphere.humidity) / 100,
             apparent_temp: parseInt(yw.wind.chill),
             sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
             sunset: yw.astronomy.sunset, /* Need to parse with moment */    
@@ -122,13 +127,16 @@ class WeatherAPIUtils {
           daily: { 
             data: dailyData
           },
-          alerts: []
+          alerts: [],
+          source: "Yahoo weather",
+          lastupdated: new Date()
         };
 
         return weatherdata;
     }
 
-    getPollen(zipcode){
+    /* Get pollen counts for the given zipcode */
+    getPollen(zipcode) {
         //  The base url for the service - change this to your service location:
         //  You can get this microservice for free at https://github.com/danesparza/forecast-service
         let baseurl = "http://service.cagedtornado.com:3030/pollen/";

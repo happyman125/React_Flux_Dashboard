@@ -654,6 +654,7 @@ var DashboardSettings = (function (_React$Component) {
     this._onZipcodeChange = this._onZipcodeChange.bind(this);
     this._onCalendarIdChange = this._onCalendarIdChange.bind(this);
     this._onWeatherSourceChange = this._onWeatherSourceChange.bind(this);
+    this._onForecastioAPIChange = this._onForecastioAPIChange.bind(this);
     this._onLocationSourceChange = this._onLocationSourceChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
@@ -695,7 +696,7 @@ var DashboardSettings = (function (_React$Component) {
 
       return _reactAddons2['default'].createElement('div', { className: 'container' }, _reactAddons2['default'].createElement('div', { className: 'row' }, _reactAddons2['default'].createElement('h1', null, 'Dashboard settings'), _reactAddons2['default'].createElement('div', { className: 'col-md-6' }, _reactAddons2['default'].createElement('form', null, _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'calendarId' }, 'Calendar to display'), _reactAddons2['default'].createElement('select', { id: 'calendarIdTest', className: 'form-control', value: this.state.settings.calendarid, onChange: this._onCalendarIdChange }, calendarList.map(function (cal) {
         return _reactAddons2['default'].createElement('option', { key: cal.id, value: cal.id }, cal.summary);
-      })), authButton), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'weathersource' }, 'Get weather forecast from'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radYahoo', name: 'weathersource', value: 'Yahoo', onChange: this._onWeatherSourceChange, checked: this.state.settings.weathersource === "Yahoo" }), 'Yahoo')), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radForecastio', name: 'weathersource', value: 'Forecastio', onChange: this._onWeatherSourceChange, checked: this.state.settings.weathersource === "Forecastio" }), 'Forecast.io'))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'zipcode' }, 'Zipcode for pollen information'), _reactAddons2['default'].createElement('input', { id: 'zipcode', value: this.state.settings.zipcode, onChange: this._onZipcodeChange, type: 'text', className: 'form-control', placeholder: 'Enter zipcode' })), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', null, 'Location data'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'browser', onChange: this._onLocationSourceChange, checked: this.state.settings.locationsource === "browser" }), 'Use the browser')), _reactAddons2['default'].createElement('div', { className: 'radio inline-radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'staticLocation', onChange: this._onLocationSourceChange, checked: this.state.settings.locationsource === "staticLocation" }), 'Always use this location:'), ' ', _reactAddons2['default'].createElement('input', { id: 'staticLocation', type: 'text', className: 'form-control', placeholder: 'Enter location coordinates' }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('button', { className: 'btn btn-primary', onClick: this.handleSave }, 'Save'), ' ', _reactAddons2['default'].createElement('a', { href: '#/', className: 'btn btn-default' }, 'Cancel'))))));
+      })), authButton), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'weathersource' }, 'Get weather forecast from'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radYahoo', name: 'weathersource', value: 'Yahoo', onChange: this._onWeatherSourceChange, checked: this.state.settings.weathersource === "Yahoo" }), 'Yahoo')), _reactAddons2['default'].createElement('div', { className: 'radio inline-radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', id: 'radForecastio', name: 'weathersource', value: 'Forecastio', onChange: this._onWeatherSourceChange, checked: this.state.settings.weathersource === "Forecastio" }), 'Forecast.io - ', _reactAddons2['default'].createElement('a', { href: 'https://developer.forecast.io/' }, 'API key'), ':'), ' ', _reactAddons2['default'].createElement('input', { id: 'forecastio_apikey', value: this.state.settings.weathersource_apikey, onChange: this._onForecastioAPIChange, type: 'text', className: 'form-control', placeholder: 'Enter your API key' }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', { htmlFor: 'zipcode' }, 'Zipcode for pollen information'), _reactAddons2['default'].createElement('input', { id: 'zipcode', value: this.state.settings.zipcode, onChange: this._onZipcodeChange, type: 'text', className: 'form-control', placeholder: 'Enter zipcode' })), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('label', null, 'Location data'), _reactAddons2['default'].createElement('div', { className: 'radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'browser', onChange: this._onLocationSourceChange, checked: this.state.settings.locationsource === "browser" }), 'Use the browser')), _reactAddons2['default'].createElement('div', { className: 'radio inline-radio' }, _reactAddons2['default'].createElement('label', null, _reactAddons2['default'].createElement('input', { type: 'radio', name: 'locationsource', value: 'staticLocation', onChange: this._onLocationSourceChange, checked: this.state.settings.locationsource === "staticLocation" }), 'Always use this location:'), ' ', _reactAddons2['default'].createElement('input', { id: 'staticLocation', type: 'text', className: 'form-control', placeholder: 'Enter location coordinates' }))), _reactAddons2['default'].createElement('div', { className: 'form-group' }, _reactAddons2['default'].createElement('button', { className: 'btn btn-primary', onClick: this.handleSave }, 'Save'), ' ', _reactAddons2['default'].createElement('a', { href: '#/', className: 'btn btn-default' }, 'Cancel'))))));
     }
   }, {
     key: 'handleSave',
@@ -737,6 +738,16 @@ var DashboardSettings = (function (_React$Component) {
       //  https://facebook.github.io/react/docs/update.html
       var newState = _reactAddons2['default'].addons.update(this.state, {
         settings: { zipcode: { $set: event.target.value } }
+      });
+      this.setState(newState);
+    }
+  }, {
+    key: '_onForecastioAPIChange',
+    value: function _onForecastioAPIChange(event) {
+      //  Using new Immutability helpers from
+      //  https://facebook.github.io/react/docs/update.html
+      var newState = _reactAddons2['default'].addons.update(this.state, {
+        settings: { weathersource_apikey: { $set: event.target.value } }
       });
       this.setState(newState);
     }
@@ -1024,14 +1035,14 @@ var WeatherDisplay = (function (_Component) {
         forecasticon = this.props.weather.currently.icon;
         temperature = Math.round(this.props.weather.currently.temperature);
 
-        windspeed = Math.round(this.props.weather.currently.windSpeed);
+        windspeed = Math.round(this.props.weather.currently.windspeed);
         formattedHumidity = Math.floor(this.props.weather.currently.humidity * 100);
         formattedHumidity = formattedHumidity + "%";
-        feelslike = Math.round(this.props.weather.currently.apparentTemperature);
+        feelslike = Math.round(this.props.weather.currently.apparent_temp);
 
-        sunrise = this.props.weather.daily.data[0].sunriseTime;
+        sunrise = this.props.weather.currently.sunrise;
         formattedSunrise = (0, _moment2['default'])(sunrise * 1000).format("h:mma");
-        sunset = this.props.weather.daily.data[0].sunsetTime;
+        sunset = this.props.weather.currently.sunset;
         formattedSunset = (0, _moment2['default'])(sunset * 1000).format("h:mma");
 
         forecastdays = this.props.weather.daily.data;
@@ -1074,88 +1085,224 @@ module.exports = exports['default'];
 },{"../utils/WeatherAPIUtils":31,"./WeatherAlerts.react":15,"./WeatherForecast.react":17,"./WeatherForecastIcon.react":20,"moment":54,"react":227}],17:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-
-//  The components
-var WeatherForecastDay = require('./WeatherForecastDay.react');
-var WeatherForecastDaySummary = require('./WeatherForecastDaySummary.react');
-
-var WeatherForecast = React.createClass({
-  displayName: 'WeatherForecast',
-
-  /**
-   * @return {object}
-   */
-  render: function render() {
-
-    //  First, see if we have a forecast
-    if (this.props.forecastdays.length < 1) {
-      return null;
-    }
-
-    //  Slice to just the next 5 days:
-    var next5days = this.props.forecastdays.slice(0, 5);
-
-    return React.createElement('table', { id: 'forcast', className: 'table table-condensed' }, React.createElement('tbody', null, next5days.map(function (forecastday) {
-      return [React.createElement(WeatherForecastDay, { key: forecastday.time, forecast: forecastday }), React.createElement(WeatherForecastDaySummary, { key: forecastday.time + "summary", forecast: forecastday })];
-    })));
-  }
+Object.defineProperty(exports, '__esModule', {
+  value: true
 });
 
-module.exports = WeatherForecast;
+var _createClass = (function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+  var _again = true;_function: while (_again) {
+    var object = _x,
+        property = _x2,
+        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);if (parent === null) {
+        return undefined;
+      } else {
+        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+      }
+    } else if ('value' in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;if (getter === undefined) {
+        return undefined;
+      }return getter.call(receiver);
+    }
+  }
+};
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = require('react');
+
+//  The components
+
+var _WeatherForecastDayReact = require('./WeatherForecastDay.react');
+
+var _WeatherForecastDayReact2 = _interopRequireDefault(_WeatherForecastDayReact);
+
+var _WeatherForecastDaySummaryReact = require('./WeatherForecastDaySummary.react');
+
+var _WeatherForecastDaySummaryReact2 = _interopRequireDefault(_WeatherForecastDaySummaryReact);
+
+var WeatherForecast = (function (_Component) {
+  _inherits(WeatherForecast, _Component);
+
+  function WeatherForecast() {
+    _classCallCheck(this, WeatherForecast);
+
+    _get(Object.getPrototypeOf(WeatherForecast.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(WeatherForecast, [{
+    key: 'render',
+    value: function render() {
+
+      //  First, see if we have a forecast
+      if (this.props.forecastdays.length < 1) {
+        return null;
+      }
+
+      //  Slice to just the next 5 days:
+      var next5days = this.props.forecastdays.slice(0, 5);
+
+      return React.createElement('table', { id: 'forcast', className: 'table table-condensed' }, React.createElement('tbody', null, next5days.map(function (forecastday) {
+        return [React.createElement(_WeatherForecastDayReact2['default'], { key: forecastday.day, forecast: forecastday }), React.createElement(_WeatherForecastDaySummaryReact2['default'], { key: forecastday.day + "summary", forecast: forecastday })];
+      })));
+    }
+  }]);
+
+  return WeatherForecast;
+})(_react.Component);
+
+exports['default'] = WeatherForecast;
+module.exports = exports['default'];
 
 },{"./WeatherForecastDay.react":18,"./WeatherForecastDaySummary.react":19,"react":227}],18:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
-var Moment = require('moment');
-
-//  The components
-var WeatherForecastIcon = require('./WeatherForecastIcon.react');
-
-var WeatherForecastDay = React.createClass({
-  displayName: 'WeatherForecastDay',
-
-  /**
-   * @return {object}
-   */
-  render: function render() {
-
-    //  Format the display:
-    var tempHigh = Math.round(this.props.forecast.temperatureMax);
-    var tempLow = Math.round(this.props.forecast.temperatureMin);
-    var forecastDay = this.props.forecast.time;
-    var formattedDay = Moment(forecastDay * 1000).format("dddd");
-    var forcastIcon = this.props.forecast.icon;
-    var formattedPercentage = "";
-    var pollenCount = this.props.forecast.pollen || "";
-    var pollenCountClass = "label";
-
-    //  If it looks like it's not clear or partly-anything, then there is probably a change of precipitation:
-    if (forcastIcon.indexOf("clear") < 0 && forcastIcon.indexOf("partly") < 0) {
-      formattedPercentage = Math.floor(this.props.forecast.precipProbability * 100);
-      formattedPercentage = formattedPercentage + "%";
-    }
-
-    //  Format the pollen count display:
-    if (pollenCount <= 3) {
-      pollenCountClass = pollenCountClass + " label-default";
-    }
-    if (pollenCount > 3 && pollenCount < 7) {
-      pollenCountClass = pollenCountClass + " label-info";
-    }
-    if (pollenCount >= 7 && pollenCount < 10) {
-      pollenCountClass = pollenCountClass + " label-warning";
-    }
-    if (pollenCount >= 10) {
-      pollenCountClass = pollenCountClass + " label-danger";
-    }
-
-    return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', null, formattedDay), React.createElement('td', null, React.createElement(WeatherForecastIcon, { icon: forcastIcon }), ' ', React.createElement('span', { style: { color: '#7595AD' } }, formattedPercentage)), React.createElement('td', null, tempLow, ' • ', tempHigh), React.createElement('td', null), React.createElement('td', null, React.createElement('span', { className: pollenCountClass }, pollenCount)));
-  }
+Object.defineProperty(exports, '__esModule', {
+  value: true
 });
 
-module.exports = WeatherForecastDay;
+var _createClass = (function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+  var _again = true;_function: while (_again) {
+    var object = _x,
+        property = _x2,
+        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);if (parent === null) {
+        return undefined;
+      } else {
+        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+      }
+    } else if ('value' in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;if (getter === undefined) {
+        return undefined;
+      }return getter.call(receiver);
+    }
+  }
+};
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = require('react');
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+//  The components
+
+var _WeatherForecastIconReact = require('./WeatherForecastIcon.react');
+
+var _WeatherForecastIconReact2 = _interopRequireDefault(_WeatherForecastIconReact);
+
+var WeatherForecastDay = (function (_Component) {
+  _inherits(WeatherForecastDay, _Component);
+
+  function WeatherForecastDay() {
+    _classCallCheck(this, WeatherForecastDay);
+
+    _get(Object.getPrototypeOf(WeatherForecastDay.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(WeatherForecastDay, [{
+    key: 'render',
+    value: function render() {
+
+      //  Format the display:
+      var tempHigh = Math.round(this.props.forecast.high);
+      var tempLow = Math.round(this.props.forecast.low);
+      var forecastDay = this.props.forecast.date;
+      var formattedDay = (0, _moment2['default'])(forecastDay * 1000).format("dddd");
+      var forcastIcon = this.props.forecast.icon;
+      var formattedPercentage = "";
+      var pollenCount = this.props.forecast.pollen || "";
+      var pollenCountClass = "label";
+
+      //  If it looks like it's not clear or partly-anything, then there is probably a change of precipitation:
+      if (forcastIcon.indexOf("clear") < 0 && forcastIcon.indexOf("partly") < 0) {
+        formattedPercentage = Math.floor(this.props.forecast.precipProbability * 100);
+
+        //  If we have a percentage and it's greater than 10.. proceed
+        if (formattedPercentage > 10) {
+          formattedPercentage = formattedPercentage + "%";
+        } else {
+          formattedPercentage = "";
+        }
+      }
+
+      //  Format the pollen count display:
+      if (pollenCount <= 3) {
+        pollenCountClass = pollenCountClass + " label-default";
+      }
+      if (pollenCount > 3 && pollenCount < 7) {
+        pollenCountClass = pollenCountClass + " label-info";
+      }
+      if (pollenCount >= 7 && pollenCount < 10) {
+        pollenCountClass = pollenCountClass + " label-warning";
+      }
+      if (pollenCount >= 10) {
+        pollenCountClass = pollenCountClass + " label-danger";
+      }
+
+      return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', null, formattedDay), React.createElement('td', null, React.createElement(_WeatherForecastIconReact2['default'], { icon: forcastIcon }), ' ', React.createElement('span', { style: { color: '#7595AD' } }, formattedPercentage)), React.createElement('td', null, tempLow, ' • ', tempHigh), React.createElement('td', null), React.createElement('td', null, React.createElement('span', { className: pollenCountClass }, pollenCount)));
+    }
+  }]);
+
+  return WeatherForecastDay;
+})(_react.Component);
+
+exports['default'] = WeatherForecastDay;
+module.exports = exports['default'];
 
 },{"./WeatherForecastIcon.react":20,"moment":54,"react":227}],19:[function(require,module,exports){
 "use strict";
@@ -2154,41 +2301,42 @@ var _actionsWeatherActions = require('../actions/WeatherActions');
 
 var _actionsWeatherActions2 = _interopRequireDefault(_actionsWeatherActions);
 
+//  The stores
+
+var _storesSettingsStore = require('../stores/SettingsStore');
+
+var _storesSettingsStore2 = _interopRequireDefault(_storesSettingsStore);
+
 var WeatherAPIUtils = (function () {
     function WeatherAPIUtils() {
         _classCallCheck(this, WeatherAPIUtils);
-
-        //  We should try formatting this with an ES6 template string.  See
-        //  https://babeljs.io/docs/learn-es2015/#template-strings for more info
-        this.yahoobaseurl = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="34.0485975,-84.2267117" and gflags="R")&format=json';
-
-        //  We should try formatting this with an ES6 template string as well
-        this.forecastiobaseurl = 'https://api.forecast.io/forecast/';
     }
+
+    /* Get the Forecast.io weather for the given coordiates */
 
     _createClass(WeatherAPIUtils, [{
         key: 'getCurrentForecastIOWeather',
         value: function getCurrentForecastIOWeather(latitude, longitude) {
-            //  Deprecated.  We will be calling forecastio directly (and storing the API key in settings)
 
-            //  The base url for the service - change this to your service location:
-            //  You can get this microservice for free at https://github.com/danesparza/forecast-service
-            var baseurl = "http://service.cagedtornado.com:3030/forecast/";
+            var settings = _storesSettingsStore2['default'].getSettings();
+            var apikey = settings.weathersource_apikey;
 
             //  Get the weather for the given lat/long coordinates
-            var url = baseurl + latitude + "," + longitude;
+            var url = 'https://api.forecast.io/forecast/' + apikey + '/' + latitude + ',' + longitude + '?callback=?';
 
-            $.ajax(url).done((function (data) {
+            $.ajax({ url: url, dataType: 'json', async: false }).done((function (data) {
 
                 var weatherdata = this.convertForecastIOToWeather(data);
 
                 //	Call the action to receive the data:
-                _actionsWeatherActions2['default'].recieveWeatherData(data);
+                _actionsWeatherActions2['default'].recieveWeatherData(weatherdata);
             }).bind(this)).fail(function () {
                 //	Something bad happened
                 console.log("There was a problem getting weather");
             });
         }
+
+        /* Convert Forecast.io data to the standard model */
     }, {
         key: 'convertForecastIOToWeather',
         value: function convertForecastIOToWeather(fdata) {
@@ -2201,7 +2349,8 @@ var WeatherAPIUtils = (function () {
                     date: day.time,
                     icon: day.icon,
                     high: day.temperatureMax,
-                    low: day.temperatureMin
+                    low: day.temperatureMin,
+                    precipProbability: day.precipProbability
                 });
             });
 
@@ -2220,16 +2369,21 @@ var WeatherAPIUtils = (function () {
                 daily: {
                     data: dailyData
                 },
-                alerts: []
+                alerts: [],
+                source: "Forecast.io",
+                lastupdated: new Date()
             };
 
             return weatherdata;
         }
+
+        /* Get Yahoo weather for the given coordinates */
     }, {
         key: 'getCurrentYahooWeather',
         value: function getCurrentYahooWeather(latitude, longitude) {
+
             //  Format the yahoo url
-            var url = this.yahoobaseurl;
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="' + latitude + ',' + longitude + '" and gflags="R")&format=json';
 
             $.ajax(url).done((function (data) {
                 //  Convert the data to the common weather format
@@ -2242,6 +2396,8 @@ var WeatherAPIUtils = (function () {
                 console.log("There was a problem getting weather");
             });
         }
+
+        /* Convert Yahoo data format to the standard model */
     }, {
         key: 'convertYahooToWeather',
         value: function convertYahooToWeather(ydata) {
@@ -2253,10 +2409,11 @@ var WeatherAPIUtils = (function () {
             yw.item.forecast.map(function (day) {
                 dailyData.push({
                     summary: day.text,
-                    date: (0, _moment2['default'])(day.date).unix(), /* Need to parse with moment */
+                    date: (0, _moment2['default'])(day.date).unix(),
                     icon: day.code, /* Convert to standard icon here*/
                     high: parseInt(day.high),
-                    low: parseInt(day.low)
+                    low: parseInt(day.low),
+                    precipProbability: 0
                 });
             });
 
@@ -2267,7 +2424,7 @@ var WeatherAPIUtils = (function () {
                     temperature: parseInt(yw.item.condition.temp),
                     windspeed: parseInt(yw.wind.speed),
                     wind_direction: parseInt(yw.wind.direction),
-                    humidity: parseInt(yw.atmosphere.humidity),
+                    humidity: parseInt(yw.atmosphere.humidity) / 100,
                     apparent_temp: parseInt(yw.wind.chill),
                     sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
                     sunset: yw.astronomy.sunset },
@@ -2275,11 +2432,15 @@ var WeatherAPIUtils = (function () {
                 daily: {
                     data: dailyData
                 },
-                alerts: []
+                alerts: [],
+                source: "Yahoo weather",
+                lastupdated: new Date()
             };
 
             return weatherdata;
         }
+
+        /* Get pollen counts for the given zipcode */
     }, {
         key: 'getPollen',
         value: function getPollen(zipcode) {
@@ -2322,7 +2483,7 @@ var WeatherAPIUtils = (function () {
 
 module.exports = new WeatherAPIUtils();
 
-},{"../actions/WeatherActions":5,"moment":54}],32:[function(require,module,exports){
+},{"../actions/WeatherActions":5,"../stores/SettingsStore":26,"moment":54}],32:[function(require,module,exports){
 /*
  * Cookies.js - 1.2.2
  * https://github.com/ScottHamper/Cookies

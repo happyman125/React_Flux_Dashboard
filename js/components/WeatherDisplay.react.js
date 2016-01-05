@@ -32,14 +32,14 @@ class WeatherDisplay extends Component {
       forecasticon = this.props.weather.currently.icon;
       temperature = Math.round(this.props.weather.currently.temperature);
       
-      windspeed = Math.round(this.props.weather.currently.windSpeed);
+      windspeed = Math.round(this.props.weather.currently.windspeed);
       formattedHumidity = Math.floor((this.props.weather.currently.humidity * 100)); 
       formattedHumidity = formattedHumidity + "%"
-      feelslike = Math.round(this.props.weather.currently.apparentTemperature);
+      feelslike = Math.round(this.props.weather.currently.apparent_temp);
 
-      sunrise = this.props.weather.daily.data[0].sunriseTime;
+      sunrise = this.props.weather.currently.sunrise;
       formattedSunrise = Moment(sunrise * 1000).format("h:mma");
-      sunset = this.props.weather.daily.data[0].sunsetTime;
+      sunset = this.props.weather.currently.sunset;
       formattedSunset = Moment(sunset * 1000).format("h:mma");
 
       forecastdays = this.props.weather.daily.data;
