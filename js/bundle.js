@@ -226,7 +226,14 @@ function showApp(position) {
 
     //  We have coordinates -- get the weather data
     console.log("Using browser geocoordinates: ", position);
-    _utilsWeatherAPIUtils2['default'].getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
+    switch (settings.weathersource) {
+        case "Yahoo":
+            _utilsWeatherAPIUtils2['default'].getCurrentYahooWeather(position.coords.latitude, position.coords.longitude);
+            break;
+        case "Forecastio":
+            _utilsWeatherAPIUtils2['default'].getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
+            break;
+    }
 
     //  If we have a zipcode, get pollen data:
     if (zipcode) {
@@ -499,7 +506,16 @@ var DashboardHome = _react2['default'].createClass({
 
   tick: function tick() {
     //  Get the latest weather:
-    WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+    switch (this.state.settings.weathersource) {
+      case "Yahoo":
+        WeatherAPIUtils.getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+        break;
+      case "Forecastio":
+        WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+        break;
+    }
+
+    //  Get the latest pollen
     WeatherAPIUtils.getPollen(this.props.zipcode);
 
     //  Get the latest calendar information if the API is loaded,
@@ -706,6 +722,16 @@ var DashboardSettings = (function (_React$Component) {
       //  Update the calendar data / pollen data:
       _utilsCalendarAPIUtils2['default'].getCalendarEvents(this.state.settings.calendarid);
       _utilsWeatherAPIUtils2['default'].getPollen(this.state.settings.zipcode);
+
+      //  Update the weather data
+      switch (this.state.settings.weathersource) {
+        case "Yahoo":
+          _utilsWeatherAPIUtils2['default'].getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+          break;
+        case "Forecastio":
+          _utilsWeatherAPIUtils2['default'].getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+          break;
+      }
 
       //  Save the settings:
       _utilsSettingsUtils2['default'].saveSettings(this.state.settings);
@@ -1041,9 +1067,9 @@ var WeatherDisplay = (function (_Component) {
         feelslike = Math.round(this.props.weather.currently.apparent_temp);
 
         sunrise = this.props.weather.currently.sunrise;
-        formattedSunrise = (0, _moment2['default'])(sunrise * 1000).format("h:mma");
+        formattedSunrise = (0, _moment2['default'])(sunrise).format("h:mma");
         sunset = this.props.weather.currently.sunset;
-        formattedSunset = (0, _moment2['default'])(sunset * 1000).format("h:mma");
+        formattedSunset = (0, _moment2['default'])(sunset).format("h:mma");
 
         forecastdays = this.props.weather.daily.data;
 
@@ -2363,8 +2389,8 @@ var WeatherAPIUtils = (function () {
                     wind_direction: fdata.currently.windBearing,
                     humidity: fdata.currently.humidity,
                     apparent_temp: fdata.currently.apparentTemperature,
-                    sunrise: fdata.daily.data[0].sunriseTime,
-                    sunset: fdata.daily.data[0].sunsetTime
+                    sunrise: fdata.daily.data[0].sunriseTime * 1000,
+                    sunset: fdata.daily.data[0].sunsetTime * 1000
                 },
                 daily: {
                     data: dailyData
@@ -2410,25 +2436,27 @@ var WeatherAPIUtils = (function () {
                 dailyData.push({
                     summary: day.text,
                     date: (0, _moment2['default'])(day.date).unix(),
-                    icon: day.code, /* Convert to standard icon here*/
+                    icon: day.code, /* Convert to standard icon here? */
                     high: parseInt(day.high),
                     low: parseInt(day.low),
                     precipProbability: 0
                 });
             });
 
+            var startofday = (0, _moment2['default'])().startOf('day').format('MMM D, YYYY');
+
             //  Convert the rest of the data to the common weather format
             var weatherdata = {
                 currently: {
-                    icon: yw.item.condition.code, /* Convert to standard icon */
+                    icon: yw.item.condition.code, /* Convert to standard icon here? */
                     temperature: parseInt(yw.item.condition.temp),
                     windspeed: parseInt(yw.wind.speed),
                     wind_direction: parseInt(yw.wind.direction),
                     humidity: parseInt(yw.atmosphere.humidity) / 100,
                     apparent_temp: parseInt(yw.wind.chill),
-                    sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
-                    sunset: yw.astronomy.sunset },
-                /* Need to parse with moment */
+                    sunrise: Date.parse(startofday + ' ' + yw.astronomy.sunrise),
+                    sunset: Date.parse(startofday + ' ' + yw.astronomy.sunset)
+                },
                 daily: {
                     data: dailyData
                 },

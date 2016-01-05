@@ -138,6 +138,17 @@ class DashboardSettings extends React.Component {
     //  Update the calendar data / pollen data:
     CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
     WeatherAPIUtils.getPollen(this.state.settings.zipcode);
+
+    //  Update the weather data
+    switch(this.state.settings.weathersource)
+    {
+        case "Yahoo":
+            WeatherAPIUtils.getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            break;
+        case "Forecastio": 
+            WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            break;
+    }
     
     //  Save the settings:
     SettingsUtils.saveSettings(this.state.settings);

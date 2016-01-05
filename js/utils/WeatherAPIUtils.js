@@ -60,8 +60,8 @@ class WeatherAPIUtils {
             wind_direction: fdata.currently.windBearing,
             humidity: fdata.currently.humidity,
             apparent_temp: fdata.currently.apparentTemperature,
-            sunrise: fdata.daily.data[0].sunriseTime,
-            sunset: fdata.daily.data[0].sunsetTime,     
+            sunrise: fdata.daily.data[0].sunriseTime * 1000,
+            sunset: fdata.daily.data[0].sunsetTime * 1000,     
           }, 
           daily: { 
             data: dailyData
@@ -105,24 +105,26 @@ class WeatherAPIUtils {
             dailyData.push({
                 summary: day.text,
                 date: Moment(day.date).unix(),
-                icon: day.code, /* Convert to standard icon here*/
+                icon: day.code, /* Convert to standard icon here? */
                 high: parseInt(day.high), 
                 low: parseInt(day.low),
                 precipProbability: 0
             });
         });
         
+        let startofday = Moment().startOf('day').format('MMM D, YYYY');
+
         //  Convert the rest of the data to the common weather format
         let weatherdata = {    
           currently: {
-            icon: yw.item.condition.code, /* Convert to standard icon */
+            icon: yw.item.condition.code, /* Convert to standard icon here? */
             temperature: parseInt(yw.item.condition.temp),
             windspeed: parseInt(yw.wind.speed),
             wind_direction: parseInt(yw.wind.direction),
             humidity: parseInt(yw.atmosphere.humidity) / 100,
             apparent_temp: parseInt(yw.wind.chill),
-            sunrise: yw.astronomy.sunrise, /* Need to parse with moment */
-            sunset: yw.astronomy.sunset, /* Need to parse with moment */    
+            sunrise: Date.parse(startofday + ' ' + yw.astronomy.sunrise), 
+            sunset: Date.parse(startofday + ' ' + yw.astronomy.sunset),    
           }, 
           daily: { 
             data: dailyData

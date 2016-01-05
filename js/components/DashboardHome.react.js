@@ -41,7 +41,17 @@ var DashboardHome = React.createClass({
 
   tick: function() {
     //  Get the latest weather:
-    WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+    switch(this.state.settings.weathersource)
+    {
+        case "Yahoo":
+            WeatherAPIUtils.getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            break;
+        case "Forecastio": 
+            WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            break;
+    }
+
+    //  Get the latest pollen
     WeatherAPIUtils.getPollen(this.props.zipcode);
 
     //  Get the latest calendar information if the API is loaded, 

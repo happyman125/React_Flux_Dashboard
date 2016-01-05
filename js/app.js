@@ -56,7 +56,15 @@ function showApp(position) {
 
     //  We have coordinates -- get the weather data
     console.log("Using browser geocoordinates: ", position);
-    WeatherAPIUtils.getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
+    switch(settings.weathersource)
+    {
+        case "Yahoo":
+            WeatherAPIUtils.getCurrentYahooWeather(position.coords.latitude, position.coords.longitude);
+            break;
+        case "Forecastio": 
+            WeatherAPIUtils.getCurrentForecastIOWeather(position.coords.latitude, position.coords.longitude);
+            break;
+    }
 
     //  If we have a zipcode, get pollen data:
     if(zipcode){

@@ -38,9 +38,9 @@ class WeatherDisplay extends Component {
       feelslike = Math.round(this.props.weather.currently.apparent_temp);
 
       sunrise = this.props.weather.currently.sunrise;
-      formattedSunrise = Moment(sunrise * 1000).format("h:mma");
+      formattedSunrise = Moment(sunrise).format("h:mma");
       sunset = this.props.weather.currently.sunset;
-      formattedSunset = Moment(sunset * 1000).format("h:mma");
+      formattedSunset = Moment(sunset).format("h:mma");
 
       forecastdays = this.props.weather.daily.data;
 
