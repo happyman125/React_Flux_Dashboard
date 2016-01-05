@@ -1,4 +1,5 @@
 var React = require('react');
+import Moment from 'moment';
 
 //  The components
 var CalendarEventItem = require('./CalendarEventItem.react');
@@ -16,14 +17,19 @@ var CalendarDisplay = React.createClass({
     }
 
     //  If we do, display them:
+    let formattedStatus = this.props.calendar.summary + ' last updated ' + Moment(this.props.calendar.updated).format("h:mma");
+
   	return (
-        <table id="calendar" className="table">
-          <tbody>
-            {this.props.calendar.items.map(function(eventinfo) {
-              return [<CalendarEventItem key={eventinfo.id} eventinfo={eventinfo}/>, <CalendarEventMoreInfo key={"mi"+eventinfo.id} eventinfo={eventinfo}/>];
-            })}
-          </tbody>
-        </table>
+        <div>
+          <table id="calendar" className="table">
+            <tbody>
+              {this.props.calendar.items.map(function(eventinfo) {
+                return [<CalendarEventItem key={eventinfo.id} eventinfo={eventinfo}/>, <CalendarEventMoreInfo key={"mi"+eventinfo.id} eventinfo={eventinfo}/>];
+              })}
+            </tbody>
+          </table>
+          <div className="dashboard-status">{formattedStatus}</div>
+        </div>
     );
   }
 });

@@ -104,7 +104,7 @@ class WeatherAPIUtils {
         yw.item.forecast.map(function(day) {
             dailyData.push({
                 summary: day.text,
-                date: Moment(day.date).unix(),
+                date: Moment(day.date, "D MMM YYYY").unix(),
                 icon: day.code, /* Convert to standard icon here? */
                 high: parseInt(day.high), 
                 low: parseInt(day.low),

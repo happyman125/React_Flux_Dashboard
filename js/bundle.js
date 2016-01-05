@@ -278,9 +278,16 @@ function showError(error) {
 },{"./actions/PageActions":3,"./components/DashboardApp.react":10,"./stores/SettingsStore":26,"./utils/CalendarAPIUtils":28,"./utils/NewsAPIUtils":29,"./utils/SettingsUtils":30,"./utils/WeatherAPIUtils":31,"director":33,"react":227}],7:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { 'default': obj };
+}
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
 
 //  The components
+var React = require('react');
 var CalendarEventItem = require('./CalendarEventItem.react');
 var CalendarEventMoreInfo = require('./CalendarEventMoreInfo.react');
 
@@ -297,15 +304,17 @@ var CalendarDisplay = React.createClass({
     }
 
     //  If we do, display them:
-    return React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
+    var formattedStatus = this.props.calendar.summary + ' last updated ' + (0, _moment2['default'])(this.props.calendar.updated).format("h:mma");
+
+    return React.createElement('div', null, React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
       return [React.createElement(CalendarEventItem, { key: eventinfo.id, eventinfo: eventinfo }), React.createElement(CalendarEventMoreInfo, { key: "mi" + eventinfo.id, eventinfo: eventinfo })];
-    })));
+    }))), React.createElement('div', { className: 'dashboard-status' }, formattedStatus));
   }
 });
 
 module.exports = CalendarDisplay;
 
-},{"./CalendarEventItem.react":8,"./CalendarEventMoreInfo.react":9,"react":227}],8:[function(require,module,exports){
+},{"./CalendarEventItem.react":8,"./CalendarEventMoreInfo.react":9,"moment":54,"react":227}],8:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -456,6 +465,36 @@ var _react2 = _interopRequireDefault(_react);
 
 //  The components
 
+var _DateTimeDisplayReact = require('./DateTimeDisplay.react');
+
+var _DateTimeDisplayReact2 = _interopRequireDefault(_DateTimeDisplayReact);
+
+var _WeatherDisplayReact = require('./WeatherDisplay.react');
+
+var _WeatherDisplayReact2 = _interopRequireDefault(_WeatherDisplayReact);
+
+var _CalendarDisplayReact = require('./CalendarDisplay.react');
+
+var _CalendarDisplayReact2 = _interopRequireDefault(_CalendarDisplayReact);
+
+var _NewsDisplayReact = require('./NewsDisplay.react');
+
+var _NewsDisplayReact2 = _interopRequireDefault(_NewsDisplayReact);
+
+//  The API utils
+
+var _utilsWeatherAPIUtils = require('../utils/WeatherAPIUtils');
+
+var _utilsWeatherAPIUtils2 = _interopRequireDefault(_utilsWeatherAPIUtils);
+
+var _utilsCalendarAPIUtils = require('../utils/CalendarAPIUtils');
+
+var _utilsCalendarAPIUtils2 = _interopRequireDefault(_utilsCalendarAPIUtils);
+
+var _utilsNewsAPIUtils = require('../utils/NewsAPIUtils');
+
+var _utilsNewsAPIUtils2 = _interopRequireDefault(_utilsNewsAPIUtils);
+
 //  The stores
 
 var _storesWeatherStore = require('../stores/WeatherStore');
@@ -477,15 +516,7 @@ var _storesSettingsStore2 = _interopRequireDefault(_storesSettingsStore);
 /*
   Get the current state
  */
-var DateTimeDisplay = require('./DateTimeDisplay.react');
-var WeatherDisplay = require('./WeatherDisplay.react');
-var CalendarDisplay = require('./CalendarDisplay.react');
-var NewsDisplay = require('./NewsDisplay.react');
-
-//  The API utils
-var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
-var CalendarAPIUtils = require('../utils/CalendarAPIUtils');
-var NewsAPIUtils = require('../utils/NewsAPIUtils');function getAppState() {
+function getAppState() {
   return {
     weather: _storesWeatherStore2['default'].getWeather(),
     pollen: _storesWeatherStore2['default'].getPollen(),
@@ -508,24 +539,24 @@ var DashboardHome = _react2['default'].createClass({
     //  Get the latest weather:
     switch (this.state.settings.weathersource) {
       case "Yahoo":
-        WeatherAPIUtils.getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+        _utilsWeatherAPIUtils2['default'].getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
         break;
       case "Forecastio":
-        WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+        _utilsWeatherAPIUtils2['default'].getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
         break;
     }
 
     //  Get the latest pollen
-    WeatherAPIUtils.getPollen(this.props.zipcode);
+    _utilsWeatherAPIUtils2['default'].getPollen(this.props.zipcode);
 
     //  Get the latest calendar information if the API is loaded,
     //  we're authorized, and we have a calendar selected:
     if (this.state.cal_authcheckfinished && this.state.cal_authorized && this.state.settings.calendarid != "") {
-      CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
+      _utilsCalendarAPIUtils2['default'].getCalendarEvents(this.state.settings.calendarid);
     }
 
     //  Get the latest breaking news:
-    NewsAPIUtils.getTwitterFeed(this.props.breakingnewsuser);
+    _utilsNewsAPIUtils2['default'].getTwitterFeed(this.props.breakingnewsuser);
   },
 
   componentDidMount: function componentDidMount() {
@@ -553,7 +584,7 @@ var DashboardHome = _react2['default'].createClass({
    */
   render: function render() {
 
-    return _react2['default'].createElement('div', { className: 'container-fluid' }, _react2['default'].createElement('div', { className: 'row' }, _react2['default'].createElement('div', { className: 'col-sm-6' }, _react2['default'].createElement(WeatherDisplay, { weather: this.state.weather, pollen: this.state.pollen })), _react2['default'].createElement('div', { className: 'col-sm-6' }, _react2['default'].createElement(DateTimeDisplay, null), _react2['default'].createElement(CalendarDisplay, { calendar: this.state.calendarinfo }))), _react2['default'].createElement(NewsDisplay, { news: this.state.news }));
+    return _react2['default'].createElement('div', { className: 'container-fluid' }, _react2['default'].createElement('div', { className: 'row' }, _react2['default'].createElement('div', { className: 'col-sm-6' }, _react2['default'].createElement(_WeatherDisplayReact2['default'], { weather: this.state.weather, pollen: this.state.pollen })), _react2['default'].createElement('div', { className: 'col-sm-6' }, _react2['default'].createElement(_DateTimeDisplayReact2['default'], null), _react2['default'].createElement(_CalendarDisplayReact2['default'], { calendar: this.state.calendarinfo }))), _react2['default'].createElement(_NewsDisplayReact2['default'], { news: this.state.news }));
   },
 
   _onChange: function _onChange() {
@@ -1055,6 +1086,7 @@ var WeatherDisplay = (function (_Component) {
       var formattedSunset = "";
       var pollendays = [];
       var formattedHumidity = "";
+      var formattedStatus = "";
 
       if (this.props.weather.currently) {
         //  Format the current weather summary:
@@ -1072,6 +1104,8 @@ var WeatherDisplay = (function (_Component) {
         formattedSunset = (0, _moment2['default'])(sunset).format("h:mma");
 
         forecastdays = this.props.weather.daily.data;
+
+        formattedStatus = this.props.weather.source + ' last updated ' + (0, _moment2['default'])(this.props.weather.lastupdated).format("h:mma");
 
         //  If we have alerts, use them
         if (this.props.weather.alerts != null) {
@@ -1098,7 +1132,7 @@ var WeatherDisplay = (function (_Component) {
         }
       }
 
-      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }));
+      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }), React.createElement('div', { className: 'dashboard-status' }, formattedStatus));
     }
   }]);
 
@@ -2008,33 +2042,9 @@ var WeatherStore = (function (_Store) {
 
     _get(Object.getPrototypeOf(WeatherStore.prototype), 'constructor', this).call(this, dispatcher);
 
-    this.weatherdata = {
-      /*
-      currently: {
-        icon: "",
-        temperature: 0,
-        windspeed: 0,
-        wind_direction: 0,
-        humidity: 0,
-        apparent_temp: 0
-        sunrise: "",
-        sunset: "",        
-      }, 
-      daily: { 
-        data: [{
-          date: "",
-          icon: "",
-          summary: "",
-          high: 0,
-          low: 0,
-          }]
-      },
-      alerts: []
-      */
-    };
-
+    this.weatherdata = {};
     this.pollendata = {};
-    this.pollenZipcode = "";
+    this.pollenZipcode = ""; /* Deprecated.  We should get this from settings */
   }
 
   _createClass(WeatherStore, [{
@@ -2047,6 +2057,8 @@ var WeatherStore = (function (_Store) {
     value: function getPollen() {
       return this.pollendata;
     }
+
+    /* Deprecated.  We should get this from settings */
   }, {
     key: 'getPollenZipcode',
     value: function getPollenZipcode() {
@@ -2487,7 +2499,7 @@ var WeatherAPIUtils = (function () {
             yw.item.forecast.map(function (day) {
                 dailyData.push({
                     summary: day.text,
-                    date: (0, _moment2['default'])(day.date).unix(),
+                    date: (0, _moment2['default'])(day.date, "D MMM YYYY").unix(),
                     icon: day.code, /* Convert to standard icon here? */
                     high: parseInt(day.high),
                     low: parseInt(day.low),

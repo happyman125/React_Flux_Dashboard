@@ -7,34 +7,9 @@ class WeatherStore extends Store {
   constructor(dispatcher){
     super(dispatcher);
 
-    this.weatherdata = {
-      /*
-      currently: {
-        icon: "",
-        temperature: 0,
-        windspeed: 0,
-        wind_direction: 0,
-        humidity: 0,
-        apparent_temp: 0
-        sunrise: "",
-        sunset: "",        
-      }, 
-      daily: { 
-        data: [{
-          date: "",
-          icon: "",
-          summary: "",
-          high: 0,
-          low: 0,
-
-        }]
-      },
-      alerts: []
-      */
-    };
-
+    this.weatherdata = {};
     this.pollendata = {};
-    this.pollenZipcode = "";
+    this.pollenZipcode = ""; /* Deprecated.  We should get this from settings */
   }
 
   getWeather() {
@@ -45,6 +20,7 @@ class WeatherStore extends Store {
     return this.pollendata;
   }
 
+  /* Deprecated.  We should get this from settings */
   getPollenZipcode() {
     return this.pollenZipcode;
   }

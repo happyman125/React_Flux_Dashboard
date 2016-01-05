@@ -25,6 +25,7 @@ class WeatherDisplay extends Component {
     var formattedSunset = "";
     var pollendays = [];
     var formattedHumidity = "";
+    let formattedStatus = "";
 
     if(this.props.weather.currently) 
     {
@@ -43,6 +44,8 @@ class WeatherDisplay extends Component {
       formattedSunset = Moment(sunset).format("h:mma");
 
       forecastdays = this.props.weather.daily.data;
+
+      formattedStatus = this.props.weather.source + ' last updated ' + Moment(this.props.weather.lastupdated).format("h:mma")
 
       //  If we have alerts, use them
       if(this.props.weather.alerts != null){
@@ -86,6 +89,7 @@ class WeatherDisplay extends Component {
           <WeatherForecast forecastdays={forecastdays} />
 
           <WeatherAlerts alerts={alerts} />
+          <div className="dashboard-status">{formattedStatus}</div>
         </div>
     );
   }

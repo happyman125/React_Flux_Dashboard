@@ -1,15 +1,15 @@
 import React from 'react';
 
 //  The components
-var DateTimeDisplay = require('./DateTimeDisplay.react');
-var WeatherDisplay = require('./WeatherDisplay.react');
-var CalendarDisplay = require('./CalendarDisplay.react');
-var NewsDisplay = require('./NewsDisplay.react')
+import DateTimeDisplay from './DateTimeDisplay.react';
+import WeatherDisplay from './WeatherDisplay.react';
+import CalendarDisplay from './CalendarDisplay.react';
+import NewsDisplay from './NewsDisplay.react';
 
 //  The API utils
-var WeatherAPIUtils = require('../utils/WeatherAPIUtils');
-var CalendarAPIUtils = require('../utils/CalendarAPIUtils');
-var NewsAPIUtils = require('../utils/NewsAPIUtils');
+import WeatherAPIUtils from '../utils/WeatherAPIUtils';
+import CalendarAPIUtils from '../utils/CalendarAPIUtils';
+import NewsAPIUtils from '../utils/NewsAPIUtils';
 
 //  The stores
 import WeatherStore from '../stores/WeatherStore';
