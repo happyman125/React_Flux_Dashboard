@@ -1229,7 +1229,7 @@ var WeatherForecast = (function (_Component) {
       var next5days = this.props.forecastdays.slice(0, 5);
 
       return React.createElement('table', { id: 'forcast', className: 'table table-condensed' }, React.createElement('tbody', null, next5days.map(function (forecastday) {
-        return [React.createElement(_WeatherForecastDayReact2['default'], { key: forecastday.day, forecast: forecastday }), React.createElement(_WeatherForecastDaySummaryReact2['default'], { key: forecastday.day + "summary", forecast: forecastday })];
+        return React.createElement(_WeatherForecastDayReact2['default'], { key: forecastday.day, forecast: forecastday });
       })));
     }
   }]);
@@ -1354,7 +1354,7 @@ var WeatherForecastDay = (function (_Component) {
         pollenCountClass = pollenCountClass + " label-danger";
       }
 
-      return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', null, formattedDay), React.createElement('td', null, React.createElement(_WeatherForecastIconReact2['default'], { icon: forcastIcon }), ' ', React.createElement('span', { style: { color: '#7595AD' } }, formattedPercentage)), React.createElement('td', null, tempLow, ' • ', tempHigh), React.createElement('td', null), React.createElement('td', null, React.createElement('span', { className: pollenCountClass }, pollenCount)));
+      return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', { className: 'forecast-icon' }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forcastIcon }), ' ', React.createElement('span', { style: { color: '#7595AD' } }, formattedPercentage)), React.createElement('td', null, formattedDay, React.createElement('br', null), React.createElement('span', { className: 'forcast-summary' }, this.props.forecast.summary)), React.createElement('td', { className: 'forecast-temp' }, tempLow, ' • ', tempHigh), React.createElement('td', { className: 'forecast-pollen' }, React.createElement('span', { className: pollenCountClass }, pollenCount)));
     }
   }]);
 
@@ -1377,7 +1377,7 @@ var WeatherForecastDaySummary = React.createClass({
    */
   render: function render() {
 
-    return React.createElement("tr", null, React.createElement("td", { style: { "border": "none" }, className: "forcast-summary", colSpan: "5" }, this.props.forecast.summary));
+    return React.createElement("tr", null, React.createElement("td", { style: { "border": "none" }, className: "forcast-summary", colSpan: "2" }, this.props.forecast.summary));
   }
 });
 

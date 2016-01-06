@@ -21,7 +21,7 @@ class WeatherForecast extends Component {
           <table id="forcast" className="table table-condensed">
             <tbody>
               {next5days.map(function(forecastday) {
-                return [<WeatherForecastDay key={forecastday.day} forecast={forecastday}/>, <WeatherForecastDaySummary key={forecastday.day + "summary"} forecast={forecastday}/>];
+                return <WeatherForecastDay key={forecastday.day} forecast={forecastday}/>;
               })}
             </tbody>
           </table>

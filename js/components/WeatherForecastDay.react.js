@@ -43,11 +43,13 @@ class WeatherForecastDay extends Component {
     return (
 
         <tr className="forcast-datarow">
-          <td>{formattedDay}</td>
-          <td><WeatherForecastIcon icon={forcastIcon} /> <span style={{color: '#7595AD'}}>{formattedPercentage}</span></td>
-          <td>{tempLow} • {tempHigh}</td>
-          <td></td>
-          <td><span className={pollenCountClass}>{pollenCount}</span></td>
+          <td className="forecast-icon"><WeatherForecastIcon icon={forcastIcon} /> <span style={{color: '#7595AD'}}>{formattedPercentage}</span></td>
+          <td>
+            {formattedDay}<br/>
+            <span className="forcast-summary">{this.props.forecast.summary}</span>            
+          </td>
+          <td className="forecast-temp">{tempLow} • {tempHigh}</td>
+          <td className="forecast-pollen"><span className={pollenCountClass}>{pollenCount}</span></td>
         </tr>
     );
   }

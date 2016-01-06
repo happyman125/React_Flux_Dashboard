@@ -51,6 +51,22 @@ body{
   font-size: 2em;
 }
 
+.forecast-icon{
+  vertical-align: middle !important;
+  font-size: 1.5em;
+  width: 1em;
+}
+
+.forecast-temp{
+  vertical-align: middle !important;
+  font-size: 1.5em;
+}
+
+.forecast-pollen{
+  vertical-align: middle !important;
+  font-size: 1em;
+}
+
 .forcast-summary{
   font-size: .7em;
 }
@@ -115,7 +131,7 @@ body{
   width:100%;
   background-color:black;
   color:white;
-  opacity: 0.7;/* transparency */
+  opacity: 0.85;/* transparency */
   filter:alpha(opacity=70);/* IE transparency */
 }
 
