@@ -54,7 +54,7 @@ class WeatherAPIUtils {
         //  Convert the rest of the data to the common weather format
         let weatherdata = {    
           currently: {
-            icon: fdata.currently.icon, /* We should convert this to a set of standard icons here */
+            icon: fdata.currently.icon, 
             temperature: fdata.currently.temperature,
             windspeed: fdata.currently.windSpeed,
             wind_direction: fdata.currently.windBearing,
@@ -105,7 +105,7 @@ class WeatherAPIUtils {
             dailyData.push({
                 summary: day.text,
                 date: Moment(day.date, "D MMM YYYY").unix(),
-                icon: day.code, /* Convert to standard icon here? */
+                icon: day.code,
                 high: parseInt(day.high), 
                 low: parseInt(day.low),
                 precipProbability: 0
@@ -117,7 +117,7 @@ class WeatherAPIUtils {
         //  Convert the rest of the data to the common weather format
         let weatherdata = {    
           currently: {
-            icon: yw.item.condition.code, /* Convert to standard icon here? */
+            icon: yw.item.condition.code, 
             temperature: parseInt(yw.item.condition.temp),
             windspeed: parseInt(yw.wind.speed),
             wind_direction: parseInt(yw.wind.direction),

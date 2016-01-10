@@ -75,6 +75,17 @@ body{
  font-size: 2em; 
 }
 
+.temp-pixel-pad{
+  display: inline-block;
+}
+
+.temp-pixel{
+  width: 2px;
+  height: 35px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* Calendar display */
 #time {
   font-size: 13em;

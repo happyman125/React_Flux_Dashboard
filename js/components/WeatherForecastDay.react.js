@@ -3,6 +3,7 @@ import Moment from 'moment';
 
 //  The components
 import WeatherForecastIcon from './WeatherForecastIcon.react';
+import WeatherForecastTemp from './WeatherForecastTemp.react';
 
 class WeatherForecastDay extends Component {
 
@@ -48,7 +49,7 @@ class WeatherForecastDay extends Component {
             {formattedDay}<br/>
             <span className="forcast-summary">{this.props.forecast.summary}</span>            
           </td>
-          <td className="forecast-temp">{tempLow} • {tempHigh}</td>
+          <td className="forecast-temp"><WeatherForecastTemp low={tempLow} high={tempHigh}/></td>
           <td className="forecast-pollen"><span className={pollenCountClass}>{pollenCount}</span></td>
         </tr>
     );
