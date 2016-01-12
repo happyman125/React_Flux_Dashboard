@@ -41,6 +41,7 @@ class WeatherAPIUtils {
         //  Map the daily data to the common format
         var dailyData = [];
         fdata.daily.data.map(function(day) {
+
             dailyData.push({
                 summary: day.summary,
                 date: day.time,
@@ -102,12 +103,19 @@ class WeatherAPIUtils {
         //  Map the daily data to the common format
         var dailyData = [];
         yw.item.forecast.map(function(day) {
+
+            //  Sanity check the high and low:
+            let low = parseInt(yw.item.condition.temp);
+            if(parseInt(day.low) < parseInt(day.high)) {
+                low = parseInt(day.low);
+            }
+
             dailyData.push({
                 summary: day.text,
                 date: Moment(day.date, "D MMM YYYY").unix(),
                 icon: day.code,
                 high: parseInt(day.high), 
-                low: parseInt(day.low),
+                low: low,
                 precipProbability: 0
             });
         });
