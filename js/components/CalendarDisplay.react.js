@@ -21,14 +21,14 @@ var CalendarDisplay = React.createClass({
 
   	return (
         <div>
+          <div id="calendar-status" className="dashboard-status">{formattedStatus}</div>
           <table id="calendar" className="table">
             <tbody>
               {this.props.calendar.items.map(function(eventinfo) {
                 return [<CalendarEventItem key={eventinfo.id} eventinfo={eventinfo}/>, <CalendarEventMoreInfo key={"mi"+eventinfo.id} eventinfo={eventinfo}/>];
               })}
             </tbody>
-          </table>
-          <div className="dashboard-status">{formattedStatus}</div>
+          </table>          
         </div>
     );
   }

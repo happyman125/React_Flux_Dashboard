@@ -306,9 +306,9 @@ var CalendarDisplay = React.createClass({
     //  If we do, display them:
     var formattedStatus = this.props.calendar.summary + ' last updated ' + (0, _moment2['default'])(this.props.calendar.updated).format("h:mma");
 
-    return React.createElement('div', null, React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
+    return React.createElement('div', null, React.createElement('div', { id: 'calendar-status', className: 'dashboard-status' }, formattedStatus), React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
       return [React.createElement(CalendarEventItem, { key: eventinfo.id, eventinfo: eventinfo }), React.createElement(CalendarEventMoreInfo, { key: "mi" + eventinfo.id, eventinfo: eventinfo })];
-    }))), React.createElement('div', { className: 'dashboard-status' }, formattedStatus));
+    }))));
   }
 });
 
@@ -1087,6 +1087,7 @@ var WeatherDisplay = (function (_Component) {
       var pollendays = [];
       var formattedHumidity = "";
       var formattedStatus = "";
+      var pollenSummary = "";
 
       if (this.props.weather.currently) {
         //  Format the current weather summary:
@@ -1129,10 +1130,13 @@ var WeatherDisplay = (function (_Component) {
           for (var i = pollendays.length - 1; i >= 0; i--) {
             forecastdays[i].pollen = pollendays[i];
           };
+
+          //  Set the pollen summary:
+          pollenSummary = this.props.pollen.PredominantPollen;
         }
       }
 
-      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }), React.createElement('div', { className: 'dashboard-status' }, formattedStatus));
+      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement('div', { className: 'dashboard-status' }, formattedStatus), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement('div', { id: 'pollen-summary' }, 'Predominant pollen: ', pollenSummary), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }));
     }
   }]);
 

@@ -26,6 +26,7 @@ class WeatherDisplay extends Component {
     var pollendays = [];
     var formattedHumidity = "";
     let formattedStatus = "";
+    let pollenSummary = "";
 
     if(this.props.weather.currently) 
     {
@@ -71,6 +72,9 @@ class WeatherDisplay extends Component {
         for (var i = pollendays.length - 1; i >= 0; i--) {
           forecastdays[i].pollen = pollendays[i];
         };
+
+        //  Set the pollen summary:
+        pollenSummary = this.props.pollen.PredominantPollen;
       }
     }
 
@@ -86,10 +90,15 @@ class WeatherDisplay extends Component {
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
           </div>
 
+          <div className="dashboard-status">{formattedStatus}</div>
           <WeatherForecast forecastdays={forecastdays} />
 
+          <div id="pollen-summary">
+            Predominant pollen: {pollenSummary}
+          </div>
+
           <WeatherAlerts alerts={alerts} />
-          <div className="dashboard-status">{formattedStatus}</div>
+
         </div>
     );
   }
