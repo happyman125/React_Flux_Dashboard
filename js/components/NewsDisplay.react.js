@@ -38,7 +38,7 @@ var NewsDisplay = React.createClass({
           <div id='breaking-wrapper'>
             <img id='breaking-news-image' src={newsItem.MediaUrl} />
             <div id='breaking-news-caption-wrapper'>
-              <div id='breaking-news-caption'><span id='breaking-news-caption-intro'>Breaking news {formattedTime}:</span> {newsText}</div>
+              <div id='breaking-news-caption'><span id='breaking-news-caption-intro'>{newsText}</span> {formattedTime}</div>
             </div>
           </div>
         </div>

@@ -930,7 +930,7 @@ var NewsDisplay = React.createClass({
     //  Set the time format:
     var formattedTime = newsCreatedTime.fromNow();
 
-    return React.createElement('div', { id: 'breaking-news' }, React.createElement('div', { id: 'breaking-wrapper' }, React.createElement('img', { id: 'breaking-news-image', src: newsItem.MediaUrl }), React.createElement('div', { id: 'breaking-news-caption-wrapper' }, React.createElement('div', { id: 'breaking-news-caption' }, React.createElement('span', { id: 'breaking-news-caption-intro' }, 'Breaking news ', formattedTime, ':'), ' ', newsText))));
+    return React.createElement('div', { id: 'breaking-news' }, React.createElement('div', { id: 'breaking-wrapper' }, React.createElement('img', { id: 'breaking-news-image', src: newsItem.MediaUrl }), React.createElement('div', { id: 'breaking-news-caption-wrapper' }, React.createElement('div', { id: 'breaking-news-caption' }, React.createElement('span', { id: 'breaking-news-caption-intro' }, newsText), ' ', formattedTime))));
   }
 });
 
