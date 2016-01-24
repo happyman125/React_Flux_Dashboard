@@ -1,16 +1,16 @@
-var React = require('react');
+import {Component} from 'react';
 import Moment from 'moment';
 
 //  The components
-var CalendarEventItem = require('./CalendarEventItem.react');
-var CalendarEventMoreInfo = require('./CalendarEventMoreInfo.react');
+import CalendarEventItem from './CalendarEventItem.react';
+import CalendarEventMoreInfo from './CalendarEventMoreInfo.react';
 
-var CalendarDisplay = React.createClass({
+class CalendarDisplay extends Component {
 
   /**
    * @return {object}
    */
-  render: function() {
+  render() {
     //  First, see if we have events
     if(this.props.calendar.items == null || this.props.calendar.items.length == 0) {
       return (<div id="calendar-empty">No calendar events left for today</div>);
@@ -32,6 +32,6 @@ var CalendarDisplay = React.createClass({
         </div>
     );
   }
-});
+}
 
-module.exports = CalendarDisplay;
+export default CalendarDisplay;

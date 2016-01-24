@@ -278,41 +278,107 @@ function showError(error) {
 },{"./actions/PageActions":3,"./components/DashboardApp.react":10,"./stores/SettingsStore":28,"./utils/CalendarAPIUtils":30,"./utils/NewsAPIUtils":31,"./utils/SettingsUtils":32,"./utils/WeatherAPIUtils":33,"director":35,"react":229}],7:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ('value' in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+  };
+})();
+
+var _get = function get(_x, _x2, _x3) {
+  var _again = true;_function: while (_again) {
+    var object = _x,
+        property = _x2,
+        receiver = _x3;desc = parent = getter = undefined;_again = false;if (object === null) object = Function.prototype;var desc = Object.getOwnPropertyDescriptor(object, property);if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);if (parent === null) {
+        return undefined;
+      } else {
+        _x = parent;_x2 = property;_x3 = receiver;_again = true;continue _function;
+      }
+    } else if ('value' in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;if (getter === undefined) {
+        return undefined;
+      }return getter.call(receiver);
+    }
+  }
+};
+
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { 'default': obj };
 }
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError('Cannot call a class as a function');
+  }
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== 'function' && superClass !== null) {
+    throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass);
+  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+}
+
+var _react = require('react');
 
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
 //  The components
-var React = require('react');
-var CalendarEventItem = require('./CalendarEventItem.react');
-var CalendarEventMoreInfo = require('./CalendarEventMoreInfo.react');
 
-var CalendarDisplay = React.createClass({
-  displayName: 'CalendarDisplay',
+var _CalendarEventItemReact = require('./CalendarEventItem.react');
 
-  /**
-   * @return {object}
-   */
-  render: function render() {
-    //  First, see if we have events
-    if (this.props.calendar.items == null || this.props.calendar.items.length == 0) {
-      return React.createElement('div', { id: 'calendar-empty' }, 'No calendar events left for today');
-    }
+var _CalendarEventItemReact2 = _interopRequireDefault(_CalendarEventItemReact);
 
-    //  If we do, display them:
-    var formattedStatus = this.props.calendar.summary + ' last updated ' + (0, _moment2['default'])(this.props.calendar.updated).format("h:mma");
+var _CalendarEventMoreInfoReact = require('./CalendarEventMoreInfo.react');
 
-    return React.createElement('div', null, React.createElement('div', { id: 'calendar-status', className: 'dashboard-status' }, formattedStatus), React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
-      return [React.createElement(CalendarEventItem, { key: eventinfo.id, eventinfo: eventinfo }), React.createElement(CalendarEventMoreInfo, { key: "mi" + eventinfo.id, eventinfo: eventinfo })];
-    }))));
+var _CalendarEventMoreInfoReact2 = _interopRequireDefault(_CalendarEventMoreInfoReact);
+
+var CalendarDisplay = (function (_Component) {
+  _inherits(CalendarDisplay, _Component);
+
+  function CalendarDisplay() {
+    _classCallCheck(this, CalendarDisplay);
+
+    _get(Object.getPrototypeOf(CalendarDisplay.prototype), 'constructor', this).apply(this, arguments);
   }
-});
 
-module.exports = CalendarDisplay;
+  _createClass(CalendarDisplay, [{
+    key: 'render',
+
+    /**
+     * @return {object}
+     */
+    value: function render() {
+      //  First, see if we have events
+      if (this.props.calendar.items == null || this.props.calendar.items.length == 0) {
+        return React.createElement('div', { id: 'calendar-empty' }, 'No calendar events left for today');
+      }
+
+      //  If we do, display them:
+      var formattedStatus = this.props.calendar.summary + ' last updated ' + (0, _moment2['default'])(this.props.calendar.updated).format("h:mma");
+
+      return React.createElement('div', null, React.createElement('div', { id: 'calendar-status', className: 'dashboard-status' }, formattedStatus), React.createElement('table', { id: 'calendar', className: 'table' }, React.createElement('tbody', null, this.props.calendar.items.map(function (eventinfo) {
+        return [React.createElement(_CalendarEventItemReact2['default'], { key: eventinfo.id, eventinfo: eventinfo }), React.createElement(_CalendarEventMoreInfoReact2['default'], { key: "mi" + eventinfo.id, eventinfo: eventinfo })];
+      }))));
+    }
+  }]);
+
+  return CalendarDisplay;
+})(_react.Component);
+
+exports['default'] = CalendarDisplay;
+module.exports = exports['default'];
 
 },{"./CalendarEventItem.react":8,"./CalendarEventMoreInfo.react":9,"moment":56,"react":229}],8:[function(require,module,exports){
 'use strict';
@@ -1332,21 +1398,8 @@ var WeatherForecastDay = (function (_Component) {
       var forecastDay = this.props.forecast.date;
       var formattedDay = (0, _moment2['default'])(forecastDay * 1000).format("dddd");
       var forcastIcon = this.props.forecast.icon;
-      var formattedPercentage = "";
       var pollenCount = this.props.forecast.pollen || "";
       var pollenCountClass = "label";
-
-      //  If it looks like it's not clear or partly-anything, then there is probably a change of precipitation:
-      if (forcastIcon.indexOf("clear") < 0 && forcastIcon.indexOf("partly") < 0) {
-        formattedPercentage = Math.floor(this.props.forecast.precipProbability * 100);
-
-        //  If we have a percentage and it's greater than 10.. proceed
-        if (formattedPercentage > 10) {
-          formattedPercentage = formattedPercentage + "%";
-        } else {
-          formattedPercentage = "";
-        }
-      }
 
       //  Format the pollen count display:
       if (pollenCount <= 3) {
@@ -1362,7 +1415,7 @@ var WeatherForecastDay = (function (_Component) {
         pollenCountClass = pollenCountClass + " label-danger";
       }
 
-      return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', { className: 'forecast-icon' }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forcastIcon }), ' ', React.createElement('span', { style: { color: '#7595AD' } }, formattedPercentage)), React.createElement('td', null, formattedDay, React.createElement('br', null), React.createElement('span', { className: 'forcast-summary' }, this.props.forecast.summary)), React.createElement('td', { className: 'forecast-temp' }, React.createElement(_WeatherForecastTempReact2['default'], { low: tempLow, high: tempHigh })), React.createElement('td', { className: 'forecast-pollen' }, React.createElement('span', { className: pollenCountClass }, pollenCount)));
+      return React.createElement('tr', { className: 'forcast-datarow' }, React.createElement('td', { className: 'forecast-icon' }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forcastIcon })), React.createElement('td', null, formattedDay, React.createElement('br', null), React.createElement('span', { className: 'forcast-summary' }, this.props.forecast.summary)), React.createElement('td', { className: 'forecast-temp' }, React.createElement(_WeatherForecastTempReact2['default'], { low: tempLow, high: tempHigh })), React.createElement('td', { className: 'forecast-pollen' }, React.createElement('span', { className: pollenCountClass }, pollenCount)));
     }
   }]);
 

@@ -15,25 +15,8 @@ class WeatherForecastDay extends Component {
     var forecastDay = this.props.forecast.date;
     var formattedDay = Moment(forecastDay * 1000).format("dddd");
     var forcastIcon = this.props.forecast.icon;
-    var formattedPercentage = "";
     var pollenCount = this.props.forecast.pollen || "";
     var pollenCountClass = "label";
-
-    //  If it looks like it's not clear or partly-anything, then there is probably a change of precipitation:
-    if(forcastIcon.indexOf("clear") < 0 && forcastIcon.indexOf("partly") < 0)
-    {
-      formattedPercentage = Math.floor((this.props.forecast.precipProbability * 100)); 
-
-      //  If we have a percentage and it's greater than 10.. proceed
-      if(formattedPercentage > 10)
-      { 
-        formattedPercentage = formattedPercentage + "%" 
-      } 
-      else 
-      {
-        formattedPercentage = "";
-      }
-    }
 
     //  Format the pollen count display:
     if(pollenCount <= 3){pollenCountClass = pollenCountClass + " label-default";}
@@ -44,7 +27,7 @@ class WeatherForecastDay extends Component {
     return (
 
         <tr className="forcast-datarow">
-          <td className="forecast-icon"><WeatherForecastIcon icon={forcastIcon} /> <span style={{color: '#7595AD'}}>{formattedPercentage}</span></td>
+          <td className="forecast-icon"><WeatherForecastIcon icon={forcastIcon} /></td>
           <td>
             {formattedDay}<br/>
             <span className="forcast-summary">{this.props.forecast.summary}</span>            
