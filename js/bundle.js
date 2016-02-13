@@ -1172,7 +1172,7 @@ var WeatherDisplay = (function (_Component) {
 
         forecastdays = this.props.weather.daily.data;
 
-        formattedStatus = this.props.weather.source + ' last updated ' + (0, _moment2['default'])(this.props.weather.lastupdated).format("h:mma");
+        formattedStatus = this.props.weather.source + ' last updated ' + (0, _moment2['default'])(this.props.weather.lastupdated).format("h:mma") + ' / ';
 
         //  If we have alerts, use them
         if (this.props.weather.alerts != null) {
@@ -1202,7 +1202,7 @@ var WeatherDisplay = (function (_Component) {
         }
       }
 
-      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement('div', { className: 'dashboard-status' }, formattedStatus), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement('div', { id: 'pollen-summary' }, 'Predominant pollen: ', pollenSummary), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }));
+      return React.createElement('div', { className: 'row' }, React.createElement('div', { id: 'temp', style: { color: tempColor } }, React.createElement(_WeatherForecastIconReact2['default'], { icon: forecasticon }), ' ', temperature, '°'), React.createElement('div', { id: 'extended-summary' }, 'Wind: ', windspeed, 'mph • ', formattedHumidity, ' humidity • ', React.createElement('span', { style: feelsLikeStyles }, 'Feels like: ', feelslike, ' °')), React.createElement('div', { id: 'sunrise-sunset' }, React.createElement('i', { className: 'wi wi-horizon' }), ' ', formattedSunrise, ' / ', React.createElement('i', { className: 'wi wi-night-clear' }), ' ', formattedSunset), React.createElement('div', { className: 'dashboard-status' }, formattedStatus, ' ', React.createElement('a', { href: '/#/settings' }, 'Settings')), React.createElement(_WeatherForecastReact2['default'], { forecastdays: forecastdays }), React.createElement('div', { id: 'pollen-summary' }, 'Predominant pollen: ', pollenSummary), React.createElement(_WeatherAlertsReact2['default'], { alerts: alerts }));
     }
   }]);
 

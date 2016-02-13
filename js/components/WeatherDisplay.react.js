@@ -46,7 +46,7 @@ class WeatherDisplay extends Component {
 
       forecastdays = this.props.weather.daily.data;
 
-      formattedStatus = this.props.weather.source + ' last updated ' + Moment(this.props.weather.lastupdated).format("h:mma")
+      formattedStatus = this.props.weather.source + ' last updated ' + Moment(this.props.weather.lastupdated).format("h:mma") + ' / '
 
       //  If we have alerts, use them
       if(this.props.weather.alerts != null){
@@ -90,7 +90,7 @@ class WeatherDisplay extends Component {
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
           </div>
 
-          <div className="dashboard-status">{formattedStatus}</div>
+          <div className="dashboard-status">{formattedStatus} <a href='/#/settings'>Settings</a></div>
           <WeatherForecast forecastdays={forecastdays} />
 
           <div id="pollen-summary">

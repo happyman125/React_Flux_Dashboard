@@ -160,3 +160,10 @@ body{
   color: #444;
 }
 
+.dashboard-status a{
+  color: #444;
+}
+
+.dashboard-status .a:hover{
+  color: #444;
+}
