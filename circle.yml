@@ -9,12 +9,5 @@ dependencies:
     - npm install
   post:
     - npm run build
-    - cp -r css $CIRCLE_ARTIFACTS
+    - ./stagingscript.sh
 
-general:
-  artifacts:
-  - font
-  - fonts
-  - js/bundle.js
-  - js/rainbowvis.js
-  - index.html
