@@ -6,6 +6,8 @@ cat <<EOT > build.json
 }
 EOT
 
+# Make our js directory
+mkdir $CIRCLE_ARTIFACTS/js/
 
 # Copy selected files to staging area
 cp -r css $CIRCLE_ARTIFACTS
