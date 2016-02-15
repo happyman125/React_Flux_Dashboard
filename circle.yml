@@ -15,4 +15,3 @@ general:
   - fonts
   - js/*.js
   - index.html
-  - *.js
