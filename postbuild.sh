@@ -17,3 +17,7 @@ cp js/bundle.js $CIRCLE_ARTIFACTS/js/
 cp js/rainbowvis.js $CIRCLE_ARTIFACTS/js/
 cp index.html $CIRCLE_ARTIFACTS
 cp build.json $CIRCLE_ARTIFACTS
+
+# Set our other scripts to execute:
+chmod 755 stagingscript.sh
+chmod 755 deployscript.sh
