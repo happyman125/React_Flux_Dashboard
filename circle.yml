@@ -13,5 +13,7 @@ general:
   - css 
   - font
   - fonts
-  - js
+  - js/app.js
+  - js/bundle.js
+  - js/rainbowvis.js
   - index.html
