@@ -5,15 +5,16 @@ machine:
     - docker
 
 dependencies:
+  override:
+    - npm install
   post:
     - npm run build
+    - cp -r css $CIRCLE_ARTIFACTS
 
 general:
   artifacts:
-  - css 
   - font
   - fonts
-  - js/app.js
   - js/bundle.js
   - js/rainbowvis.js
   - index.html
