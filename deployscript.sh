@@ -1,0 +1,1 @@
+s3cmd sync /root/dashboard.cagedtornado.com/ s3://dashboard.cagedtornado.com --acl-public --no-mime-magic --guess-mime-type
