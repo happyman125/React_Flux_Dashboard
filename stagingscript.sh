@@ -3,9 +3,6 @@ rm -rf /root/dashboard.cagedtornado.com
 mkdir /root/dashboard.cagedtornado.com
 mkdir /root/dashboard.cagedtornado.com/js
 
-# See what is available
-tree -if --noreport /root/dashboard
-
 # Copy selected files to staging area
 cp -r /root/dashboard/css /root/dashboard.cagedtornado.com
 cp -r /root/dashboard/font /root/dashboard.cagedtornado.com
