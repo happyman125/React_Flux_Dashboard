@@ -9,5 +9,6 @@ dependencies:
     - npm install
   post:
     - npm run build
+    - chmod 755 stagingscript.sh
     - ./stagingscript.sh
 
