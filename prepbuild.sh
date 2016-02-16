@@ -10,6 +10,13 @@ cat <<EOT > build.json
 }
 EOT
 
+# Set Cloudflare development mode on
+curl -X PATCH "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode" \
+-H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+-H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+-H "Content-Type: application/json" \
+--data '{"value":"on"}'
+
 # Set our other scripts to execute:
 chmod 755 stagingscript.sh
 chmod 755 deployscript.sh
