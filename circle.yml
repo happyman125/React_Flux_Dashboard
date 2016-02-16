@@ -1,16 +1,11 @@
 machine:
-  node:
-    version: 0.12.7
   services:
     - docker
 
 dependencies:
   override:
-    - npm install
-  post:
-    - npm run build
-    - chmod 755 postbuild.sh
-    - ./postbuild.sh
+    - chmod 755 prepbuild.sh
+    - ./prepbuild.sh
     - docker info
     - docker build -t danesparza/dashboard:$CIRCLE_BUILD_NUM .
 

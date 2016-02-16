@@ -1,3 +1,6 @@
+# This script is run when the docker image is created
+# It should be run after the site is built with npm tools
+
 # Reset the staging area
 rm -rf /root/dashboard.cagedtornado.com
 mkdir /root/dashboard.cagedtornado.com
