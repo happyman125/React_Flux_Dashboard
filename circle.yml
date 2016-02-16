@@ -8,6 +8,7 @@ dependencies:
     - ./prepbuild.sh
     - docker info
     - docker build -t danesparza/dashboard:$CIRCLE_BUILD_NUM .
+    - docker run -e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" danesparza/dashboard:$CIRCLE_BUILD_NUM
 
 deployment:
   hub:
