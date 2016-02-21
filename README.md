@@ -5,7 +5,7 @@ Screenshot:
 
 ![Dashboard screenshot](screen_dashboard_small.png?raw=true)
 
-[![Build Status](https://drone.io/github.com/danesparza/Dashboard/status.png)](https://drone.io/github.com/danesparza/Dashboard/latest)
+Build: [![Circle CI](https://circleci.com/gh/danesparza/Dashboard.svg?style=svg)](https://circleci.com/gh/danesparza/Dashboard)
 
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
