@@ -1,11 +1,9 @@
-# Dashboard
+# Dashboard [![Circle CI](https://circleci.com/gh/danesparza/Dashboard.svg?style=svg)](https://circleci.com/gh/danesparza/Dashboard)
 Weather and Google calendar dashboard built with [React](http://facebook.github.io/react/) &amp; [Flux](https://facebook.github.io/flux/)
 
 Screenshot:
 
 ![Dashboard screenshot](screen_dashboard_small.png?raw=true)
-
-Build: [![Circle CI](https://circleci.com/gh/danesparza/Dashboard.svg?style=svg)](https://circleci.com/gh/danesparza/Dashboard)
 
 *To build, make sure you have the latest version of [Node](https://nodejs.org/) installed.  Node is just used for [package management](https://docs.npmjs.com/cli/npm) and to ease local development.  If you've never used Node before, it's a quick install and [there are installers for multiple platforms](https://nodejs.org/download/), including Windows, Linux and OSX.*
 
