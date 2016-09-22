@@ -2718,7 +2718,7 @@ var WeatherAPIUtils = (function () {
         value: function getCurrentYahooWeather(latitude, longitude) {
 
             //  Format the yahoo url
-            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="' + latitude + ',' + longitude + '" and gflags="R")&format=json';
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(' + latitude + ',' + longitude + ')")&format=json&env=store://datatables.org/alltableswithkeys';
 
             $.ajax(url).done((function (data) {
                 //  Convert the data to the common weather format
