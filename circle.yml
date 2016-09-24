@@ -9,7 +9,7 @@ dependencies:
     # Our Github release maker
     - go get github.com/tcnksm/ghr
     # Our S3 deploy tool
-    - apt-get install -y s3cmd
+    - sudo apt-get update; sudo apt-get install -y s3cmd
   override:    
     # Execute the build process
     - npm set progress=false; npm install; npm run build;
