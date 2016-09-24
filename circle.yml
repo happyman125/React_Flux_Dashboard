@@ -1,19 +1,9 @@
-machine:
-  services:
-    - docker
-
 dependencies:
   pre:
-    # Docker version sanity check
-    - docker info
     # Our Github release maker
     - go get github.com/tcnksm/ghr
     # Our S3 deploy tool
     - sudo apt-get update; sudo apt-get install -y s3cmd
-
-    # Set our other scripts to execute (eventually, do these things in the build script itself):
-    - chmod 755 stagingscript.sh
-    - chmod 755 deployscript.sh
   override:    
     # Execute the build process
     - npm set progress=false; npm install; npm run build;
@@ -23,6 +13,7 @@ dependencies:
     - mkdir -p /tmp/ui/css
     - cp css/*.css /tmp/ui/css
     - cp js/bundle.js /tmp/ui/js
+    - cp js/rainbowvis.js /tmp/ui/rainbowvis.js
     - cp index.html /tmp/ui/index.html
     - cd /tmp; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip ui
 
@@ -38,4 +29,5 @@ deployment:
       # curl -X PATCH "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode" -H "X-Auth-Email: $CLOUDFLARE_EMAIL" -H "X-Auth-Key: $CLOUDFLARE_API_KEY" -H "Content-Type: application/json" --data '{"value":"on"}'
       # Publish assets to Github
       - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+
 
