@@ -2,8 +2,6 @@ dependencies:
   pre:
     # Our Github release maker
     - go get github.com/tcnksm/ghr
-    # Our S3 deploy tool
-    - sudo apt-get update; sudo apt-get install -y s3cmd
   override:    
     # Execute the build process
     - npm set progress=false; npm install; npm run build;
@@ -15,12 +13,10 @@ dependencies:
     - cp js/bundle.js /tmp/ui/js
     - cp js/rainbowvis.js /tmp/ui/js
     - cp index.html /tmp/ui/index.html
-    - cd /tmp/ui; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip 
-
+    - cd /tmp/ui; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
 test:
   post:
     - curl --retry 10 --retry-delay 5 http://dashboard.cagedtornado.com/build.json
-
 deployment:
   hub:
     branch: master
@@ -29,5 +25,3 @@ deployment:
       # curl -X PATCH "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode" -H "X-Auth-Email: $CLOUDFLARE_EMAIL" -H "X-Auth-Key: $CLOUDFLARE_API_KEY" -H "Content-Type: application/json" --data '{"value":"on"}'
       # Publish assets to Github
       - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
-
-
