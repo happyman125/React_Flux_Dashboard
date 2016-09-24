@@ -10,6 +10,9 @@ dependencies:
     - go get github.com/tcnksm/ghr
     # Our S3 deploy tool
     - sudo apt-get update; sudo apt-get install -y s3cmd
+    # Set our other scripts to execute (eventually, do these things in the build script itself):
+    - chmod 755 stagingscript.sh
+    - chmod 755 deployscript.sh
   override:    
     # Execute the build process
     - npm set progress=false; npm install; npm run build;
