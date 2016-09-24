@@ -23,10 +23,10 @@ deployment:
   hub:
     branch: master
     commands:
-      # Prep Cloudflare for deployment
-      - "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
       # Publish assets to Github
       - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+      # Prep Cloudflare for deployment
+      - "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"      
       # Push to S3. This expects the environment variables 
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
-      s3cmd sync /tmp/ui/ s3://dashboard.cagedtornado.com --acl-public --no-mime-magic --guess-mime-type
+      - s3cmd sync /tmp/ui/ s3://dashboard.cagedtornado.com --acl-public --no-mime-magic --guess-mime-type
