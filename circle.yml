@@ -9,7 +9,9 @@ dependencies:
     # Build our dashboard zip file
     - mkdir -p /tmp/ui/js
     - mkdir -p /tmp/ui/css
+    - mkdir -p /tmp/ui/font
     - cp css/*.css /tmp/ui/css
+    - cp font/*.* /tmp/ui/font
     - cp js/bundle.js /tmp/ui/js
     - cp js/rainbowvis.js /tmp/ui/js
     - cp index.html /tmp/ui/index.html
