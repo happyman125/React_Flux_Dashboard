@@ -11,13 +11,12 @@ dependencies:
     # Our S3 deploy tool
     - sudo apt-get update; sudo apt-get install -y s3cmd
     # Create the build.json file
-    - >
-    cat <<EOT > build.json
+    - cat <<EOT > build.json
     {
       "version" : "$CIRCLE_BUILD_NUM",
       "project" : "$CIRCLE_PROJECT_REPONAME"
     }
-  EOT
+    EOT
 
     # Set our other scripts to execute (eventually, do these things in the build script itself):
     - chmod 755 stagingscript.sh
