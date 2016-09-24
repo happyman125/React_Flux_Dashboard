@@ -1,5 +1,7 @@
 dependencies:
   pre:
+    # Update s3cmd
+    - sudo apt-get update; sudo DEBIAN_FRONTEND=noninteractive apt-get install -y s3cmd;
     # Our Github release maker
     - go get github.com/tcnksm/ghr
   override:    
