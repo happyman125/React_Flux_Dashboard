@@ -3,13 +3,28 @@ machine:
     - docker
 
 dependencies:
-  override:
-    - chmod 755 prepbuild.sh
-    - ./prepbuild.sh
+  pre:
+    # Docker version sanity check
     - docker info
+    # Our Github release maker
+    - go get github.com/tcnksm/ghr
+    # Our S3 deploy tool
+    - apt-get install -y s3cmd
+  override:    
+    # Execute the build process
+    - npm set progress=false; npm install; npm run build;
+
+    # Build our dashboard zip file
+    - mkdir -p /tmp/ui/js
+    - mkdir -p /tmp/ui/css
+    - cp css/*.css /tmp/ui/css
+    - cp js/bundle.js /tmp/ui/js
+    - cp index.html /tmp/ui/index.html
+    - cd /tmp; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip ui
+
+    # Build our docker image
     - docker build -t danesparza/dashboard:$CIRCLE_BUILD_NUM .
     - docker run -e "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -e "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" danesparza/dashboard:$CIRCLE_BUILD_NUM
-
 test:
   post:
     - curl --retry 10 --retry-delay 5 http://dashboard.cagedtornado.com/build.json
@@ -18,6 +33,11 @@ deployment:
   hub:
     branch: master
     commands:
+      # Prep Cloudflare for deployment
+      - curl -X PATCH "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode" -H "X-Auth-Email: $CLOUDFLARE_EMAIL" -H "X-Auth-Key: $CLOUDFLARE_API_KEY" -H "Content-Type: application/json" --data '{"value":"on"}'
+      # Publish assets to Github
+      - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
+      # Push to docker
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push danesparza/dashboard
 
