@@ -13,4 +13,3 @@ cp -r /root/dashboard/fonts /root/dashboard.cagedtornado.com
 cp /root/dashboard/js/bundle.js /root/dashboard.cagedtornado.com/js/
 cp /root/dashboard/js/rainbowvis.js /root/dashboard.cagedtornado.com/js/
 cp /root/dashboard/index.html /root/dashboard.cagedtornado.com/
-cp /root/dashboard/build.json /root/dashboard.cagedtornado.com/

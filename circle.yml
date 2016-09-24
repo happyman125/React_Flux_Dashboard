@@ -10,13 +10,6 @@ dependencies:
     - go get github.com/tcnksm/ghr
     # Our S3 deploy tool
     - sudo apt-get update; sudo apt-get install -y s3cmd
-    # Create the build.json file
-    - cat <<EOT > build.json
-    {
-      "version" : "$CIRCLE_BUILD_NUM",
-      "project" : "$CIRCLE_PROJECT_REPONAME"
-    }
-    EOT
 
     # Set our other scripts to execute (eventually, do these things in the build script itself):
     - chmod 755 stagingscript.sh
@@ -31,7 +24,6 @@ dependencies:
     - cp css/*.css /tmp/ui/css
     - cp js/bundle.js /tmp/ui/js
     - cp index.html /tmp/ui/index.html
-    - cp build.json /tmp/ui/build.json
     - cd /tmp; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip ui
 
     # Build our docker image
