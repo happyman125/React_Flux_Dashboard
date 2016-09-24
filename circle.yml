@@ -13,9 +13,9 @@ dependencies:
     - mkdir -p /tmp/ui/css
     - cp css/*.css /tmp/ui/css
     - cp js/bundle.js /tmp/ui/js
-    - cp js/rainbowvis.js /tmp/ui/rainbowvis.js
+    - cp js/rainbowvis.js /tmp/ui/js
     - cp index.html /tmp/ui/index.html
-    - cd /tmp; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip ui
+    - cd /tmp/ui; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip 
 
 test:
   post:
