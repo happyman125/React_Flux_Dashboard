@@ -1,9 +1,11 @@
 dependencies:
   pre:
-    # Update s3cmd
-    - sudo apt-get update; sudo DEBIAN_FRONTEND=noninteractive apt-get install -y s3cmd;
     # Our Github release maker
     - go get github.com/tcnksm/ghr
+
+    # AWS tools
+    - bundle install
+    - sudo pip install awscli
   override:    
     # Execute the build process
     - npm set progress=false; npm install; npm run build;
@@ -31,4 +33,6 @@ deployment:
       - "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"      
       # Push to S3. This expects the environment variables 
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
-      - s3cmd sync /tmp/ui/ s3://dashboard.cagedtornado.com --acl-public --no-mime-magic --guess-mime-type
+      # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
+      # for more information
+      - aws s3 sync /tmp/ui/ s3://dashboard.cagedtornado.com --delete
