@@ -4,7 +4,6 @@ dependencies:
     - go get github.com/tcnksm/ghr
 
     # AWS tools
-    - bundle install
     - sudo pip install awscli
   override:    
     # Execute the build process
