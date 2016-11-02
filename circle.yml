@@ -10,7 +10,7 @@ dependencies:
     - mkdir -p /tmp/ui/js
     - mkdir -p /tmp/ui/css
     - mkdir -p /tmp/ui/font
-    - echo {"version" &#58; "$CIRCLE_BUILD_NUM"} >> /tmp/ui/build.json
+    - echo $CIRCLE_BUILD_NUM >> /tmp/ui/build.json
     - cp css/*.css /tmp/ui/css
     - cp font/*.* /tmp/ui/font
     - cp js/bundle.js /tmp/ui/js
