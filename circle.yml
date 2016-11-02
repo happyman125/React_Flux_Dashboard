@@ -19,7 +19,7 @@ dependencies:
     - cd /tmp/ui; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
 test:
   post:
-    - curl --retry 10 --retry-delay 5 http://dashboard.cagedtornado.com/build.json
+    - echo .
 deployment:
   hub:
     branch: master
