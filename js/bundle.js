@@ -2789,8 +2789,7 @@ var WeatherAPIUtils = (function () {
         key: 'getPollen',
         value: function getPollen(zipcode) {
             //  The base url for the service - change this to your service location:
-            //  You can get this microservice for free at https://github.com/danesparza/forecast-service
-            var baseurl = "http://service.cagedtornado.com:3030/pollen/";
+            var baseurl = "https://mbxawsgue8.execute-api.us-east-1.amazonaws.com/v1/";
 
             //  Get the pollen for the given zipcode
             var url = baseurl + zipcode;
