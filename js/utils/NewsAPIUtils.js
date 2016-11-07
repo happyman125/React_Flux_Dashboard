@@ -6,7 +6,7 @@ module.exports = {
 
 	    //  The base url for the service - change this to your service location:
 	    //  You can get this microservice for free at https://github.com/danesparza/twitter-breaking-news
-	    var baseurl = "http://service.cagedtornado.com:9010/news/";
+	    var baseurl = "https://xcktpgt8r4.execute-api.us-east-1.amazonaws.com/v1/";
 
 	    //  Get the news using the given user's screen name
 	    var url = baseurl + user;

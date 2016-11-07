@@ -24,7 +24,7 @@ var NewsDisplay = React.createClass({
     }    
 
     //  Clean up the text (remove the links - both http and https)
-    var newsText = newsItem.Text;
+    var newsText = newsItem.text;
     if(newsText.indexOf("http"))
     {
       newsText = newsText.substring(0, newsText.indexOf("http"));
@@ -36,7 +36,7 @@ var NewsDisplay = React.createClass({
   	return (
         <div id='breaking-news'>
           <div id='breaking-wrapper'>
-            <img id='breaking-news-image' src={newsItem.MediaUrl} />
+            <img id='breaking-news-image' src={newsItem.url} />
             <div id='breaking-news-caption-wrapper'>
               <div id='breaking-news-caption'><span id='breaking-news-caption-intro'>{newsText}</span> {formattedTime}</div>
             </div>
