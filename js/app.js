@@ -9,6 +9,7 @@ import WeatherAPIUtils from './utils/WeatherAPIUtils';
 import CalendarAPIUtils from './utils/CalendarAPIUtils';
 import NewsAPIUtils from './utils/NewsAPIUtils';
 import SettingsUtils from './utils/SettingsUtils';
+import LocationAPIUtils from './utils/LocationAPIUtils';
 
 //	The app component
 import DashboardApp from './components/DashboardApp.react';
@@ -33,6 +34,13 @@ window.handleGoogleClientLoad = function(){
 
 //  Application element
 var appElement = document.getElementById("dashboardapp");
+
+console.log("Geting geolocation information...");
+LocationAPIUtils.getCurrentLocation({
+    success: function (coords) {
+        console.log(coords);
+    }
+});
 
 //	The app requires geolocation!
 if (navigator.geolocation) 

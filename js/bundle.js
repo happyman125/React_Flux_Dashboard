@@ -70,11 +70,15 @@
 
 	var _SettingsUtils2 = _interopRequireDefault(_SettingsUtils);
 
-	var _DashboardApp = __webpack_require__(295);
+	var _LocationAPIUtils = __webpack_require__(295);
+
+	var _LocationAPIUtils2 = _interopRequireDefault(_LocationAPIUtils);
+
+	var _DashboardApp = __webpack_require__(296);
 
 	var _DashboardApp2 = _interopRequireDefault(_DashboardApp);
 
-	var _PageActions = __webpack_require__(333);
+	var _PageActions = __webpack_require__(334);
 
 	var _PageActions2 = _interopRequireDefault(_PageActions);
 
@@ -119,6 +123,13 @@
 
 	//  Application element
 	var appElement = document.getElementById("dashboardapp");
+
+	console.log("Geting geolocation information...");
+	_LocationAPIUtils2.default.getCurrentLocation({
+	    success: function success(coords) {
+	        console.log(coords);
+	    }
+	});
 
 	//	The app requires geolocation!
 	if (navigator.geolocation) {
@@ -43105,6 +43116,79 @@
 
 /***/ },
 /* 295 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	//  Actions
+
+	//  The stores
+
+	var LocationAPIUtils = function () {
+	    function LocationAPIUtils() {
+	        _classCallCheck(this, LocationAPIUtils);
+	    }
+
+	    /* Get the current geolocation coordiates */
+
+
+	    _createClass(LocationAPIUtils, [{
+	        key: "getCurrentLocation",
+	        value: function getCurrentLocation(options) {
+
+	            var apikey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
+
+	            //  Get the lat/long coordinates
+	            var url = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + apikey;
+
+	            $.ajax({ url: url, dataType: 'json', type: "POST" }).done(function (data) {
+
+	                //  If a success callback was specified, call it:
+	                if (typeof options.success === "function") {
+	                    options.success({ latitude: data.location.lat, longitude: data.location.lng });
+	                }
+
+	                //	Call the action to receive the data:
+	                // WeatherActions.recieveWeatherData(data);
+	            }.bind(this)).fail(function () {
+	                //	Something bad happened
+	                console.log("There was a problem getting location");
+	            });
+	        }
+
+	        /* Get Yahoo weather for the given coordinates */
+
+	    }, {
+	        key: "getLocationName",
+	        value: function getLocationName(latitude, longitude) {
+
+	            //  Format the url
+	            var url = "https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text=\"(" + latitude + "," + longitude + ")\")&format=json&env=store://datatables.org/alltableswithkeys";
+
+	            $.ajax(url).done(function (data) {
+	                //  Convert the data to the common weather format
+	                var weatherdata = this.convertYahooToWeather(data);
+
+	                //  Call the action to receive the data:
+	                WeatherActions.recieveWeatherData(weatherdata);
+	            }.bind(this)).fail(function () {
+	                //  Something bad happened
+	                console.log("There was a problem getting weather");
+	            });
+	        }
+	    }]);
+
+	    return LocationAPIUtils;
+	}();
+
+	module.exports = new LocationAPIUtils();
+
+/***/ },
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43118,7 +43202,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _PageStore = __webpack_require__(296);
+	var _PageStore = __webpack_require__(297);
 
 	var _PageStore2 = _interopRequireDefault(_PageStore);
 
@@ -43183,7 +43267,7 @@
 	module.exports = DashboardApp;
 
 /***/ },
-/* 296 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43200,11 +43284,11 @@
 
 	var _DashboardConstants2 = _interopRequireDefault(_DashboardConstants);
 
-	var _DashboardHome = __webpack_require__(297);
+	var _DashboardHome = __webpack_require__(298);
 
 	var _DashboardHome2 = _interopRequireDefault(_DashboardHome);
 
-	var _DashboardSettings = __webpack_require__(314);
+	var _DashboardSettings = __webpack_require__(315);
 
 	var _DashboardSettings2 = _interopRequireDefault(_DashboardSettings);
 
@@ -43266,7 +43350,7 @@
 	module.exports = new PageStore(_AppDispatcher2.default);
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43275,19 +43359,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DateTimeDisplay = __webpack_require__(298);
+	var _DateTimeDisplay = __webpack_require__(299);
 
 	var _DateTimeDisplay2 = _interopRequireDefault(_DateTimeDisplay);
 
-	var _WeatherDisplay = __webpack_require__(299);
+	var _WeatherDisplay = __webpack_require__(300);
 
 	var _WeatherDisplay2 = _interopRequireDefault(_WeatherDisplay);
 
-	var _CalendarDisplay = __webpack_require__(307);
+	var _CalendarDisplay = __webpack_require__(308);
 
 	var _CalendarDisplay2 = _interopRequireDefault(_CalendarDisplay);
 
-	var _NewsDisplay = __webpack_require__(310);
+	var _NewsDisplay = __webpack_require__(311);
 
 	var _NewsDisplay2 = _interopRequireDefault(_NewsDisplay);
 
@@ -43303,15 +43387,15 @@
 
 	var _NewsAPIUtils2 = _interopRequireDefault(_NewsAPIUtils);
 
-	var _WeatherStore = __webpack_require__(311);
+	var _WeatherStore = __webpack_require__(312);
 
 	var _WeatherStore2 = _interopRequireDefault(_WeatherStore);
 
-	var _CalendarStore = __webpack_require__(312);
+	var _CalendarStore = __webpack_require__(313);
 
 	var _CalendarStore2 = _interopRequireDefault(_CalendarStore);
 
-	var _NewsStore = __webpack_require__(313);
+	var _NewsStore = __webpack_require__(314);
 
 	var _NewsStore2 = _interopRequireDefault(_NewsStore);
 
@@ -43433,7 +43517,7 @@
 	module.exports = DashboardHome;
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43495,7 +43579,7 @@
 	module.exports = DateTimeDisplay;
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43512,15 +43596,15 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _WeatherForecast = __webpack_require__(300);
+	var _WeatherForecast = __webpack_require__(301);
 
 	var _WeatherForecast2 = _interopRequireDefault(_WeatherForecast);
 
-	var _WeatherForecastIcon = __webpack_require__(302);
+	var _WeatherForecastIcon = __webpack_require__(303);
 
 	var _WeatherForecastIcon2 = _interopRequireDefault(_WeatherForecastIcon);
 
-	var _WeatherAlerts = __webpack_require__(306);
+	var _WeatherAlerts = __webpack_require__(307);
 
 	var _WeatherAlerts2 = _interopRequireDefault(_WeatherAlerts);
 
@@ -43684,7 +43768,7 @@
 	exports.default = WeatherDisplay;
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43697,11 +43781,11 @@
 
 	var _react = __webpack_require__(1);
 
-	var _WeatherForecastDay = __webpack_require__(301);
+	var _WeatherForecastDay = __webpack_require__(302);
 
 	var _WeatherForecastDay2 = _interopRequireDefault(_WeatherForecastDay);
 
-	var _WeatherForecastDaySummary = __webpack_require__(305);
+	var _WeatherForecastDaySummary = __webpack_require__(306);
 
 	var _WeatherForecastDaySummary2 = _interopRequireDefault(_WeatherForecastDaySummary);
 
@@ -43757,7 +43841,7 @@
 	exports.default = WeatherForecast;
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43774,11 +43858,11 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _WeatherForecastIcon = __webpack_require__(302);
+	var _WeatherForecastIcon = __webpack_require__(303);
 
 	var _WeatherForecastIcon2 = _interopRequireDefault(_WeatherForecastIcon);
 
-	var _WeatherForecastTemp = __webpack_require__(303);
+	var _WeatherForecastTemp = __webpack_require__(304);
 
 	var _WeatherForecastTemp2 = _interopRequireDefault(_WeatherForecastTemp);
 
@@ -43872,7 +43956,7 @@
 	exports.default = WeatherForecastDay;
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43985,7 +44069,7 @@
 	module.exports = WeatherForecastIcon;
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43998,7 +44082,7 @@
 
 	var _react = __webpack_require__(1);
 
-	var _WeatherTempPixel = __webpack_require__(304);
+	var _WeatherTempPixel = __webpack_require__(305);
 
 	var _WeatherTempPixel2 = _interopRequireDefault(_WeatherTempPixel);
 
@@ -44062,7 +44146,7 @@
 	exports.default = WeatherForecastTemp;
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44117,7 +44201,7 @@
 	exports.default = WeatherTempPixel;
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44148,7 +44232,7 @@
 	module.exports = WeatherForecastDaySummary;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44218,7 +44302,7 @@
 	module.exports = WeatherAlerts;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44235,11 +44319,11 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _CalendarEventItem = __webpack_require__(308);
+	var _CalendarEventItem = __webpack_require__(309);
 
 	var _CalendarEventItem2 = _interopRequireDefault(_CalendarEventItem);
 
-	var _CalendarEventMoreInfo = __webpack_require__(309);
+	var _CalendarEventMoreInfo = __webpack_require__(310);
 
 	var _CalendarEventMoreInfo2 = _interopRequireDefault(_CalendarEventMoreInfo);
 
@@ -44312,7 +44396,7 @@
 	exports.default = CalendarDisplay;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44361,7 +44445,7 @@
 	module.exports = CalendarEventItem;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44396,7 +44480,7 @@
 	module.exports = CalendarEventMoreInfo;
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44466,7 +44550,7 @@
 	module.exports = NewsDisplay;
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44553,7 +44637,7 @@
 	module.exports = new WeatherStore(_AppDispatcher2.default);
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44657,7 +44741,7 @@
 	module.exports = new CalendarStore(_AppDispatcher2.default);
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44723,7 +44807,7 @@
 	module.exports = new NewsStore(_AppDispatcher2.default);
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44734,15 +44818,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _addons = __webpack_require__(315);
+	var _addons = __webpack_require__(316);
 
 	var _addons2 = _interopRequireDefault(_addons);
 
-	var _WeatherStore = __webpack_require__(311);
+	var _WeatherStore = __webpack_require__(312);
 
 	var _WeatherStore2 = _interopRequireDefault(_WeatherStore);
 
-	var _CalendarStore = __webpack_require__(312);
+	var _CalendarStore = __webpack_require__(313);
 
 	var _CalendarStore2 = _interopRequireDefault(_CalendarStore);
 
@@ -45081,14 +45165,14 @@
 	exports.default = DashboardSettings;
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(316);
+	module.exports = __webpack_require__(317);
 
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -45111,18 +45195,18 @@
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(317);
+	var LinkedStateMixin = __webpack_require__(318);
 	var React = __webpack_require__(2);
 	var ReactComponentWithPureRenderMixin =
-	  __webpack_require__(320);
-	var ReactCSSTransitionGroup = __webpack_require__(321);
+	  __webpack_require__(321);
+	var ReactCSSTransitionGroup = __webpack_require__(322);
 	var ReactFragment = __webpack_require__(10);
-	var ReactTransitionGroup = __webpack_require__(322);
+	var ReactTransitionGroup = __webpack_require__(323);
 	var ReactUpdates = __webpack_require__(26);
 
-	var cx = __webpack_require__(330);
-	var cloneWithProps = __webpack_require__(324);
-	var update = __webpack_require__(331);
+	var cx = __webpack_require__(331);
+	var cloneWithProps = __webpack_require__(325);
+	var update = __webpack_require__(332);
 
 	React.addons = {
 	  CSSTransitionGroup: ReactCSSTransitionGroup,
@@ -45139,7 +45223,7 @@
 
 	if ("production" !== process.env.NODE_ENV) {
 	  React.addons.Perf = __webpack_require__(150);
-	  React.addons.TestUtils = __webpack_require__(332);
+	  React.addons.TestUtils = __webpack_require__(333);
 	}
 
 	module.exports = React;
@@ -45147,7 +45231,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45164,8 +45248,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(318);
-	var ReactStateSetters = __webpack_require__(319);
+	var ReactLink = __webpack_require__(319);
+	var ReactStateSetters = __webpack_require__(320);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -45192,7 +45276,7 @@
 
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45269,7 +45353,7 @@
 
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	/**
@@ -45379,7 +45463,7 @@
 
 
 /***/ },
-/* 320 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45432,7 +45516,7 @@
 
 
 /***/ },
-/* 321 */
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45454,10 +45538,10 @@
 	var assign = __webpack_require__(13);
 
 	var ReactTransitionGroup = React.createFactory(
-	  __webpack_require__(322)
+	  __webpack_require__(323)
 	);
 	var ReactCSSTransitionGroupChild = React.createFactory(
-	  __webpack_require__(327)
+	  __webpack_require__(328)
 	);
 
 	var ReactCSSTransitionGroup = React.createClass({
@@ -45506,7 +45590,7 @@
 
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45523,10 +45607,10 @@
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var ReactTransitionChildMapping = __webpack_require__(323);
+	var ReactTransitionChildMapping = __webpack_require__(324);
 
 	var assign = __webpack_require__(13);
-	var cloneWithProps = __webpack_require__(324);
+	var cloneWithProps = __webpack_require__(325);
 	var emptyFunction = __webpack_require__(16);
 
 	var ReactTransitionGroup = React.createClass({
@@ -45740,7 +45824,7 @@
 
 
 /***/ },
-/* 323 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45849,7 +45933,7 @@
 
 
 /***/ },
-/* 324 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -45867,7 +45951,7 @@
 	'use strict';
 
 	var ReactElement = __webpack_require__(11);
-	var ReactPropTransferer = __webpack_require__(325);
+	var ReactPropTransferer = __webpack_require__(326);
 
 	var keyOf = __webpack_require__(39);
 	var warning = __webpack_require__(15);
@@ -45911,7 +45995,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 325 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45929,7 +46013,7 @@
 
 	var assign = __webpack_require__(13);
 	var emptyFunction = __webpack_require__(16);
-	var joinClasses = __webpack_require__(326);
+	var joinClasses = __webpack_require__(327);
 
 	/**
 	 * Creates a transfer strategy that will merge prop values using the supplied
@@ -46025,7 +46109,7 @@
 
 
 /***/ },
-/* 326 */
+/* 327 */
 /***/ function(module, exports) {
 
 	/**
@@ -46070,7 +46154,7 @@
 
 
 /***/ },
-/* 327 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46089,8 +46173,8 @@
 
 	var React = __webpack_require__(2);
 
-	var CSSCore = __webpack_require__(328);
-	var ReactTransitionEvents = __webpack_require__(329);
+	var CSSCore = __webpack_require__(329);
+	var ReactTransitionEvents = __webpack_require__(330);
 
 	var onlyChild = __webpack_require__(156);
 	var warning = __webpack_require__(15);
@@ -46221,7 +46305,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 328 */
+/* 329 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46336,7 +46420,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 329 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46451,7 +46535,7 @@
 
 
 /***/ },
-/* 330 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46510,7 +46594,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 331 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46684,7 +46768,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 332 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -47202,7 +47286,7 @@
 
 
 /***/ },
-/* 333 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
