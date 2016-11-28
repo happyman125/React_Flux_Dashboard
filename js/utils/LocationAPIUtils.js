@@ -37,7 +37,7 @@ class LocationAPIUtils {
     getLocationName(latitude, longitude) {
         
         //  Format the url
-        let url = `http://maps.googleapis.com/maps/api/geocode/json?sensor=false&language=en&latlng=${latitude},${longitude}`
+        let url = `https://maps.googleapis.com/maps/api/geocode/json?sensor=false&language=en&latlng=${latitude},${longitude}`
         
         $.ajax( url )
         .done(function(data) {
