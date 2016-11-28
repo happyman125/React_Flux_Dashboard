@@ -44,10 +44,10 @@ var DashboardHome = React.createClass({
     switch(this.state.settings.weathersource)
     {
         case "Yahoo":
-            WeatherAPIUtils.getCurrentYahooWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            WeatherAPIUtils.getCurrentYahooWeather(this.props.coords.latitude, this.props.coords.longitude);
             break;
         case "Forecastio": 
-            WeatherAPIUtils.getCurrentForecastIOWeather(this.props.position.coords.latitude, this.props.position.coords.longitude);
+            WeatherAPIUtils.getCurrentForecastIOWeather(this.props.coords.latitude, this.props.coords.longitude);
             break;
     }
 

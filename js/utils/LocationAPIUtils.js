@@ -37,15 +37,13 @@ class LocationAPIUtils {
     getLocationName(latitude, longitude) {
         
         //  Format the url
-        let url = `https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(${latitude},${longitude})")&format=json&env=store://datatables.org/alltableswithkeys`
+        let url = `http://maps.googleapis.com/maps/api/geocode/json?sensor=false&language=en&latlng=${latitude},${longitude}`
         
         $.ajax( url )
         .done(function(data) {
-            //  Convert the data to the common weather format
-            let weatherdata = this.convertYahooToWeather(data);
-
+            console.log(data);
             //  Call the action to receive the data:
-            WeatherActions.recieveWeatherData(weatherdata);
+            //  WeatherActions.recieveWeatherData(weatherdata);
         }.bind(this))
         .fail(function() {
             //  Something bad happened
