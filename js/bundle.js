@@ -74,11 +74,11 @@
 
 	var _LocationAPIUtils2 = _interopRequireDefault(_LocationAPIUtils);
 
-	var _DashboardApp = __webpack_require__(296);
+	var _DashboardApp = __webpack_require__(297);
 
 	var _DashboardApp2 = _interopRequireDefault(_DashboardApp);
 
-	var _PageActions = __webpack_require__(334);
+	var _PageActions = __webpack_require__(336);
 
 	var _PageActions2 = _interopRequireDefault(_PageActions);
 
@@ -43092,7 +43092,7 @@
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); //  Actions
 
 
-	var _LocationActions = __webpack_require__(335);
+	var _LocationActions = __webpack_require__(296);
 
 	var _LocationActions2 = _interopRequireDefault(_LocationActions);
 
@@ -43165,6 +43165,35 @@
 
 	'use strict';
 
+	var AppDispatcher = __webpack_require__(264);
+	var DashboardConstants = __webpack_require__(268);
+
+	var LocationActions = {
+
+	  recieveCurrentLocation: function recieveCurrentLocation(geoPoint) {
+	    AppDispatcher.dispatch({
+	      actionType: DashboardConstants.RECIEVE_GEOPOINT,
+	      geopoint: geoPoint
+	    });
+	  },
+
+	  recieveLocationInfo: function recieveLocationInfo(locationInfo) {
+	    AppDispatcher.dispatch({
+	      actionType: DashboardConstants.RECIEVE_LOCATION_INFO,
+	      locationInfo: locationInfo
+	    });
+	  }
+
+	};
+
+	module.exports = LocationActions;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	//  The stores
@@ -43174,7 +43203,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _PageStore = __webpack_require__(297);
+	var _PageStore = __webpack_require__(298);
 
 	var _PageStore2 = _interopRequireDefault(_PageStore);
 
@@ -43239,7 +43268,7 @@
 	module.exports = DashboardApp;
 
 /***/ },
-/* 297 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43256,11 +43285,11 @@
 
 	var _DashboardConstants2 = _interopRequireDefault(_DashboardConstants);
 
-	var _DashboardHome = __webpack_require__(298);
+	var _DashboardHome = __webpack_require__(299);
 
 	var _DashboardHome2 = _interopRequireDefault(_DashboardHome);
 
-	var _DashboardSettings = __webpack_require__(315);
+	var _DashboardSettings = __webpack_require__(317);
 
 	var _DashboardSettings2 = _interopRequireDefault(_DashboardSettings);
 
@@ -43322,7 +43351,7 @@
 	module.exports = new PageStore(_AppDispatcher2.default);
 
 /***/ },
-/* 298 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43331,19 +43360,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _DateTimeDisplay = __webpack_require__(299);
+	var _DateTimeDisplay = __webpack_require__(300);
 
 	var _DateTimeDisplay2 = _interopRequireDefault(_DateTimeDisplay);
 
-	var _WeatherDisplay = __webpack_require__(300);
+	var _WeatherDisplay = __webpack_require__(301);
 
 	var _WeatherDisplay2 = _interopRequireDefault(_WeatherDisplay);
 
-	var _CalendarDisplay = __webpack_require__(308);
+	var _CalendarDisplay = __webpack_require__(309);
 
 	var _CalendarDisplay2 = _interopRequireDefault(_CalendarDisplay);
 
-	var _NewsDisplay = __webpack_require__(311);
+	var _NewsDisplay = __webpack_require__(312);
 
 	var _NewsDisplay2 = _interopRequireDefault(_NewsDisplay);
 
@@ -43359,15 +43388,15 @@
 
 	var _NewsAPIUtils2 = _interopRequireDefault(_NewsAPIUtils);
 
-	var _WeatherStore = __webpack_require__(312);
+	var _WeatherStore = __webpack_require__(313);
 
 	var _WeatherStore2 = _interopRequireDefault(_WeatherStore);
 
-	var _CalendarStore = __webpack_require__(313);
+	var _CalendarStore = __webpack_require__(314);
 
 	var _CalendarStore2 = _interopRequireDefault(_CalendarStore);
 
-	var _NewsStore = __webpack_require__(314);
+	var _NewsStore = __webpack_require__(315);
 
 	var _NewsStore2 = _interopRequireDefault(_NewsStore);
 
@@ -43375,7 +43404,7 @@
 
 	var _SettingsStore2 = _interopRequireDefault(_SettingsStore);
 
-	var _LocationInfoStore = __webpack_require__(336);
+	var _LocationInfoStore = __webpack_require__(316);
 
 	var _LocationInfoStore2 = _interopRequireDefault(_LocationInfoStore);
 
@@ -43496,7 +43525,7 @@
 	module.exports = DashboardHome;
 
 /***/ },
-/* 299 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43558,7 +43587,7 @@
 	module.exports = DateTimeDisplay;
 
 /***/ },
-/* 300 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43575,15 +43604,15 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _WeatherForecast = __webpack_require__(301);
+	var _WeatherForecast = __webpack_require__(302);
 
 	var _WeatherForecast2 = _interopRequireDefault(_WeatherForecast);
 
-	var _WeatherForecastIcon = __webpack_require__(303);
+	var _WeatherForecastIcon = __webpack_require__(304);
 
 	var _WeatherForecastIcon2 = _interopRequireDefault(_WeatherForecastIcon);
 
-	var _WeatherAlerts = __webpack_require__(307);
+	var _WeatherAlerts = __webpack_require__(308);
 
 	var _WeatherAlerts2 = _interopRequireDefault(_WeatherAlerts);
 
@@ -43749,7 +43778,7 @@
 	exports.default = WeatherDisplay;
 
 /***/ },
-/* 301 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43762,11 +43791,11 @@
 
 	var _react = __webpack_require__(1);
 
-	var _WeatherForecastDay = __webpack_require__(302);
+	var _WeatherForecastDay = __webpack_require__(303);
 
 	var _WeatherForecastDay2 = _interopRequireDefault(_WeatherForecastDay);
 
-	var _WeatherForecastDaySummary = __webpack_require__(306);
+	var _WeatherForecastDaySummary = __webpack_require__(307);
 
 	var _WeatherForecastDaySummary2 = _interopRequireDefault(_WeatherForecastDaySummary);
 
@@ -43822,7 +43851,7 @@
 	exports.default = WeatherForecast;
 
 /***/ },
-/* 302 */
+/* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -43839,11 +43868,11 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _WeatherForecastIcon = __webpack_require__(303);
+	var _WeatherForecastIcon = __webpack_require__(304);
 
 	var _WeatherForecastIcon2 = _interopRequireDefault(_WeatherForecastIcon);
 
-	var _WeatherForecastTemp = __webpack_require__(304);
+	var _WeatherForecastTemp = __webpack_require__(305);
 
 	var _WeatherForecastTemp2 = _interopRequireDefault(_WeatherForecastTemp);
 
@@ -43937,7 +43966,7 @@
 	exports.default = WeatherForecastDay;
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44050,7 +44079,7 @@
 	module.exports = WeatherForecastIcon;
 
 /***/ },
-/* 304 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44063,7 +44092,7 @@
 
 	var _react = __webpack_require__(1);
 
-	var _WeatherTempPixel = __webpack_require__(305);
+	var _WeatherTempPixel = __webpack_require__(306);
 
 	var _WeatherTempPixel2 = _interopRequireDefault(_WeatherTempPixel);
 
@@ -44127,7 +44156,7 @@
 	exports.default = WeatherForecastTemp;
 
 /***/ },
-/* 305 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44182,7 +44211,7 @@
 	exports.default = WeatherTempPixel;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44213,7 +44242,7 @@
 	module.exports = WeatherForecastDaySummary;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44283,7 +44312,7 @@
 	module.exports = WeatherAlerts;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44300,11 +44329,11 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _CalendarEventItem = __webpack_require__(309);
+	var _CalendarEventItem = __webpack_require__(310);
 
 	var _CalendarEventItem2 = _interopRequireDefault(_CalendarEventItem);
 
-	var _CalendarEventMoreInfo = __webpack_require__(310);
+	var _CalendarEventMoreInfo = __webpack_require__(311);
 
 	var _CalendarEventMoreInfo2 = _interopRequireDefault(_CalendarEventMoreInfo);
 
@@ -44377,7 +44406,7 @@
 	exports.default = CalendarDisplay;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44426,7 +44455,7 @@
 	module.exports = CalendarEventItem;
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44461,7 +44490,7 @@
 	module.exports = CalendarEventMoreInfo;
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44531,7 +44560,7 @@
 	module.exports = NewsDisplay;
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44618,7 +44647,7 @@
 	module.exports = new WeatherStore(_AppDispatcher2.default);
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44722,7 +44751,7 @@
 	module.exports = new CalendarStore(_AppDispatcher2.default);
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44788,7 +44817,103 @@
 	module.exports = new NewsStore(_AppDispatcher2.default);
 
 /***/ },
-/* 315 */
+/* 316 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(271);
+
+	var _AppDispatcher = __webpack_require__(264);
+
+	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
+
+	var _DashboardConstants = __webpack_require__(268);
+
+	var _DashboardConstants2 = _interopRequireDefault(_DashboardConstants);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LocationInfoStore = function (_Store) {
+	  _inherits(LocationInfoStore, _Store);
+
+	  function LocationInfoStore(dispatcher) {
+	    _classCallCheck(this, LocationInfoStore);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocationInfoStore).call(this, dispatcher));
+
+	    _this.locationinfo = [];
+	    _this.geopoint = {};
+	    return _this;
+	  }
+
+	  _createClass(LocationInfoStore, [{
+	    key: 'getGeoPoint',
+	    value: function getGeoPoint() {
+	      return this.geopoint;
+	    }
+	  }, {
+	    key: 'getLocationInfo',
+	    value: function getLocationInfo() {
+	      return this.locationinfo;
+	    }
+	  }, {
+	    key: 'getLocationName',
+	    value: function getLocationName() {
+	      var retval = "Unknown location";
+
+	      //  If we actually have some location information,
+	      //  rip through it
+	      for (var i = 0; i < this.locationinfo.length; i++) {
+	        //  Look for the first object that includes a 'type'
+	        //  property of 'locality' and return the 
+	        //  associated 'formatted_address'  
+	        if (typeof this.locationinfo[i].types.includes === "function" && this.locationinfo[i].types.includes("locality")) {
+	          retval = this.locationinfo[i].formatted_address;
+	          break;
+	        }
+	      }
+
+	      return retval;
+	    }
+	  }, {
+	    key: '__onDispatch',
+	    value: function __onDispatch(action) {
+
+	      switch (action.actionType) {
+	        case _DashboardConstants2.default.RECIEVE_GEOPOINT:
+	          console.log('Updating current location: ', action);
+	          this.geopoint = action.geopoint;
+	          this.__emitChange();
+	          break;
+
+	        case _DashboardConstants2.default.RECIEVE_LOCATION_INFO:
+	          console.log('Updating location information: ', action);
+	          this.locationinfo = action.locationInfo;
+	          this.__emitChange();
+	          break;
+
+	        default:
+	        // no op
+	      }
+	    }
+	  }]);
+
+	  return LocationInfoStore;
+	}(_utils.Store);
+
+	module.exports = new LocationInfoStore(_AppDispatcher2.default);
+
+/***/ },
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44799,15 +44924,15 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _addons = __webpack_require__(316);
+	var _addons = __webpack_require__(318);
 
 	var _addons2 = _interopRequireDefault(_addons);
 
-	var _WeatherStore = __webpack_require__(312);
+	var _WeatherStore = __webpack_require__(313);
 
 	var _WeatherStore2 = _interopRequireDefault(_WeatherStore);
 
-	var _CalendarStore = __webpack_require__(313);
+	var _CalendarStore = __webpack_require__(314);
 
 	var _CalendarStore2 = _interopRequireDefault(_CalendarStore);
 
@@ -45146,14 +45271,14 @@
 	exports.default = DashboardSettings;
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(317);
+	module.exports = __webpack_require__(319);
 
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -45176,18 +45301,18 @@
 
 	'use strict';
 
-	var LinkedStateMixin = __webpack_require__(318);
+	var LinkedStateMixin = __webpack_require__(320);
 	var React = __webpack_require__(2);
 	var ReactComponentWithPureRenderMixin =
-	  __webpack_require__(321);
-	var ReactCSSTransitionGroup = __webpack_require__(322);
+	  __webpack_require__(323);
+	var ReactCSSTransitionGroup = __webpack_require__(324);
 	var ReactFragment = __webpack_require__(10);
-	var ReactTransitionGroup = __webpack_require__(323);
+	var ReactTransitionGroup = __webpack_require__(325);
 	var ReactUpdates = __webpack_require__(26);
 
-	var cx = __webpack_require__(331);
-	var cloneWithProps = __webpack_require__(325);
-	var update = __webpack_require__(332);
+	var cx = __webpack_require__(333);
+	var cloneWithProps = __webpack_require__(327);
+	var update = __webpack_require__(334);
 
 	React.addons = {
 	  CSSTransitionGroup: ReactCSSTransitionGroup,
@@ -45204,7 +45329,7 @@
 
 	if ("production" !== process.env.NODE_ENV) {
 	  React.addons.Perf = __webpack_require__(150);
-	  React.addons.TestUtils = __webpack_require__(333);
+	  React.addons.TestUtils = __webpack_require__(335);
 	}
 
 	module.exports = React;
@@ -45212,7 +45337,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45229,8 +45354,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(319);
-	var ReactStateSetters = __webpack_require__(320);
+	var ReactLink = __webpack_require__(321);
+	var ReactStateSetters = __webpack_require__(322);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -45257,7 +45382,7 @@
 
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45334,7 +45459,7 @@
 
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports) {
 
 	/**
@@ -45444,7 +45569,7 @@
 
 
 /***/ },
-/* 321 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45497,7 +45622,7 @@
 
 
 /***/ },
-/* 322 */
+/* 324 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45519,10 +45644,10 @@
 	var assign = __webpack_require__(13);
 
 	var ReactTransitionGroup = React.createFactory(
-	  __webpack_require__(323)
+	  __webpack_require__(325)
 	);
 	var ReactCSSTransitionGroupChild = React.createFactory(
-	  __webpack_require__(328)
+	  __webpack_require__(330)
 	);
 
 	var ReactCSSTransitionGroup = React.createClass({
@@ -45571,7 +45696,7 @@
 
 
 /***/ },
-/* 323 */
+/* 325 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45588,10 +45713,10 @@
 	'use strict';
 
 	var React = __webpack_require__(2);
-	var ReactTransitionChildMapping = __webpack_require__(324);
+	var ReactTransitionChildMapping = __webpack_require__(326);
 
 	var assign = __webpack_require__(13);
-	var cloneWithProps = __webpack_require__(325);
+	var cloneWithProps = __webpack_require__(327);
 	var emptyFunction = __webpack_require__(16);
 
 	var ReactTransitionGroup = React.createClass({
@@ -45805,7 +45930,7 @@
 
 
 /***/ },
-/* 324 */
+/* 326 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45914,7 +46039,7 @@
 
 
 /***/ },
-/* 325 */
+/* 327 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -45932,7 +46057,7 @@
 	'use strict';
 
 	var ReactElement = __webpack_require__(11);
-	var ReactPropTransferer = __webpack_require__(326);
+	var ReactPropTransferer = __webpack_require__(328);
 
 	var keyOf = __webpack_require__(39);
 	var warning = __webpack_require__(15);
@@ -45976,7 +46101,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 326 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -45994,7 +46119,7 @@
 
 	var assign = __webpack_require__(13);
 	var emptyFunction = __webpack_require__(16);
-	var joinClasses = __webpack_require__(327);
+	var joinClasses = __webpack_require__(329);
 
 	/**
 	 * Creates a transfer strategy that will merge prop values using the supplied
@@ -46090,7 +46215,7 @@
 
 
 /***/ },
-/* 327 */
+/* 329 */
 /***/ function(module, exports) {
 
 	/**
@@ -46135,7 +46260,7 @@
 
 
 /***/ },
-/* 328 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46154,8 +46279,8 @@
 
 	var React = __webpack_require__(2);
 
-	var CSSCore = __webpack_require__(329);
-	var ReactTransitionEvents = __webpack_require__(330);
+	var CSSCore = __webpack_require__(331);
+	var ReactTransitionEvents = __webpack_require__(332);
 
 	var onlyChild = __webpack_require__(156);
 	var warning = __webpack_require__(15);
@@ -46286,7 +46411,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 329 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46401,7 +46526,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 330 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -46516,7 +46641,7 @@
 
 
 /***/ },
-/* 331 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46575,7 +46700,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 332 */
+/* 334 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -46749,7 +46874,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 333 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -47267,7 +47392,7 @@
 
 
 /***/ },
-/* 334 */
+/* 336 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47292,131 +47417,6 @@
 	};
 
 	module.exports = PageActions;
-
-/***/ },
-/* 335 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(264);
-	var DashboardConstants = __webpack_require__(268);
-
-	var LocationActions = {
-
-	  recieveCurrentLocation: function recieveCurrentLocation(geoPoint) {
-	    AppDispatcher.dispatch({
-	      actionType: DashboardConstants.RECIEVE_GEOPOINT,
-	      geopoint: geoPoint
-	    });
-	  },
-
-	  recieveLocationInfo: function recieveLocationInfo(locationInfo) {
-	    AppDispatcher.dispatch({
-	      actionType: DashboardConstants.RECIEVE_LOCATION_INFO,
-	      locationInfo: locationInfo
-	    });
-	  }
-
-	};
-
-	module.exports = LocationActions;
-
-/***/ },
-/* 336 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _utils = __webpack_require__(271);
-
-	var _AppDispatcher = __webpack_require__(264);
-
-	var _AppDispatcher2 = _interopRequireDefault(_AppDispatcher);
-
-	var _DashboardConstants = __webpack_require__(268);
-
-	var _DashboardConstants2 = _interopRequireDefault(_DashboardConstants);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var LocationInfoStore = function (_Store) {
-	  _inherits(LocationInfoStore, _Store);
-
-	  function LocationInfoStore(dispatcher) {
-	    _classCallCheck(this, LocationInfoStore);
-
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LocationInfoStore).call(this, dispatcher));
-
-	    _this.locationinfo = [];
-	    _this.geopoint = {};
-	    return _this;
-	  }
-
-	  _createClass(LocationInfoStore, [{
-	    key: 'getGeoPoint',
-	    value: function getGeoPoint() {
-	      return this.geopoint;
-	    }
-	  }, {
-	    key: 'getLocationInfo',
-	    value: function getLocationInfo() {
-	      return this.locationinfo;
-	    }
-	  }, {
-	    key: 'getLocationName',
-	    value: function getLocationName() {
-	      var retval = "Unknown location";
-
-	      //  If we actually have some location information,
-	      //  rip through it
-	      for (var i = 0; i < this.locationinfo.length; i++) {
-	        //  Look for the first object that includes a 'type'
-	        //  property of 'locality' and return the 
-	        //  associated 'formatted_address'  
-	        if (this.locationinfo[i].types.includes("locality")) {
-	          retval = this.locationinfo[i].formatted_address;
-	          break;
-	        }
-	      }
-
-	      return retval;
-	    }
-	  }, {
-	    key: '__onDispatch',
-	    value: function __onDispatch(action) {
-
-	      switch (action.actionType) {
-	        case _DashboardConstants2.default.RECIEVE_GEOPOINT:
-	          console.log('Updating current location: ', action);
-	          this.geopoint = action.geopoint;
-	          this.__emitChange();
-	          break;
-
-	        case _DashboardConstants2.default.RECIEVE_LOCATION_INFO:
-	          console.log('Updating location information: ', action);
-	          this.locationinfo = action.locationInfo;
-	          this.__emitChange();
-	          break;
-
-	        default:
-	        // no op
-	      }
-	    }
-	  }]);
-
-	  return LocationInfoStore;
-	}(_utils.Store);
-
-	module.exports = new LocationInfoStore(_AppDispatcher2.default);
 
 /***/ }
 /******/ ]);

@@ -28,7 +28,7 @@ class LocationInfoStore extends Store {
       //  Look for the first object that includes a 'type'
       //  property of 'locality' and return the 
       //  associated 'formatted_address'  
-      if(this.locationinfo[i].types.includes("locality"))
+      if(typeof this.locationinfo[i].types.includes === "function" && this.locationinfo[i].types.includes("locality"))
       {
         retval = this.locationinfo[i].formatted_address;
         break;
