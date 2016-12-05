@@ -16,6 +16,7 @@ import WeatherStore from '../stores/WeatherStore';
 import CalendarStore from '../stores/CalendarStore';
 import NewsStore from '../stores/NewsStore';
 import SettingsStore from '../stores/SettingsStore';
+import LocationInfoStore from '../stores/LocationInfoStore';
 
 /*
   Get the current state
@@ -29,7 +30,8 @@ function getAppState()
     news: NewsStore.getBreakingNews(),
     settings: SettingsStore.getSettings(),
     cal_authcheckfinished: CalendarStore.authCheckFinished(),
-    cal_authorized: CalendarStore.areAuthorized()
+    cal_authorized: CalendarStore.areAuthorized(),
+    location_name: LocationInfoStore.getLocationName()
   };
 }
 
@@ -72,6 +74,7 @@ var DashboardHome = React.createClass({
     this.weatherListener = WeatherStore.addListener(this._onChange);
     this.calendarListener = CalendarStore.addListener(this._onChange);
     this.newsListener = NewsStore.addListener(this._onChange);
+    this.locationListener = LocationInfoStore.addListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -82,6 +85,7 @@ var DashboardHome = React.createClass({
     this.weatherListener.remove();
     this.calendarListener.remove();
     this.newsListener.remove();
+    this.locationListener.remove();
   },
 
   /**
@@ -94,7 +98,7 @@ var DashboardHome = React.createClass({
          <div className="row">
           
           <div className="col-sm-6">
-            <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} />
+            <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} locationname={this.state.location_name} />
           </div>
 
           <div className="col-sm-6">

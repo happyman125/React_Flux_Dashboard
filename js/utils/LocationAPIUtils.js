@@ -1,6 +1,5 @@
 //  Actions
-
-//  The stores
+import LocationActions from '../actions/LocationActions';
 
 class LocationAPIUtils {
 
@@ -18,14 +17,13 @@ class LocationAPIUtils {
 
         $.ajax({ url: url, dataType: 'json', type: "POST"})
         .done(function(data) {
+            //  Call the action to receive the data:
+            LocationActions.recieveCurrentLocation({latitude: data.location.lat, longitude: data.location.lng});
 
             //  If a success callback was specified, call it:
             if(typeof options.success === "function"){
                 options.success({latitude: data.location.lat, longitude: data.location.lng});
             }
-
-            //	Call the action to receive the data:
-        	// WeatherActions.recieveWeatherData(data);
         }.bind(this))
         .fail(function() {
         	//	Something bad happened
@@ -41,13 +39,16 @@ class LocationAPIUtils {
         
         $.ajax( url )
         .done(function(data) {
-            console.log(data);
-            //  Call the action to receive the data:
-            //  WeatherActions.recieveWeatherData(weatherdata);
+            if(data.status === "OK") {
+                //  Call the action to receive the data:
+                LocationActions.recieveLocationInfo(data.results);
+            } else {
+                console.log("When getting location name info, status was not OK")
+            }         
         }.bind(this))
         .fail(function() {
             //  Something bad happened
-            console.log("There was a problem getting weather");
+            console.log("There was a problem getting location name");
         });
     }
 }

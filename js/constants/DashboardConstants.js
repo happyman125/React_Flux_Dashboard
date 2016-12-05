@@ -9,5 +9,7 @@ module.exports = keyMirror({
   RECIEVE_RAW_NEWS_EVENTS: null,
   RECIEVE_SETTINGS: null,
   SHOW_SETTINGS: null,
-  SHOW_HOME: null
+  SHOW_HOME: null,
+  RECIEVE_GEOPOINT: null,
+  RECIEVE_LOCATION_INFO: null
 });

@@ -51,7 +51,6 @@ LocationAPIUtils.getCurrentLocation({
         var zipcode = settings.zipcode;
 
         //  We have coordinates -- get the weather data
-        console.log("Using geocoordinates: ", coords);
         switch(settings.weathersource)
         {
             case "Yahoo":

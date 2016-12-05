@@ -90,7 +90,7 @@ class WeatherDisplay extends Component {
             <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
           </div>
 
-          <div className="dashboard-status">{formattedStatus} <a href='/#/settings'>Settings</a></div>
+          <div className="dashboard-status">{this.props.locationname} / {formattedStatus} <a href='/#/settings'>Settings</a></div>
           <WeatherForecast forecastdays={forecastdays} />
 
           <div id="pollen-summary">
