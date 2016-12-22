@@ -42650,19 +42650,16 @@
 	                'orderBy': 'startTime'
 	            };
 
-	            console.log("Requesting calendar events: ", requestParams);
+	            //  console.log("Requesting calendar events: ", requestParams);
 	            var request = gapi.client.calendar.events.list(requestParams);
 
-	            //  Execute the request and get the response
-	            request.execute(function (resp) {
-	                //  If we get a code == 403 here, should we attempt to re-authenticate or something?
-	                if (resp.code == 403) {
-	                    console.log("Got a strange response: ", resp, " - Trying to re-authenticate");
-	                    utils.authorizeCalendar();
-	                } else {
-	                    //  Call the action to receive the data:
-	                    _CalendarActions2.default.recieveCalendarData(resp, calendarId);
-	                }
+	            request.then(function (resp) {
+	                _CalendarActions2.default.recieveCalendarData(resp.result, calendarId);
+	            }, function (reason) {
+	                // Handle error
+	                /* If we get a strange response we attempt to re-authenticate */
+	                console.log("Got a strange response: ", reason, " - Trying to re-authenticate");
+	                utils.authorizeCalendar();
 	            });
 	        }
 
