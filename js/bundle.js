@@ -21389,7 +21389,7 @@
 	            var apikey = settings.weathersource_apikey;
 
 	            //  Get the weather for the given lat/long coordinates
-	            var url = 'https://api.forecast.io/forecast/' + apikey + '/' + latitude + ',' + longitude + '?callback=?';
+	            var url = 'https://api.darksky.net/forecast/' + apikey + '/' + latitude + ',' + longitude + '?callback=?';
 
 	            $.ajax({ url: url, dataType: 'json', async: false }).done(function (data) {
 
@@ -21439,7 +21439,7 @@
 	                    data: dailyData
 	                },
 	                alerts: [],
-	                source: "Forecast.io",
+	                source: "Darksky.net",
 	                lastupdated: new Date()
 	            };
 
