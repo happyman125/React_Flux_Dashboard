@@ -4,7 +4,7 @@ dependencies:
     - go get github.com/tcnksm/ghr
   override:    
     # Execute the build process
-    - npm install -g yarnpkg
+    - npm install -g yarnpkg webpack
     - yarn
     - webpack --optimize-minimize
 
