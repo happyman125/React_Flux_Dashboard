@@ -4,7 +4,9 @@ dependencies:
     - go get github.com/tcnksm/ghr
   override:    
     # Execute the build process
-    - npm set progress=false; npm install; npm run build;
+    - npm install -g yarnpkg
+    - yarn
+    - webpack --optimize-minimize
 
     # Build our dashboard zip file
     - mkdir -p /tmp/ui/js
