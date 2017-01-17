@@ -18,7 +18,7 @@ class WeatherForecastTemp extends Component {
     return (
 
         <div>
-          <span style={{color: lowColor}}>{this.props.low}</span> • <span style={{color: highColor}}>{this.props.high}</span>
+          <span style={{color: highColor}}>{this.props.high}</span> • <span style={{color: lowColor}}>{this.props.low}</span> 
         </div>
     );
   }
