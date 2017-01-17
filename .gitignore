@@ -29,3 +29,4 @@ node_modules
 
 # Build information
 build.json
+js/bundle.js
