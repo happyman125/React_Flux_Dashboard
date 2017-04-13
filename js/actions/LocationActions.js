@@ -1,22 +1,22 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var DashboardConstants = require('../constants/DashboardConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var LocationActions = {
+class LocationActions {
 
-  recieveCurrentLocation: function(geoPoint) {
+  recieveCurrentLocation(geoPoint) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_GEOPOINT,
       geopoint: geoPoint
     });
-  },
+  }
 
-  recieveLocationInfo: function(locationInfo) {
+  recieveLocationInfo(locationInfo) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_LOCATION_INFO,
       locationInfo: locationInfo
     });
   }
 
-};
+}
 
-module.exports = LocationActions;
+module.exports = new LocationActions(AppDispatcher);

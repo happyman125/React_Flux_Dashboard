@@ -1,16 +1,16 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var DashboardConstants = require('../constants/DashboardConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var WeatherActions = {
+class WeatherActions {
 
-  recieveWeatherData: function(weatherData) {
+  recieveWeatherData(weatherData) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_WEATHER,
       weatherData: weatherData
     });
-  },
+  }
 
-  recievePollenData: function(pollenData, zipcode) {
+  recievePollenData(pollenData, zipcode) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_POLLEN,
       pollenData: pollenData,
@@ -18,6 +18,6 @@ var WeatherActions = {
     });
   }
 
-};
+}
 
-module.exports = WeatherActions;
+module.exports = new WeatherActions(AppDispatcher);

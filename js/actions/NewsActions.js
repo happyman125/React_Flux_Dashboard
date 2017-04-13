@@ -1,15 +1,15 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var DashboardConstants = require('../constants/DashboardConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var NewsActions = {
+class NewsActions {
 
-  recieveNewsData: function(newsData) {
+  recieveNewsData(newsData) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_NEWS_EVENTS,
       newsData: newsData
     });
-  },
+  }
 
 };
 
-module.exports = NewsActions;
+module.exports = new NewsActions(AppDispatcher);

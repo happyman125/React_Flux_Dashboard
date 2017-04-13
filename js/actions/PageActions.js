@@ -1,20 +1,20 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var DashboardConstants = require('../constants/DashboardConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var PageActions = {
+class PageActions {
 
-  showHome: function() {
+  showHome() {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.SHOW_HOME
     });
-  },
+  }
 
-  showSettings: function() {
+  showSettings() {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.SHOW_SETTINGS
     });
   }
 
-};
+}
 
-module.exports = PageActions;
+module.exports = new PageActions(AppDispatcher);

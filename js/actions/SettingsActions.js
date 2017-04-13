@@ -1,15 +1,15 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import DashboardConstants from '../constants/DashboardConstants';
 
-var SettingsActions = {
+class SettingsActions {
 
-  recieveSettingsData: function(settingsData) {
+  recieveSettingsData(settingsData) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_SETTINGS,
       settingsData: settingsData
     });
   }
 
-};
+}
 
-module.exports = SettingsActions;
+module.exports = new SettingsActions(AppDispatcher);
