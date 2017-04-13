@@ -1,11 +1,8 @@
-var React = require('react');
+import {Component} from 'react';
 
-var CalendarEventMoreInfo = React.createClass({
+class CalendarEventMoreInfo extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
     //  Get the description or a default & cut it down to size
     var description = this.props.eventinfo.description || "";
@@ -15,6 +12,6 @@ var CalendarEventMoreInfo = React.createClass({
         <tr><td style={{"border": "none"}} className="event-moreinfo" colSpan="2">{description}</td></tr>
     );
   }
-});
+}
 
-module.exports = CalendarEventMoreInfo;
+export default CalendarEventMoreInfo;

@@ -1,11 +1,8 @@
-var React = require('react');
+import {Component} from 'react';
 
-var WeatherForecastIcon = React.createClass({
+class WeatherForecastIcon extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
 
     //  Yahoo numeric codes are here: https://developer.yahoo.com/weather/documentation.html
     //  Forecast.io icon codes are here: https://developer.forecast.io/docs/v2#forecast_call
@@ -101,6 +98,6 @@ var WeatherForecastIcon = React.createClass({
         <i className={iconClass}></i>
     );
   }
-});
+}
 
-module.exports = WeatherForecastIcon;
+export default WeatherForecastIcon;

@@ -1,38 +1,36 @@
-var React = require('react');
-var Moment = require('moment');
+import {Component} from 'react';
+import Moment from 'moment';
 
-function getDateTimeState()
-{
-  var d = new Date();
+class DateTimeDisplay extends Component{
 
-  return {
-    currentDate: Moment().format("dddd, MMMM Do"),
-    currentTime: Moment().format("h:mma")
-  };
-}
+  constructor(props) {
+    super(props);
 
-var DateTimeDisplay = React.createClass({
+    this.state = {
+      currentDate: Moment().format("dddd, MMMM Do"),
+      currentTime: Moment().format("h:mma")
+    };
 
-  getInitialState: function() {
-    return getDateTimeState();
-  },
+    //  Bind our event handlers:
+    this.tick = this.tick.bind(this);
+  }
   
-  tick: function() {
-    this.setState(getDateTimeState());
-  },
+  tick() {
+    this.setState({
+      currentDate: Moment().format("dddd, MMMM Do"),
+      currentTime: Moment().format("h:mma")
+    });
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.interval = setInterval(this.tick, 1000);
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     clearInterval(this.interval);
-  },
+  }
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
   	return (
       <div>
         <div id="time">{this.state.currentTime}</div>
@@ -41,6 +39,6 @@ var DateTimeDisplay = React.createClass({
     );
   }
 
-});
+}
 
-module.exports = DateTimeDisplay;
+export default DateTimeDisplay;

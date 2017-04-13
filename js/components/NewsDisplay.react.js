@@ -1,12 +1,9 @@
-var React = require('react');
-var Moment = require('moment');
+import {Component} from 'react';
+import Moment from 'moment';
 
-var NewsDisplay = React.createClass({
+class NewsDisplay extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
 
     //  First, see if we have an item to display.
     if(this.props.news.length < 1) {
@@ -44,6 +41,6 @@ var NewsDisplay = React.createClass({
         </div>
     );
   }
-});
+}
 
-module.exports = NewsDisplay;
+export default NewsDisplay;

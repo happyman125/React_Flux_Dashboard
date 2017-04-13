@@ -1,4 +1,4 @@
-import React from 'react';
+import {Component} from 'react';
 
 //  The components
 import DateTimeDisplay from './DateTimeDisplay.react';
@@ -18,30 +18,27 @@ import NewsStore from '../stores/NewsStore';
 import SettingsStore from '../stores/SettingsStore';
 import LocationInfoStore from '../stores/LocationInfoStore';
 
-/*
-  Get the current state
- */
-function getAppState()
-{
-  return{
-    weather: WeatherStore.getWeather(),
-    pollen: WeatherStore.getPollen(),
-    calendarinfo: CalendarStore.getCalendarData(),
-    news: NewsStore.getBreakingNews(),
-    settings: SettingsStore.getSettings(),
-    cal_authcheckfinished: CalendarStore.authCheckFinished(),
-    cal_authorized: CalendarStore.areAuthorized(),
-    location_name: LocationInfoStore.getLocationName()
-  };
-}
+class DashboardHome extends Component {
 
-var DashboardHome = React.createClass({
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      weather: WeatherStore.getWeather(),
+      pollen: WeatherStore.getPollen(),
+      calendarinfo: CalendarStore.getCalendarData(),
+      news: NewsStore.getBreakingNews(),
+      settings: SettingsStore.getSettings(),
+      cal_authcheckfinished: CalendarStore.authCheckFinished(),
+      cal_authorized: CalendarStore.areAuthorized(),
+      location_name: LocationInfoStore.getLocationName()
+    };
+    
+    //  Bind our event handlers:
+    this._onChange = this._onChange.bind(this);
+  }
 
-  getInitialState: function() {
-    return getAppState();
-  },
-
-  tick: function() {
+  tick() {
     //  Get the latest weather:
     switch(this.state.settings.weathersource)
     {
@@ -64,9 +61,9 @@ var DashboardHome = React.createClass({
 
     //  Get the latest breaking news:
     NewsAPIUtils.getTwitterFeed(this.props.breakingnewsuser);
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     //  Add an interval tick for every 5 minutes:
     this.interval = setInterval(this.tick, 300000);
 
@@ -75,9 +72,9 @@ var DashboardHome = React.createClass({
     this.calendarListener = CalendarStore.addListener(this._onChange);
     this.newsListener = NewsStore.addListener(this._onChange);
     this.locationListener = LocationInfoStore.addListener(this._onChange);
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     //  Clear the interval:
     clearInterval(this.interval);
 
@@ -86,12 +83,9 @@ var DashboardHome = React.createClass({
     this.calendarListener.remove();
     this.newsListener.remove();
     this.locationListener.remove();
-  },
+  }
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
 
   	return (
       <div className="container-fluid">
@@ -111,12 +105,21 @@ var DashboardHome = React.createClass({
         <NewsDisplay news={this.state.news} />
       </div>
   	);
-  },
-
-  _onChange: function() {
-    this.setState(getAppState());
   }
 
-});
+  _onChange() {
+    this.setState({
+      weather: WeatherStore.getWeather(),
+      pollen: WeatherStore.getPollen(),
+      calendarinfo: CalendarStore.getCalendarData(),
+      news: NewsStore.getBreakingNews(),
+      settings: SettingsStore.getSettings(),
+      cal_authcheckfinished: CalendarStore.authCheckFinished(),
+      cal_authorized: CalendarStore.areAuthorized(),
+      location_name: LocationInfoStore.getLocationName()
+    });
+  }
 
-module.exports = DashboardHome;
+}
+
+export default DashboardHome;

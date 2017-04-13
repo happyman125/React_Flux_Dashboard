@@ -1,47 +1,40 @@
-
-import React from 'react';
+import {Component} from 'react';
 
 //  The stores
 import PageStore from '../stores/PageStore';
 import SettingsStore from '../stores/SettingsStore';
 
-/*
-  Get the current state from the GistStore
- */
-function getAppState()
-{
-  return{
-    page: PageStore.getPage(),
-    settings: SettingsStore.getSettings()
-  };
-}
+class DashboardApp extends Component {
 
-var DashboardApp = React.createClass({
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      page: PageStore.getPage(),
+      settings: SettingsStore.getSettings()
+    };
+    
+    //  Bind our event handlers:
+    this._onChange = this._onChange.bind(this);
+  }
 
-  getInitialState: function() {
-    return getAppState();
-  },
-
-  componentDidMount: function() {
+  componentDidMount() {
     //  If we don't have a calendarid or a zipcode set, we should
     //  try to redirect here (instead of using app.js)
 
     //  Add store listeners ... and notify ME of changes
     this.pageListener = PageStore.addListener(this._onChange);
     this.settingsListener = SettingsStore.addListener(this._onChange);
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
 
     //  Remove store listeners
     this.pageListener.remove();
     this.settingsListener.remove();
-  },
+  }
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     //  Determine what page to show
     var ComponentToLoad = this.state.page;
 
@@ -50,12 +43,15 @@ var DashboardApp = React.createClass({
   	return (
       <ComponentToLoad settings={this.state.settings} {...this.props} />
   	);
-  },
-
-  _onChange: function() {
-    this.setState(getAppState());
   }
 
-});
+  _onChange() {
+     this.setState({
+      page: PageStore.getPage(),
+      settings: SettingsStore.getSettings()
+    });
+  }
 
-module.exports = DashboardApp;
+}
+
+export default DashboardApp;

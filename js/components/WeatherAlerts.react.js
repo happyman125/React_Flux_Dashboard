@@ -1,12 +1,9 @@
-var React = require('react');
-var Moment = require('moment');
+import {Component} from 'react';
+import Moment from 'moment';
 
-var WeatherAlerts = React.createClass({
+class WeatherAlerts extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
     //  First, see if we have any alerts
     if(this.props.alerts.length < 1) {
@@ -44,6 +41,6 @@ var WeatherAlerts = React.createClass({
         </div>
     );
   }
-});
+}
 
-module.exports = WeatherAlerts;
+export default WeatherAlerts;

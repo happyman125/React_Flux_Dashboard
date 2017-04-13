@@ -1,11 +1,8 @@
-var React = require('react');
+import {Component} from 'react';
 
-var WeatherForecastDaySummary = React.createClass({
+class WeatherForecastDaySummary extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
   	return (
         <tr>
@@ -13,6 +10,6 @@ var WeatherForecastDaySummary = React.createClass({
         </tr>
     );
   }
-});
+}
 
-module.exports = WeatherForecastDaySummary;
+export default WeatherForecastDaySummary;

@@ -1,12 +1,9 @@
-var React = require('react');
-var Moment = require('moment');
+import {Component} from 'react';
+import Moment from 'moment';
 
-var CalendarEventItem = React.createClass({
+class CalendarEventItem extends Component{
 
-  /**
-   * @return {object}
-   */
-  render: function() {
+  render() {
     
     //  Format the display:
     var eventStart = "All day";
@@ -24,6 +21,6 @@ var CalendarEventItem = React.createClass({
         <tr><td>{eventStart}{eventEnd}</td><td>{summary}</td></tr>
     );
   }
-});
+}
 
-module.exports = CalendarEventItem;
+export default CalendarEventItem;
