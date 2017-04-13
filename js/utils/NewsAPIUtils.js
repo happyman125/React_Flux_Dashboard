@@ -1,8 +1,8 @@
-var NewsActions = require('../actions/NewsActions');
+import NewsActions from '../actions/NewsActions';
 
-module.exports = {
-
-    getTwitterFeed: function(user) {
+class NewsAPIUtils {
+    
+	getTwitterFeed(user) {
 
 	    //  The base url for the service - change this to your service location:
 	    //  You can get this microservice for free at https://github.com/danesparza/twitter-breaking-news
@@ -20,6 +20,8 @@ module.exports = {
 	    	//	Something bad happened
 	    	console.log("There was a problem getting news");
 	    });
-  }, 
+  } 
 
-};
+}
+
+module.exports = new NewsAPIUtils();
