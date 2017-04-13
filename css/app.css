@@ -58,6 +58,11 @@ body{
   font-size: 1.5em;
 }
 
+.forecast-moon{
+  vertical-align: middle !important;
+  color: #ffff99;
+}
+
 .forecast-pollen{
   vertical-align: middle !important;
   font-size: 1em;

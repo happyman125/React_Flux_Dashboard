@@ -15,7 +15,8 @@
     "moment-timezone": "^0.3.0",
     "object-assign": "^1.0.0",
     "react": "^0.13.3",
-    "react-radio-group": "2.1.1"
+    "react-radio-group": "2.1.1",
+    "suncalc": "^1.8.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",

@@ -1,9 +1,11 @@
 import {Component} from 'react';
 import Moment from 'moment';
+import SunCalc from 'suncalc';
 
 //  The components
 import WeatherForecastIcon from './WeatherForecastIcon.react';
 import WeatherForecastTemp from './WeatherForecastTemp.react';
+import MoonPhaseIcon from './MoonPhaseIcon.react';
 
 class WeatherForecastDay extends Component {
 
@@ -17,6 +19,12 @@ class WeatherForecastDay extends Component {
     var forcastIcon = this.props.forecast.icon;
     var pollenCount = this.props.forecast.pollen || "";
     var pollenCountClass = "label";
+
+    //  Moon phases described here: 
+    //  https://github.com/mourner/suncalc#moon-illumination
+    var moonInfo = SunCalc.getMoonIllumination(Moment(forecastDay * 1000).toDate());
+    var moonPhase = moonInfo.phase;
+    moonPhase = +moonPhase.toFixed(2);
 
     //  Format the pollen count display:
     if(pollenCount <= 3){pollenCountClass = pollenCountClass + " label-default";}
@@ -33,6 +41,7 @@ class WeatherForecastDay extends Component {
             <span className="forcast-summary">{this.props.forecast.summary}</span>            
           </td>
           <td className="forecast-temp"><WeatherForecastTemp low={tempLow} high={tempHigh}/></td>
+          <td className="forecast-moon"><MoonPhaseIcon phase={moonPhase} /></td>
           <td className="forecast-pollen"><span className={pollenCountClass}>{pollenCount}</span></td>
         </tr>
     );
