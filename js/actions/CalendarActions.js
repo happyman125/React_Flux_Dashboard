@@ -1,30 +1,30 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var DashboardConstants = require('../constants/DashboardConstants');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import DashboardConstants from '../constants/DashboardConstants';
 
-var CalendarActions = {
+class CalendarActions {
 
-  recieveCalendarData: function(calendarData, calendarId) {
+  recieveCalendarData(calendarData, calendarId) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_CALENDAR_EVENTS,
       calendarData: calendarData,
       calendarId: calendarId
     });
-  },
+  }
 
-  recieveCalendarAuthCheckResult: function(authorized) {
+  recieveCalendarAuthCheckResult(authorized) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_CALENDAR_AUTH_CHECK_RESULT,
       authorized: authorized
     });
-  },
+  }
 
-  recieveCalendarList: function(calendarList) {
+  recieveCalendarList(calendarList) {
     AppDispatcher.dispatch({
       actionType: DashboardConstants.RECIEVE_RAW_CALENDAR_LIST,
       calendarList: calendarList
     });
   }
 
-};
+}
 
-module.exports = CalendarActions;
+module.exports = new CalendarActions(AppDispatcher);
