@@ -36,6 +36,7 @@ class DashboardHome extends Component {
     
     //  Bind our event handlers:
     this._onChange = this._onChange.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
   tick() {
