@@ -3,9 +3,6 @@ import {Component} from 'react';
 class MoonPhaseIcon extends Component{
 
   render() {
-
-    //  Yahoo numeric codes are here: https://developer.yahoo.com/weather/documentation.html
-    //  Forecast.io icon codes are here: https://developer.forecast.io/docs/v2#forecast_call
     
     //  Set the default icon:
     var iconClass = "wi-moon-waning-gibbous-3";
@@ -22,7 +19,7 @@ class MoonPhaseIcon extends Component{
     iconClass = "wi " + iconClass;
     
   	return (
-        <i className={iconClass}></i>
+        <i className={iconClass} rel="tooltip" title={this.props.phase}></i>
     );
   }
 }
