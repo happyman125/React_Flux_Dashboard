@@ -19,6 +19,7 @@ class WeatherForecastDay extends Component {
     var forcastIcon = this.props.forecast.icon;
     var pollenCount = this.props.forecast.pollen || "";
     var pollenCountClass = "label";
+    var forecastSummary = this.props.forecast.summary.substring(0, 50);
 
     //  Moon phases described here: 
     //  https://github.com/mourner/suncalc#moon-illumination
@@ -38,7 +39,7 @@ class WeatherForecastDay extends Component {
           <td className="forecast-icon"><WeatherForecastIcon icon={forcastIcon} /></td>
           <td>
             {formattedDay}<br/>
-            <span className="forcast-summary">{this.props.forecast.summary}</span>            
+            <span className="forcast-summary">{forecastSummary}</span>            
           </td>
           <td className="forecast-temp"><WeatherForecastTemp low={tempLow} high={tempHigh}/></td>
           <td className="forecast-moon"><MoonPhaseIcon phase={moonPhase} /></td>
