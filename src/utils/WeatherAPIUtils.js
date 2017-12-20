@@ -78,6 +78,7 @@ class WeatherAPIUtils {
 
         //  Format the yahoo url
         let url = `https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(${latitude},${longitude})")&format=json&env=store://datatables.org/alltableswithkeys`
+        let weatherUtils = this;
 
         fetch(url, {mode: 'cors'})
         .then(
@@ -90,7 +91,7 @@ class WeatherAPIUtils {
                 // Receive data
                 response.json().then(function (data) {
                     //  Convert the data to the common weather format
-                    let weatherdata = this.convertYahooToWeather(data);
+                    let weatherdata = weatherUtils.convertYahooToWeather(data);
                     
                     //  Call the action to receive the data:
                     WeatherActions.recieveWeatherData(weatherdata);					

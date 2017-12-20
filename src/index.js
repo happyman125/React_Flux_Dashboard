@@ -15,6 +15,7 @@ import SettingsStore from './stores/SettingsStore';
 
 //  'Google client loaded' handler 
 window.handleGoogleClientLoad = function(){
+    console.log("Google client loaded.  Calling authorize calendar...");
     CalendarAPIUtils.authorizeCalendar();
 }
 

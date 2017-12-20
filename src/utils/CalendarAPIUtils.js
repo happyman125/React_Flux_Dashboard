@@ -74,11 +74,15 @@ class CalendarAPIUtils {
 
     /* Get authorization from the google API for the given scope(s) */
     authorizeCalendar() {
-        gapi.auth.authorize({
-            'client_id': this.client_id,
-            'scope': this.scopes,
-            'immediate': true
-        }, utils.handleCalendarAuthResult);
+        try{
+            gapi.auth.authorize({
+                'client_id': this.client_id,
+                'scope': this.scopes,
+                'immediate': true
+            }, utils.handleCalendarAuthResult);
+        } catch(e){
+            console.log("There was a problem attempting to authorize the Google calendar")
+        }
     }
 
     /* Initiate auth flow in response to user clicking authorize button. */
