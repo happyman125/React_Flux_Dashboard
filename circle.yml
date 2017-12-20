@@ -1,27 +1,22 @@
+machine:
+  node:
+    version: 6
 dependencies:
   pre:
     # Our Github release maker
     - go get github.com/tcnksm/ghr
   override:    
     # Execute the build process
-    - npm install -g yarnpkg webpack
+    - npm install -g yarn
     - yarn
-    - webpack --optimize-minimize
+    - yarn build
 
     # Build our dashboard zip file
-    - mkdir -p /tmp/ui/js
-    - mkdir -p /tmp/ui/css
-    - mkdir -p /tmp/ui/font
-    - echo "{\"version\":$CIRCLE_BUILD_NUM}" >> /tmp/ui/build.json
-    - cp css/*.css /tmp/ui/css
-    - cp font/*.* /tmp/ui/font
-    - cp js/bundle.js /tmp/ui/js
-    - cp js/rainbowvis.js /tmp/ui/js
-    - cp index.html /tmp/ui/index.html
-    - cd /tmp/ui; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
+    - echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
+    - cd build; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
 test:
-  post:
-    - echo .
+  override:
+    - yarn test
 deployment:
   hub:
     branch: master
@@ -34,4 +29,4 @@ deployment:
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
       # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
       # for more information
-      - aws s3 sync /tmp/ui/ s3://$S3_DEPLOY_BUCKET --delete --quiet
+      # - aws s3 sync build s3://$S3_DEPLOY_BUCKET --quiet

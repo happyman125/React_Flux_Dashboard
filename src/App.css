@@ -1,0 +1,175 @@
+body{
+  font-family: 'Lato', sans-serif;
+  color: #fff;
+  background-color: #222;
+}
+
+.row{
+  margin: 0;
+}
+
+/* Global form helpers */
+.inline-radio label {
+    vertical-align: middle
+}
+.inline-radio input[type=text] {
+    width: 200px;
+    display:inline-block;
+}
+
+/* Weather display */
+#temp{
+  font-size: 13em;
+  text-align: center;
+}
+
+#summary{
+  font-size: 2.5em;
+  text-align: center;
+}
+
+#extended-summary {
+  font-size: 2.50em;
+  text-align: center;
+}
+
+#sunrise-sunset{
+  font-size: 2.50em;
+  text-align: center; 
+}
+
+#pollen-summary{
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+#forcast{
+  font-size: 2em;
+}
+
+.forecast-icon{
+  vertical-align: middle !important;
+  font-size: 1.5em;
+  width: 1em;
+}
+
+.forecast-temp{
+  vertical-align: middle !important;
+  font-size: 1.5em;
+}
+
+.forecast-moon{
+  vertical-align: middle !important;
+  color: #ffff99;
+}
+
+.forecast-pollen{
+  vertical-align: middle !important;
+  font-size: 1em;
+}
+
+.forcast-summary{
+  font-size: .7em;
+}
+
+.forecast-alert-title{
+ font-size: 2em; 
+}
+
+.temp-pixel-pad{
+  display: inline-block;
+}
+
+.temp-pixel{
+  width: 2px;
+  height: 35px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Calendar display */
+#time {
+  font-size: 13em;
+  text-align: center;
+}
+
+#date {
+  font-size: 3.7em;
+  text-align: center;
+}
+
+#calendar{
+  font-size: 2em; 
+}
+
+#calendar-status{
+  margin-top: 25px;
+}
+
+#calendar-empty{
+  margin-top: 40px;
+  font-size: 2em;
+  text-align: center; 
+}
+
+.event-moreinfo{
+  font-size: .7em;
+}
+
+#breaking-news{
+  background-color: #424242;
+  color: #E0E0E0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  width: auto;
+}
+
+#breaking-wrapper{
+  position: relative;
+  float: left;
+}
+
+#breaking-news-image{
+  max-width: 600px; /* Maximum image width */
+  max-height: 400px; /* Maximum image height */
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+#breaking-news-caption-wrapper{
+  position: absolute;/* absolute position (so we can position it where we want)*//* position will be on bottom */
+  bottom: 0px;
+  left:0px;
+  width:100%;
+  background-color:black;
+  color:white;
+  opacity: 0.85;/* transparency */
+  filter:alpha(opacity=70);/* IE transparency */
+}
+
+#breaking-news-caption{
+  padding: 10px;        
+  margin:0px;
+  font-size: 1.5em;
+}
+
+#breaking-news-caption-intro{
+  font-weight: bold;
+}
+
+.dashboard-status {
+  background-color: #222;
+  color: #444;
+}
+
+.dashboard-status a{
+  color: #444;
+}
+
+.dashboard-status .a:hover{
+  color: #444;
+}
