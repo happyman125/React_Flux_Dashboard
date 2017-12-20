@@ -18,7 +18,7 @@ class WeatherForecastDay extends Component {
     var formattedDay = Moment(forecastDay * 1000).format("dddd");
     var forcastIcon = this.props.forecast.icon;
     var pollenCount = this.props.forecast.pollen || "";
-    var pollenCountClass = "label";
+    var pollenCountClass = "badge";
     var forecastSummary = this.props.forecast.summary.substring(0, 50);
 
     //  Moon phases described here: 
@@ -28,10 +28,10 @@ class WeatherForecastDay extends Component {
     moonPhase = +moonPhase.toFixed(2);
 
     //  Format the pollen count display:
-    if(pollenCount <= 3){pollenCountClass = pollenCountClass + " label-default";}
-    if(pollenCount > 3 && pollenCount < 7){pollenCountClass = pollenCountClass + " label-info";}
-    if(pollenCount >= 7 && pollenCount < 10){pollenCountClass = pollenCountClass + " label-warning";}
-    if(pollenCount >= 10){pollenCountClass = pollenCountClass + " label-danger";}
+    if(pollenCount <= 3){pollenCountClass = pollenCountClass + " badge-secondary";}
+    if(pollenCount > 3 && pollenCount < 7){pollenCountClass = pollenCountClass + " badge-info";}
+    if(pollenCount >= 7 && pollenCount < 10){pollenCountClass = pollenCountClass + " badge-warning";}
+    if(pollenCount >= 10){pollenCountClass = pollenCountClass + " badge-danger";}
 
     return (
 
