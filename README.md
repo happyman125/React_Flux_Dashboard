@@ -4,4 +4,4 @@ Weather and Google calendar dashboard built with [React](http://facebook.github.
 
 Screenshot:
 
-![Dashboard screenshot](screen_dashboard_small.png?raw=true)
+![Dashboard screenshot](dashboard.cagedtornado.com.png?raw=true)
