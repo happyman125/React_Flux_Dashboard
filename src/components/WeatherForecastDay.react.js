@@ -12,19 +12,19 @@ class WeatherForecastDay extends Component {
   render() {
     
     //  Format the display:
-    var tempHigh = Math.round(this.props.forecast.high);
-    var tempLow = Math.round(this.props.forecast.low);
-    var forecastDay = this.props.forecast.date;
-    var formattedDay = Moment(forecastDay * 1000).format("dddd");
-    var forcastIcon = this.props.forecast.icon;
-    var pollenCount = this.props.forecast.pollen || "";
-    var pollenCountClass = "badge";
-    var forecastSummary = this.props.forecast.summary.substring(0, 50);
+    let tempHigh = Math.round(this.props.forecast.high);
+    let tempLow = Math.round(this.props.forecast.low);
+    let forecastDay = this.props.forecast.date;
+    let formattedDay = Moment(forecastDay * 1000).format("dddd");
+    let forcastIcon = this.props.forecast.icon;
+    let pollenCount = this.props.forecast.pollen || "";
+    let pollenCountClass = "badge";
+    let forecastSummary = this.props.forecast.summary.substring(0, 50);
 
     //  Moon phases described here: 
     //  https://github.com/mourner/suncalc#moon-illumination
-    var moonInfo = SunCalc.getMoonIllumination(Moment(forecastDay * 1000).toDate());
-    var moonPhase = moonInfo.phase;
+    let moonInfo = SunCalc.getMoonIllumination(Moment(forecastDay * 1000).toDate());
+    let moonPhase = moonInfo.phase;
     moonPhase = +moonPhase.toFixed(2);
 
     //  Format the pollen count display:
