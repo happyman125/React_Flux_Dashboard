@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 //  Stylesheets & images
-import 'weather-icons/css/weather-icons.css';
+import 'weathericons/css/weather-icons.css';
 
 class WeatherForecastIcon extends Component {
 
