@@ -10,6 +10,7 @@ const DashboardConstants = {
     SHOW_HOME: 'SHOW_HOME',
     RECIEVE_GEOPOINT: 'RECIEVE_GEOPOINT',
     RECIEVE_LOCATION_INFO: 'RECIEVE_LOCATION_INFO',
+    RECIEVE_QUAKE_INFO: 'RECIEVE_QUAKE_INFO'
 };
 
 export default DashboardConstants;

@@ -9,6 +9,7 @@ import CalendarAPIUtils from './utils/CalendarAPIUtils';
 import NewsAPIUtils from './utils/NewsAPIUtils';
 import SettingsUtils from './utils/SettingsUtils';
 import LocationAPIUtils from './utils/LocationAPIUtils';
+import QuakeAPIUtils from './utils/QuakeAPIUtils';
 
 //  The stores
 import SettingsStore from './stores/SettingsStore';
@@ -64,8 +65,11 @@ LocationAPIUtils.getCurrentLocation({
         let newsUser = settings.newsuser;
         NewsAPIUtils.getTwitterFeed(newsUser)
 
+        //  Get quake information:
+        QuakeAPIUtils.getQuakeList();
+
         //  Start the app
-        ReactDOM.render(<App coords={coords} zipcode={zipcode} breakingnewsuser={newsUser} />, document.getElementById('root'));
+        ReactDOM.render(<App coords={coords} />, document.getElementById('root'));
     }
 });
 

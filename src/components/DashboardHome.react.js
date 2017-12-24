@@ -17,6 +17,7 @@ import CalendarStore from '../stores/CalendarStore';
 import NewsStore from '../stores/NewsStore';
 import SettingsStore from '../stores/SettingsStore';
 import LocationInfoStore from '../stores/LocationInfoStore';
+import QuakeInfoStore from '../stores/QuakeStore';
 
 class DashboardHome extends Component {
 
@@ -31,7 +32,8 @@ class DashboardHome extends Component {
             settings: SettingsStore.getSettings(),
             cal_authcheckfinished: CalendarStore.authCheckFinished(),
             cal_authorized: CalendarStore.areAuthorized(),
-            location_name: LocationInfoStore.getLocationName()
+            location_name: LocationInfoStore.getLocationName(),
+            quakes: QuakeInfoStore.getQuakeInfo()
         };
 
         //  Bind our event handlers:
@@ -54,7 +56,7 @@ class DashboardHome extends Component {
         }
 
         //  Get the latest pollen
-        WeatherAPIUtils.getPollen(this.props.zipcode);
+        WeatherAPIUtils.getPollen(this.state.settings.zipcode);
 
         //  Get the latest calendar information if the API is loaded, 
         //  we're authorized, and we have a calendar selected:
@@ -63,7 +65,7 @@ class DashboardHome extends Component {
         }
 
         //  Get the latest breaking news:
-        NewsAPIUtils.getTwitterFeed(this.props.breakingnewsuser);
+        NewsAPIUtils.getTwitterFeed(this.state.settings.newsuser);
     }
 
     componentDidMount() {
