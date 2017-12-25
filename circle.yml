@@ -29,4 +29,4 @@ deployment:
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
       # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
       # for more information
-      # - aws s3 sync build s3://$S3_DEPLOY_BUCKET --quiet
+      - aws s3 sync build s3://$S3_DEPLOY_BUCKET --quiet
