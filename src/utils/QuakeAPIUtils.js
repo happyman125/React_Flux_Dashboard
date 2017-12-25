@@ -4,10 +4,6 @@ import QuakeActions from '../actions/QuakeActions';
 
 class QuakeAPIUtils {
 
-    constructor(){
-        this.googleMapAPIKey = "AIzaSyDvYQZRLnesuRRp07bu9qlbL7XJ_TkBYNU";
-    }
-
     getQuakeList() {
 
         let formattedDate = moment().subtract(7, 'days').format("YYYY-MM-DD");
@@ -35,7 +31,12 @@ class QuakeAPIUtils {
 
     //  Gets the formatted google maps static image url for the given latitude and longitude
     getGoogleMapsImageUrl(latitude, longitude){
-        return `https://maps.googleapis.com/maps/api/staticmap?zoom=4&size=175x150&maptype=roadmap&&markers=${latitude},${longitude}&key=${this.googleMapAPIKey}`;
+        let zoomLevel = 3;
+        let size = "175x150";
+        let mapType = "roadmap";
+        let googleMapAPIKey = "AIzaSyDvYQZRLnesuRRp07bu9qlbL7XJ_TkBYNU";
+
+        return `https://maps.googleapis.com/maps/api/staticmap?zoom=${zoomLevel}&size=${size}&maptype=${mapType}&markers=${latitude},${longitude}&key=${googleMapAPIKey}`;
     }
 
 }

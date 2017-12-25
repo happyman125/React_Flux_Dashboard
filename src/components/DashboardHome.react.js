@@ -5,11 +5,13 @@ import DateTimeDisplay from './DateTimeDisplay.react';
 import WeatherDisplay from './WeatherDisplay.react';
 import CalendarDisplay from './CalendarDisplay.react';
 import NewsDisplay from './NewsDisplay.react';
+import QuakeDisplay from './QuakeDisplay';
 
 //  The API utils
 import WeatherAPIUtils from '../utils/WeatherAPIUtils';
 import CalendarAPIUtils from '../utils/CalendarAPIUtils';
 import NewsAPIUtils from '../utils/NewsAPIUtils';
+import QuakeAPIUtils from '../utils/QuakeAPIUtils';
 
 //  The stores
 import WeatherStore from '../stores/WeatherStore';
@@ -66,6 +68,9 @@ class DashboardHome extends Component {
 
         //  Get the latest breaking news:
         NewsAPIUtils.getTwitterFeed(this.state.settings.newsuser);
+
+        //  Get quake information:
+        QuakeAPIUtils.getQuakeList();
     }
 
     componentDidMount() {
@@ -77,6 +82,7 @@ class DashboardHome extends Component {
         this.calendarListener = CalendarStore.addListener(this._onChange);
         this.newsListener = NewsStore.addListener(this._onChange);
         this.locationListener = LocationInfoStore.addListener(this._onChange);
+        this.quakeListener = QuakeInfoStore.addListener(this._onChange);
     }
 
     componentWillUnmount() {
@@ -88,6 +94,7 @@ class DashboardHome extends Component {
         this.calendarListener.remove();
         this.newsListener.remove();
         this.locationListener.remove();
+        this.quakeListener.remove();
     }
 
     render() {
@@ -98,6 +105,7 @@ class DashboardHome extends Component {
 
                     <div className="col">
                         <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} locationname={this.state.location_name} />
+                        <QuakeDisplay quakes={this.state.quakes} />
                     </div>
 
                     <div className="col">
@@ -121,7 +129,8 @@ class DashboardHome extends Component {
             settings: SettingsStore.getSettings(),
             cal_authcheckfinished: CalendarStore.authCheckFinished(),
             cal_authorized: CalendarStore.areAuthorized(),
-            location_name: LocationInfoStore.getLocationName()
+            location_name: LocationInfoStore.getLocationName(),
+            quakes: QuakeInfoStore.getQuakeInfo()
         });
     }
 
