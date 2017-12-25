@@ -183,3 +183,12 @@ body{
 .dashboard-status .a:hover{
   color: #444;
 }
+
+.quakeinfo {
+  border: 1px #3a3a3a solid;
+  background-color: #202020;
+}
+
+.quakeinfo .media-body {
+  padding: 10px 0;
+}

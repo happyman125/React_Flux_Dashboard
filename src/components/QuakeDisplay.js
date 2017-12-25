@@ -24,10 +24,10 @@ class QuakeDisplay extends Component{
     var formattedTime = quakeEventTime.fromNow();
 
   	return (
-        <div className="media">
+        <div className="media quakeinfo">
             <img className="d-flex align-self-start mr-3" src={quakeItem.mapUrl} alt="Earthquake map"/>
             <div className="media-body">
-                <h2 className="mt-0"><b>{quakeItem.mag}</b> magnitude earthquake</h2>
+                <h2 className="mt-0">Magnitude <b>{quakeItem.mag}</b> earthquake</h2>
                 {formattedTime} {quakeItem.title}
             </div>
         </div>
