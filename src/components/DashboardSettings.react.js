@@ -71,8 +71,8 @@ class DashboardSettings extends Component {
 
     return (
       <div className="container">
+        <h1>Dashboard settings</h1>
         <div className="row">
-          <h1>Dashboard settings</h1>
           <div className="col-md-6">
             <form>
 
