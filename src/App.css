@@ -14,10 +14,6 @@ body{
   padding: 5px;
 }
 
-.row{
-  margin: 0;
-}
-
 /* Global form helpers */
 .inline-radio label {
     vertical-align: middle

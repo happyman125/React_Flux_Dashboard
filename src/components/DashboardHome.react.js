@@ -100,23 +100,24 @@ class DashboardHome extends Component {
     render() {
 
         return (
-            <div className="container-fluid">
-                <div className="row">
+            <div>
+                <div className="container-fluid">
+                    <div className="row">
 
-                    <div className="col">
-                        <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} locationname={this.state.location_name} />
-                        <QuakeDisplay quakes={this.state.quakes} />
-                    </div>
+                        <div className="col">
+                            <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} locationname={this.state.location_name} />
+                            <QuakeDisplay quakes={this.state.quakes} />
+                        </div>
 
-                    <div className="col">
-                        <DateTimeDisplay />
-                        <CalendarDisplay calendar={this.state.calendarinfo} />
-                    </div>
+                        <div className="col">
+                            <DateTimeDisplay />
+                            <CalendarDisplay calendar={this.state.calendarinfo} />
+                        </div>
 
+                    </div>                    
                 </div>
-
                 <NewsDisplay news={this.state.news} />
-            </div>
+            </div>            
         );
     }
 
