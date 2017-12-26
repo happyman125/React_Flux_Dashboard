@@ -15,12 +15,10 @@ class NewsDisplay extends Component{
 
     //  If we have an item, but it's not in the last 6 hours, don't display it:
     var newsCreatedTime = Moment(newsItem.createtime * 1000);
-    /*
     if(newsCreatedTime.isBefore(Moment().subtract(4, 'hours')))
     {
       return null;
-    } 
-    */   
+    }    
 
     //  Clean up the text (remove the links - both http and https)
     var newsText = newsItem.text;

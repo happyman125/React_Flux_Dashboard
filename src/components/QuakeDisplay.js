@@ -15,12 +15,10 @@ class QuakeDisplay extends Component{
 
     //  If we have an item, but it's not in the last 12 hours, don't display it:
     let quakeEventTime = Moment(quakeItem.time);
-    /*
     if(quakeEventTime.isBefore(Moment().subtract(12, 'hours')))
     {
       return null;
     }
-    */
 
     //  Set the time format:
     var formattedTime = quakeEventTime.fromNow();
