@@ -198,58 +198,7 @@ class WeatherAPIUtils {
     // Gets the wind direction icon to use for a given wind directional heading
     getWindDirectionIcon(direction) {
 
-        let retval = "wi wi-wind ";
-
-        switch (true) {
-            case direction < 23:
-                retval += "from-23-deg";
-                break;
-            case direction < 45:
-                retval += "from-45-deg";
-                break;
-            case direction < 68:
-                retval += "from-68-deg";
-                break;
-            case direction < 90:
-                retval += "from-90-deg";
-                break;
-            case direction < 113:
-                retval += "from-113-deg";
-                break;
-            case direction < 135:
-                retval += "from-135-deg";
-                break;
-            case direction < 158:
-                retval += "from-158-deg";
-                break;
-            case direction < 180:
-                retval += "from-180-deg";
-                break;
-            case direction < 203:
-                retval += "from-203-deg";
-                break;
-            case direction < 225:
-                retval += "from-225-deg";
-                break;
-            case direction < 248:
-                retval += "from-248-deg";
-                break;
-            case direction < 270:
-                retval += "from-270-deg";
-                break;
-            case direction < 293:
-                retval += "from-293-deg";
-                break;
-            case direction < 313:
-                retval += "from-313-deg";
-                break;
-            case direction < 336:
-                retval += "from-336-deg";
-                break;
-            default:
-                retval += "from-0-deg";
-                break;
-        }
+        let retval = `wi wi-wind from-${direction}-deg`;
 
         return retval;
 
