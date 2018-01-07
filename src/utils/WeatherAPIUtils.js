@@ -21,16 +21,16 @@ class WeatherAPIUtils {
         let weatherUtils = this;
 
         fetchJsonp(url)
-        .then(function(response) {
-            return response.json()
-        }).then(function(json) {
-            let weatherdata = weatherUtils.convertForecastIOToWeather(json);
-            
-            //	Call the action to receive the data:
-            WeatherActions.recieveWeatherData(weatherdata);
-        }).catch(function(ex) {
-            console.log('parsing failed', ex)
-        })
+            .then(function (response) {
+                return response.json()
+            }).then(function (json) {
+                let weatherdata = weatherUtils.convertForecastIOToWeather(json);
+
+                //	Call the action to receive the data:
+                WeatherActions.recieveWeatherData(weatherdata);
+            }).catch(function (ex) {
+                console.log('parsing failed', ex)
+            })
 
     }
 
@@ -80,8 +80,8 @@ class WeatherAPIUtils {
         let url = `https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(${latitude},${longitude})")&format=json&env=store://datatables.org/alltableswithkeys`
         let weatherUtils = this;
 
-        fetch(url, {mode: 'cors'})
-        .then(
+        fetch(url, { mode: 'cors' })
+            .then(
             function (response) {
                 if (response.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -92,15 +92,15 @@ class WeatherAPIUtils {
                 response.json().then(function (data) {
                     //  Convert the data to the common weather format
                     let weatherdata = weatherUtils.convertYahooToWeather(data);
-                    
+
                     //  Call the action to receive the data:
-                    WeatherActions.recieveWeatherData(weatherdata);					
+                    WeatherActions.recieveWeatherData(weatherdata);
                 });
             }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
+            )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
     }
 
     /* Convert Yahoo data format to the standard model */
@@ -117,7 +117,7 @@ class WeatherAPIUtils {
                 low = parseInt(day.low, 10);
             }
 
-           return {
+            return {
                 summary: day.text,
                 date: Moment(day.date, "D MMM YYYY").unix(),
                 icon: day.code,
@@ -160,8 +160,8 @@ class WeatherAPIUtils {
         //  Get the pollen for the given zipcode
         let url = baseurl + zipcode;
 
-        fetch(url, {mode: 'cors'})
-        .then(
+        fetch(url, { mode: 'cors' })
+            .then(
             function (response) {
                 if (response.status !== 200) {
                     console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -171,13 +171,13 @@ class WeatherAPIUtils {
                 // Receive data
                 response.json().then(function (data) {
                     //  Call the action to receive the data:
-                    WeatherActions.recievePollenData(data, zipcode);				
+                    WeatherActions.recievePollenData(data, zipcode);
                 });
             }
-        )
-        .catch(function (err) {
-            console.log('Fetch Error :-S', err);
-        });
+            )
+            .catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
     }
 
     /* Get the color for the given temperature */
@@ -193,6 +193,66 @@ class WeatherAPIUtils {
         let appColor = "#" + rainbow.colorAt(temperature);
 
         return appColor;
+    }
+
+    // Gets the wind direction icon to use for a given wind directional heading
+    getWindDirectionIcon(direction) {
+
+        let retval = "wi wi-wind ";
+
+        switch (true) {
+            case direction < 23:
+                retval += "from-23-deg";
+                break;
+            case direction < 45:
+                retval += "from-45-deg";
+                break;
+            case direction < 68:
+                retval += "from-68-deg";
+                break;
+            case direction < 90:
+                retval += "from-90-deg";
+                break;
+            case direction < 113:
+                retval += "from-113-deg";
+                break;
+            case direction < 135:
+                retval += "from-135-deg";
+                break;
+            case direction < 158:
+                retval += "from-158-deg";
+                break;
+            case direction < 180:
+                retval += "from-180-deg";
+                break;
+            case direction < 203:
+                retval += "from-203-deg";
+                break;
+            case direction < 225:
+                retval += "from-225-deg";
+                break;
+            case direction < 248:
+                retval += "from-248-deg";
+                break;
+            case direction < 270:
+                retval += "from-270-deg";
+                break;
+            case direction < 293:
+                retval += "from-293-deg";
+                break;
+            case direction < 313:
+                retval += "from-313-deg";
+                break;
+            case direction < 336:
+                retval += "from-336-deg";
+                break;
+            default:
+                retval += "from-0-deg";
+                break;
+        }
+
+        return retval;
+
     }
 
 }

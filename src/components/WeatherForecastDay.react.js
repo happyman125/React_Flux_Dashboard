@@ -7,6 +7,9 @@ import WeatherForecastIcon from './WeatherForecastIcon.react';
 import WeatherForecastTemp from './WeatherForecastTemp.react';
 import MoonPhaseIcon from './MoonPhaseIcon.react';
 
+//  Stylesheets & images
+import 'bootstrap/dist/css/bootstrap.css';
+
 class WeatherForecastDay extends Component {
 
   render() {
@@ -28,7 +31,7 @@ class WeatherForecastDay extends Component {
     moonPhase = +moonPhase.toFixed(2);
 
     //  Format the pollen count display:
-    if(pollenCount <= 3){pollenCountClass = pollenCountClass + " badge-secondary";}
+    if(pollenCount <= 3){pollenCountClass = pollenCountClass + " badge-default";}
     if(pollenCount > 3 && pollenCount < 7){pollenCountClass = pollenCountClass + " badge-info";}
     if(pollenCount >= 7 && pollenCount < 10){pollenCountClass = pollenCountClass + " badge-warning";}
     if(pollenCount >= 10){pollenCountClass = pollenCountClass + " badge-danger";}

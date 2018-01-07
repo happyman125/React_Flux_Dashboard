@@ -9,24 +9,28 @@ import WeatherAlerts from './WeatherAlerts.react';
 //  The API utils
 import WeatherAPIUtils from '../utils/WeatherAPIUtils';
 
+//  Stylesheets & images
+import 'weathericons/css/weather-icons-wind.css';
+
 class WeatherDisplay extends Component {
 
   render() {
 
-    var temperature = 0;
-    var windspeed = 0;
-    var forecastdays = [];
-    var forecasticon = "";
-    var alerts = []
-    var feelslike = 0;
-    var sunrise = 0;
-    var formattedSunrise = "";
-    var sunset = 0;
-    var formattedSunset = "";
-    var pollendays = [];
-    var formattedHumidity = "";
+    let temperature = 0;
+    let windspeed = 0;
+    let forecastdays = [];
+    let forecasticon = "";
+    let alerts = []
+    let feelslike = 0;
+    let sunrise = 0;
+    let formattedSunrise = "";
+    let sunset = 0;
+    let formattedSunset = "";
+    let pollendays = [];
+    let formattedHumidity = "";
     let formattedStatus = "";
     let pollenSummary = "";
+    let winddirectionicon = "";
 
     if (this.props.weather.currently) {
       //  Format the current weather summary:
@@ -61,6 +65,9 @@ class WeatherDisplay extends Component {
         feelsLikeStyles.color = WeatherAPIUtils.getTempColor(feelslike);
       }
 
+      //  Set the wind direction icon:
+      winddirectionicon = WeatherAPIUtils.getWindDirectionIcon(this.props.weather.currently.wind_direction);
+
       //  Set pollen information
       if (this.props.pollen.PollenCount) {
         pollendays = this.props.pollen.PollenCount;
@@ -81,7 +88,7 @@ class WeatherDisplay extends Component {
         <div id="temp" style={{ color: tempColor }}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
         <div id="extended-summary">
-          Wind: {windspeed}mph • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
+          Wind: {windspeed}mph <i className={winddirectionicon}></i> • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
         </div>
         <div id="sunrise-sunset">
           <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
