@@ -88,7 +88,7 @@ class WeatherDisplay extends Component {
         <div id="temp" style={{ color: tempColor }}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
         <div id="extended-summary">
-          Wind: {windspeed}mph <i className={winddirectionicon}></i> • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
+          Wind: <i className={winddirectionicon}/> {windspeed}mph • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
         </div>
         <div id="sunrise-sunset">
           <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
