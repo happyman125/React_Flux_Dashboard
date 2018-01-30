@@ -18,7 +18,7 @@ class WeatherForecastDay extends Component {
     let tempHigh = Math.round(this.props.forecast.high);
     let tempLow = Math.round(this.props.forecast.low);
     let forecastDay = this.props.forecast.date;
-    let formattedDay = Moment(forecastDay * 1000).format("dddd");
+    let formattedDay = Moment(forecastDay * 1000).format("dddd M/D");
     let forcastIcon = this.props.forecast.icon;
     let pollenCount = this.props.forecast.pollen || "";
     let pollenCountClass = "badge";
