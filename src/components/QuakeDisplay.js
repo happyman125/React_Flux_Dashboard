@@ -13,9 +13,9 @@ class QuakeDisplay extends Component{
     //  If we do, get the first one:
     let quakeItem = this.props.quakes[0];
 
-    //  If we have an item, but it's not in the last 12 hours, don't display it:
+    //  If we have an item, but it's not in the last 6 hours, don't display it:
     let quakeEventTime = Moment(quakeItem.time);
-    if(quakeEventTime.isBefore(Moment().subtract(12, 'hours')))
+    if(quakeEventTime.isBefore(Moment().subtract(6, 'hours')))
     {
       return null;
     }
@@ -28,7 +28,7 @@ class QuakeDisplay extends Component{
             <img className="d-flex align-self-start mr-3" src={quakeItem.mapUrl} alt="Earthquake map"/>
             <div className="media-body">
                 <h2 className="mt-0">Magnitude <b>{quakeItem.mag}</b> earthquake</h2>
-                {formattedTime} {quakeItem.title}
+                <span id="quakedetail">{formattedTime} - {quakeItem.title}</span>                
             </div>
         </div>
     );

@@ -188,3 +188,7 @@ body{
 .quakeinfo .media-body {
   padding: 10px 0;
 }
+
+#quakedetail {
+  font-size: 1.5em;
+}
