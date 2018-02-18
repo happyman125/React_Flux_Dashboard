@@ -49,7 +49,7 @@ class WeatherDisplay extends Component {
 
       forecastdays = this.props.weather.daily.data;
 
-      formattedStatus = this.props.weather.source + ' last updated ' + Moment(this.props.weather.lastupdated).format("h:mma") + ' / '
+      formattedStatus = this.props.weather.source + ' last updated ' + this.props.updated + ' / '
 
       //  If we have alerts, use them
       if (this.props.weather.alerts != null) {

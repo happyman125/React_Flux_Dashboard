@@ -1,6 +1,7 @@
 import {Store} from 'flux/utils';
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import DashboardConstants from '../actions/DashboardConstants';
+import moment from 'moment';
 
 class CalendarStore extends Store {
 
@@ -12,6 +13,12 @@ class CalendarStore extends Store {
     this.calendarlist = [];
     this.gapi_authorized = false;
     this.auth_check_finished = false;
+    this.last_update_time = "Never";
+  }
+
+  //  Returns the last time the store was updated with calendar events
+  getLastUpdateTime(){
+    return this.last_update_time;
   }
 
   getCalendarData() {
@@ -42,6 +49,7 @@ class CalendarStore extends Store {
         console.log('Updating calendar store: ', action);
         this.calendardata = action.calendarData;
         this.calendarId = action.calendarId; 
+        this.last_update_time = this.last_update_time = moment().format("h:mma");
         this.__emitChange();
         break;
 

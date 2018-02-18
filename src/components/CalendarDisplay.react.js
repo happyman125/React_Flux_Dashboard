@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Moment from 'moment';
 
 //  The components
 import CalendarEventItem from './CalendarEventItem.react';
@@ -17,7 +16,7 @@ class CalendarDisplay extends Component {
     }
 
     //  If we do, display them:
-    let formattedStatus = this.props.calendar.summary + ' last updated ' + Moment(this.props.calendar.updated).format("h:mma");
+    let formattedStatus = this.props.calendar.summary + ' last updated ' + this.props.updated;
 
   	return (
         <div>

@@ -28,8 +28,10 @@ class DashboardHome extends Component {
 
         this.state = {
             weather: WeatherStore.getWeather(),
+            weatherupdated: WeatherStore.getLastUpdateTime(),
             pollen: WeatherStore.getPollen(),
             calendarinfo: CalendarStore.getCalendarData(),
+            calendarupdated: CalendarStore.getLastUpdateTime(),
             news: NewsStore.getBreakingNews(),
             settings: SettingsStore.getSettings(),
             cal_authcheckfinished: CalendarStore.authCheckFinished(),
@@ -105,13 +107,13 @@ class DashboardHome extends Component {
                     <div className="row">
 
                         <div className="col">
-                            <WeatherDisplay weather={this.state.weather} pollen={this.state.pollen} locationname={this.state.location_name} />
+                            <WeatherDisplay weather={this.state.weather} updated={this.state.weatherupdated} pollen={this.state.pollen} locationname={this.state.location_name} />
                             <QuakeDisplay quakes={this.state.quakes} />
                         </div>
 
                         <div className="col">
                             <DateTimeDisplay />
-                            <CalendarDisplay calendar={this.state.calendarinfo} />
+                            <CalendarDisplay calendar={this.state.calendarinfo} updated={this.state.calendarupdated} />
                         </div>
 
                     </div>                    
