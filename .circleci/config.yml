@@ -1,75 +1,74 @@
+version: 2
+jobs:
+  build:
+    # CircleCI 2.0 does not support environment variables that refer to each other the same way as 1.0 did.
+    # If any of these refer to each other, rewrite them so that they don't or see https://circleci.com/docs/2.0/env-vars/#interpolating-environment-variables-to-set-other-environment-variables .
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    docker:
+      - image: circleci/node:8.9.4-stretch-browsers
+    steps:
+      - checkout
+
+      # Prepare for artifact and test results  collection equivalent to how it was done on 1.0.
+      # In many cases you can simplify this from what is generated here.
+      # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+
+      # Dependencies
+      - restore_cache:
+        keys:
+        # This branch if available
+        - v1-dep-{{ .Branch }}-
+        # Default branch if not
+        - v1-dep-master-
+        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
+        - v1-dep-
+
+      # Our release creation tool
+      - run: go get github.com/tcnksm/ghr
+    
+      # Execute the build process
+      - run: npm install -g yarn
+      - run: yarn
+      - run: yarn build
+
+      # Build our dashboard zip file
+      - run: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
+      - run: cd build; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
+    
+      # Save dependency cache
+      - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        # This is a broad list of cache paths to include many possible development environments
+        # You can probably delete some of these entries
+        - ./node_modules
+        
+      - store_artifacts:
+      path: /tmp/circleci-artifacts
+    
+  # Testing
+  test:
+    docker:
+      - image: circleci/node:8.9.4-stretch-browsers
+    requires:
+      - build
+    steps:
+      - run: yarn test
+      - store_test_results:
+      path: /tmp/circleci-test-results 
+
+  # Deployment
+  deploy: 
+      requires:
+      - test
+  
 workflows:
   version: 2
   build_test_deploy:
-    jobs:
-      - build:
-        # CircleCI 2.0 does not support environment variables that refer to each other the same way as 1.0 did.
-        # If any of these refer to each other, rewrite them so that they don't or see https://circleci.com/docs/2.0/env-vars/#interpolating-environment-variables-to-set-other-environment-variables .
-        environment:
-          CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-          CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-        docker:
-         - image: circleci/node:8.9.4-stretch-browsers
-        steps:
-         - checkout
-
-         # Prepare for artifact and test results  collection equivalent to how it was done on 1.0.
-         # In many cases you can simplify this from what is generated here.
-         # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
-         - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-
-         # Dependencies
-         - restore_cache:
-            keys:
-            # This branch if available
-            - v1-dep-{{ .Branch }}-
-            # Default branch if not
-            - v1-dep-master-
-            # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-            - v1-dep-
-
-         # Our release creation tool
-         - run: go get github.com/tcnksm/ghr
-        
-         # Execute the build process
-         - run: npm install -g yarn
-         - run: yarn
-         - run: yarn build
-
-         # Build our dashboard zip file
-         - run: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
-         - run: cd build; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
-        
-         # Save dependency cache
-         - save_cache:
-            key: v1-dep-{{ .Branch }}-{{ epoch }}
-            paths:
-            # This is a broad list of cache paths to include many possible development environments
-            # You can probably delete some of these entries
-            - ./node_modules
-        
-      # Testing
-      - test:
-         requires:
-          - build
-        - run: yarn test
-      
-      # Deployment
-      - deploy: 
-         requires:
-          - test
-      
-      # Teardown
-      - teardown:
-         requires:
-          - deploy
-
-        # Save test results
-        - store_test_results:
-          path: /tmp/circleci-test-results
-          
-        # Save artifacts
-        - store_artifacts:
-          path: /tmp/circleci-artifacts
-        - store_artifacts:
-          path: /tmp/circleci-test-results
+    jobs: 
+      - build
+      - test
+      - deploy  
