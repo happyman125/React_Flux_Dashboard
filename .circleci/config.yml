@@ -25,9 +25,6 @@ jobs:
           - v1-dep-master-
           # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
           - v1-dep-
-
-      # Our release creation tool
-      - run: go get github.com/tcnksm/ghr
     
       # Execute the build process
       - run: npm install -g yarn
@@ -66,8 +63,12 @@ jobs:
     docker: 
       - image: circleci/golang:1.9.4
     requires:
+      - build
       - test
     steps:
+      # Get our github release creation tool
+      - run: go get github.com/tcnksm/ghr
+      
       # Publish assets to Github
       - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM $CIRCLE_ARTIFACTS/ || true
       
