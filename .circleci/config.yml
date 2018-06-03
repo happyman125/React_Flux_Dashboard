@@ -45,9 +45,9 @@ jobs:
         # This is a broad list of cache paths to include many possible development environments
         # You can probably delete some of these entries
         - ./node_modules
-        
+
       - store_artifacts:
-      path: /tmp/circleci-artifacts
+        path: /tmp/circleci-artifacts
     
   # Testing
   test:
@@ -58,7 +58,7 @@ jobs:
     steps:
       - run: yarn test
       - store_test_results:
-      path: /tmp/circleci-test-results 
+        path: /tmp/circleci-test-results 
 
   # Deployment
   deploy: 
