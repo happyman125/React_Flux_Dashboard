@@ -27,7 +27,6 @@ jobs:
           - v1-dep-
     
       # Execute the build process
-      - run: npm install -g yarn
       - run: yarn
       - run: yarn build
 
