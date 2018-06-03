@@ -18,13 +18,13 @@ jobs:
 
       # Dependencies
       - restore_cache:
-        keys:
-        # This branch if available
-        - v1-dep-{{ .Branch }}-
-        # Default branch if not
-        - v1-dep-master-
-        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-        - v1-dep-
+          keys:
+          # This branch if available
+          - v1-dep-{{ .Branch }}-
+          # Default branch if not
+          - v1-dep-master-
+          # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
+          - v1-dep-
 
       # Our release creation tool
       - run: go get github.com/tcnksm/ghr
@@ -40,14 +40,15 @@ jobs:
     
       # Save dependency cache
       - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
-        paths:
-        # This is a broad list of cache paths to include many possible development environments
-        # You can probably delete some of these entries
-        - ./node_modules
+          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+          
+          # This is a broad list of cache paths to include many possible development environments
+          # You can probably delete some of these entries
+            - ./node_modules
 
       - store_artifacts:
-        path: /tmp/circleci-artifacts
+          path: /tmp/circleci-artifacts
     
   # Testing
   test:
@@ -58,10 +59,12 @@ jobs:
     steps:
       - run: yarn test
       - store_test_results:
-        path: /tmp/circleci-test-results 
+          path: /tmp/circleci-test-results 
 
   # Deployment
-  deploy: 
+  deploy:
+    docker: 
+      - image: circleci/golang:1.9.4
     requires:
       - test
     steps:
