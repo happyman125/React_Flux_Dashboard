@@ -31,10 +31,10 @@ class WeatherForecastDay extends Component {
     moonPhase = +moonPhase.toFixed(2);
 
     //  Format the pollen count display:
-    if(pollenCount <= 3){pollenCountClass = pollenCountClass + " badge-default";}
-    if(pollenCount > 3 && pollenCount < 7){pollenCountClass = pollenCountClass + " badge-info";}
-    if(pollenCount >= 7 && pollenCount < 10){pollenCountClass = pollenCountClass + " badge-warning";}
-    if(pollenCount >= 10){pollenCountClass = pollenCountClass + " badge-danger";}
+    if(pollenCount <= 2){pollenCountClass = pollenCountClass + " badge-default";}
+    if(pollenCount > 2 && pollenCount < 5){pollenCountClass = pollenCountClass + " badge-info";}
+    if(pollenCount >= 5 && pollenCount < 9){pollenCountClass = pollenCountClass + " badge-warning";}
+    if(pollenCount >= 9){pollenCountClass = pollenCountClass + " badge-danger";}
 
     return (
 
