@@ -57,11 +57,14 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
 
+      - run:
+          name: Set path
+          command: export PATH=~/bin:$PATH
+
       # Get our dependencies:
       - run:
           name: Install AWS tools
-          command: |
-            export PATH=~/bin:$PATH
+          command: |            
             curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
             unzip awscli-bundle.zip
             ./awscli-bundle/install -b ~/bin/aws
