@@ -60,11 +60,7 @@ jobs:
       # Get our dependencies:
       - run:
           name: Install AWS tools
-          working_directory: /
-          command: |
-             curl -O https://bootstrap.pypa.io/get-pip.py
-             python3.4 get-pip.py --user
-             pip install awscli --upgrade --user
+          command: pip install awscli --upgrade --user
 
       # Prep Cloudflare for deployment
       - run: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
