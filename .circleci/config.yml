@@ -37,3 +37,36 @@ jobs:
       # Tuck away our artifacts
       - store_artifacts:
           path: /tmp/dashboard-ui.zip
+
+      # Persist the built (unzipped) app to the workspace
+      - persist_to_workspace:
+          root: build
+          paths:
+            - .
+
+      # Persist the zip artifact to the workspace
+      - persist_to_workspace:
+          root: /tmp
+          paths:
+            - dashboard-ui.zip
+
+  deploy:
+    docker:
+      - image: circleci/golang:1.9.4
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+
+      # Sanity check that the files appear there
+      - run: ls -l /tmp/workspace
+
+workflows:
+  version: 2
+
+  # Build and deploy workflow
+  build_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
