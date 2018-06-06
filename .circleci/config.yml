@@ -7,9 +7,14 @@ jobs:
       - checkout
 
       # Execute the build process
-      - run: yarn
-      - run: yarn build
+      - run:
+          name: Fetch and Install packages
+          command: yarn
+      - run: 
+          name: Create optimized production build
+          command: yarn build
 
+      # Execute the packaging process
       - run: 
           name: Emit build number
           command: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
