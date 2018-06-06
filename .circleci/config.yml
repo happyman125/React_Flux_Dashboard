@@ -40,9 +40,9 @@ jobs:
 
       # Persist the built (unzipped) app to the workspace
       - persist_to_workspace:
-          root: build
+          root: .
           paths:
-            - .
+            - build
 
       # Persist the zip artifact to the workspace
       - persist_to_workspace:
