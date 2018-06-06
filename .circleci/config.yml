@@ -6,10 +6,22 @@ jobs:
     steps:
       - checkout
 
+      # Restore our dependency cache
+      - restore_cache:
+          keys: 
+            - node-cache-{{ checksum "package.json" }}
+            - node_cache- 
+
       # Execute the build process
       - run:
           name: Fetch and Install packages
           command: yarn
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: node-cache-{{ checksum "package.json" }}
+
       - run: 
           name: Create optimized production build
           command: yarn build
