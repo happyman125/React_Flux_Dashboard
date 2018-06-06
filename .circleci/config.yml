@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:9.7.1-stretch-browsers
+    working_directory: /tmp
     steps:
       - checkout
 
@@ -12,7 +13,8 @@ jobs:
 
       # Build the dashboard zip file
       - run: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
-      - run: cd build; zip -r9 $CIRCLE_ARTIFACTS/dashboard-ui.zip .
+      - run: cd build; zip -r9 /tmp/dashboard-ui.zip .
 
-      # Prep Cloudflare for deployment:
-      - run: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
+      # Tuck away our artifacts
+      - store_artifacts:
+          path: /tmp/dashboard-ui.zip
