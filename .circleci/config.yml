@@ -60,7 +60,11 @@ jobs:
       # Get our dependencies:
       - run:
           name: Install AWS tools
-          command: pip install awscli --upgrade --user
+          command: |
+            export PATH=~/bin:$PATH
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -b ~/bin/aws
 
       # Prep Cloudflare for deployment
       - run: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
