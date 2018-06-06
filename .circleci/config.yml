@@ -76,7 +76,7 @@ jobs:
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
       # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
       # for more information
-      - run: aws s3 sync /tmp/workspace/build s3://$S3_DEPLOY_BUCKET --quiet
+      - run: /home/circleci/bin/aws s3 sync /tmp/workspace/build s3://$S3_DEPLOY_BUCKET --quiet
 
   release:
     docker:
