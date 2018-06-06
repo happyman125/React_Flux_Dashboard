@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:9.7.1-stretch-browsers
-    working_directory: /tmp
     steps:
       - checkout
 
