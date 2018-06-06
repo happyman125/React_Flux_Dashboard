@@ -34,7 +34,7 @@ jobs:
           name: Create the zip file
           command: cd build; zip -r9 /tmp/dashboard-ui.zip .
 
-      # Tuck away our artifacts
+      # Indicate we have artifacts
       - store_artifacts:
           path: /tmp/dashboard-ui.zip
 
@@ -61,7 +61,6 @@ jobs:
           name: Set path
           command: export PATH=~/bin:$PATH
 
-      # Get our dependencies:
       - run:
           name: Install AWS tools
           command: |            
@@ -69,14 +68,17 @@ jobs:
             unzip awscli-bundle.zip
             ./awscli-bundle/install -b ~/bin/aws
 
-      # Prep Cloudflare for deployment
-      - run: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
+      - run: 
+          name: Prep Cloudflare for deployment
+          command: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
 
-      # Push to s3.  This expects the environment variables
+      # This expects the environment variables
       # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
       # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
       # for more information
-      - run: /home/circleci/bin/aws s3 sync /tmp/workspace/build s3://$S3_DEPLOY_BUCKET --quiet
+      - run: 
+         name: Push to S3
+         command: /home/circleci/bin/aws s3 sync /tmp/workspace/build s3://$S3_DEPLOY_BUCKET --quiet
 
   release:
     docker:
@@ -85,11 +87,13 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
 
-      # Get our release maker
-      - run: go get github.com/tcnksm/ghr
+      - run:
+         name: Fetch and Install packages
+         command: go get github.com/tcnksm/ghr
 
-      # Push our release to github:
-      - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM /tmp/workspace/dashboard-ui.zip || true
+      - run: 
+         name: Push the release to Github
+         command: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM /tmp/workspace/dashboard-ui.zip || true
 
 workflows:
   version: 2
