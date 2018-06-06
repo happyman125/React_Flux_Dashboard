@@ -52,13 +52,41 @@ jobs:
 
   deploy:
     docker:
+      - image: circleci/python:3.4-jessie-browsers
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+
+      # Get our dependencies:
+      - run:
+          name: Install AWS tools
+          working_directory: /
+          command: |
+             curl -O https://bootstrap.pypa.io/get-pip.py
+             python3.4 get-pip.py --user
+             pip install awscli --upgrade --user
+
+      # Prep Cloudflare for deployment
+      - run: "curl -X PATCH \"https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/settings/development_mode\" -H \"X-Auth-Email: $CLOUDFLARE_EMAIL\" -H \"X-Auth-Key: $CLOUDFLARE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"value\":\"on\"}'"
+
+      # Push to s3.  This expects the environment variables
+      # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY to be set
+      # See http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-environment 
+      # for more information
+      - run: aws s3 sync /tmp/workspace/build s3://$S3_DEPLOY_BUCKET --quiet
+
+  release:
+    docker:
       - image: circleci/golang:1.9.4
     steps:
       - attach_workspace:
           at: /tmp/workspace
 
-      # Sanity check that the files appear there
-      - run: ls -l /tmp/workspace
+      # Get our release maker
+      - run: go get github.com/tcnksm/ghr
+
+      # Push our release to github:
+      - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME v1.0.$CIRCLE_BUILD_NUM /tmp/workspace/dashboard-ui.zip || true
 
 workflows:
   version: 2
@@ -68,5 +96,8 @@ workflows:
     jobs:
       - build
       - deploy:
+          requires:
+            - build
+      - release:
           requires:
             - build
