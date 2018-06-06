@@ -10,9 +10,12 @@ jobs:
       - run: yarn
       - run: yarn build
 
-      # Build the dashboard zip file
-      - run: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
-      - run: cd build; zip -r9 /tmp/dashboard-ui.zip .
+      - run: 
+          name: Emit build number
+          command: echo "{\"version\":$CIRCLE_BUILD_NUM}" >> build/build.json
+      - run: 
+          name: Create the zip file
+          command: cd build; zip -r9 /tmp/dashboard-ui.zip .
 
       # Tuck away our artifacts
       - store_artifacts:
