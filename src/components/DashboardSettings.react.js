@@ -60,15 +60,19 @@ class DashboardSettings extends Component {
     }
 
     //  If the auth check is complete and the user isn't authorized, show the 'authorize' button
-    //  Commented out for now.  Also:  A reference to this button used to be right below 
-    //  the calendar selection dropdown
-    /*
-    let authButton = {};
+    let calendarSelection = null;
     if (this.state.auth_check_complete && !this.state.authorized) {
-      authButton = <button className="btn btn-default" onClick={this.handleAuth}>Authorize</button>;
+      calendarSelection = <div><button className="btn btn-default" onClick={this.handleAuth}>Authorize</button></div>;
     }
-    */
-
+    else {
+      //  Otherwise ... show a dropdown list of calendars
+      calendarSelection = <div><select id="calendarIdTest" className="form-control" value={this.state.settings.calendarid} onChange={this._onCalendarIdChange}>
+                            {calendarList.map(function (cal) {
+                              return <option key={cal.id} value={cal.id}>{cal.summary}</option>;
+                            })}
+                          </select></div>;
+    }
+    
     return (
       <div className="container">
         <h1>Dashboard settings</h1>
@@ -78,13 +82,10 @@ class DashboardSettings extends Component {
 
               <div className="form-group">
                 <label htmlFor="calendarId">Calendar to display</label>
-                <select id="calendarIdTest" className="form-control" value={this.state.settings.calendarid} onChange={this._onCalendarIdChange}>
-                  {calendarList.map(function (cal) {
-                    return <option key={cal.id} value={cal.id}>{cal.summary}</option>;
-                  })}
-                </select>
 
-                
+                {calendarSelection}
+
+                <a target='_blank' rel='noopener noreferrer' href='https://myaccount.google.com/permissions'>View apps with access to your account or revoke permission</a>
 
               </div>
 

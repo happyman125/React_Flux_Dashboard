@@ -30,7 +30,7 @@ class CalendarAPIUtils {
         //  Execute the request and get the response
         request.execute(function (resp) {
             let cals = resp.items;
-            if (cals.length > 0) {
+            if ((typeof cals !== 'undefined') && cals.length > 0) {
                 //  Call the action to receive the data:
                 CalendarActions.recieveCalendarList(cals);
             } else {
