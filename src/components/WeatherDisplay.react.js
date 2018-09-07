@@ -32,6 +32,9 @@ class WeatherDisplay extends Component {
     let pollenSummary = "";
     let winddirectionicon = "";
 
+    let UVIndex = 0;
+    let UVClass = "badge";
+
     if (this.props.weather.currently) {
       //  Format the current weather summary:
       forecasticon = this.props.weather.currently.icon;
@@ -65,6 +68,13 @@ class WeatherDisplay extends Component {
         feelsLikeStyles.color = WeatherAPIUtils.getTempColor(feelslike);
       }
 
+      //  Set the UV index style:
+      UVIndex = this.props.weather.currently.uvindex
+      if(UVIndex <= 3){UVClass = "badge badge-success";}
+      if(UVIndex > 3 && UVIndex < 6){UVClass = "badge badge-info";}
+      if(UVIndex >= 6 && UVIndex < 8){UVClass = "badge badge-warning";}
+      if(UVIndex >= 8){UVClass = "badge badge-danger";}
+
       //  Set the wind direction icon:
       winddirectionicon = WeatherAPIUtils.getWindDirectionIcon(this.props.weather.currently.wind_direction);
 
@@ -88,7 +98,7 @@ class WeatherDisplay extends Component {
         <div id="temp" style={{ color: tempColor }}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
         <div id="extended-summary">
-          Wind: <i className={winddirectionicon}/> {windspeed}mph • {formattedHumidity} humidity • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span>
+          Wind: <i className={winddirectionicon}/> {windspeed}mph • {formattedHumidity} RH • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span> • UV: <span className={UVClass}>{UVIndex}</span>
         </div>
         <div id="sunrise-sunset">
           <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
