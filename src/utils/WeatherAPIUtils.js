@@ -61,6 +61,7 @@ class WeatherAPIUtils {
                 apparent_temp: fdata.currently.apparentTemperature,
                 sunrise: fdata.daily.data[0].sunriseTime * 1000,
                 sunset: fdata.daily.data[0].sunsetTime * 1000,
+                uvindex: fdata.currently.uvIndex,
             },
             daily: {
                 data: dailyData
@@ -140,6 +141,7 @@ class WeatherAPIUtils {
                 apparent_temp: parseInt(yw.wind.chill, 10),
                 sunrise: Date.parse(startofday + ' ' + yw.astronomy.sunrise),
                 sunset: Date.parse(startofday + ' ' + yw.astronomy.sunset),
+                uvindex: null,
             },
             daily: {
                 data: dailyData
