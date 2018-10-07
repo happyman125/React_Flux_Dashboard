@@ -5,9 +5,12 @@ Weather and Google calendar dashboard built with [React](http://facebook.github.
 ## Installing / using
 Get the latest release, [here](https://github.com/danesparza/Dashboard/releases/latest) and unzip to the webserver of your choice (including [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html)).  
 
-If you plan on using the Google Calendar integration, you'll need to [register a project in the Google API console](https://developers.google.com/calendar/auth#OAuth2Authorizing).  Make sure to [specify the URL for the dashboard in the Javascript Origins](https://developers.google.com/identity/protocols/OAuth2UserAgent#enable-apis) section of the project.
-
-Grab your new clientId from the Google API console project you just created and [update the clientId in the CalendarAPIUtils.js, here](https://github.com/danesparza/Dashboard/blob/master/src/utils/CalendarAPIUtils.js#L20).
+You'll need to enable Google calendar, geolocation, and static maps integration:
+* First, [Create a project in the Google API console](https://developers.google.com/calendar/auth#OAuth2Authorizing).  
+* Next, create an Oauth clientId.  Make sure to [specify the URL for the dashboard in the Javascript Origins](https://developers.google.com/identity/protocols/OAuth2UserAgent#enable-apis) section of the project.
+* Using your new clientId, [update the clientId in the CalendarAPIUtils.js, here](https://github.com/danesparza/Dashboard/blob/master/src/utils/CalendarAPIUtils.js#L20).
+* Then, create a new API key for your project in the Google developer console
+* Using your new API key, update the API key in the [LocationAPIUtil.js](https://github.com/danesparza/Dashboard/blob/master/src/utils/LocationAPIUtils.js#L11) and [QuakeAPIUtils.js](https://github.com/danesparza/Dashboard/blob/master/src/utils/QuakeAPIUtils.js#L40) files.
 
 ## Building, running
 To build, use:
