@@ -3,21 +3,23 @@ import LocationActions from '../actions/LocationActions';
 
 class LocationAPIUtils {
 
+    constructor() {
+        // Your API key can be retrieved from your project in the Google
+        // Developer Console, https://console.developers.google.com
+        this.apikey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
+    }
+
     /* Get the current geolocation coordiates */
     getCurrentLocation(options) {
 
-        // Your API key can be retrieved from your project in the Google
-        // Developer Console, https://console.developers.google.com
-        let apikey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
-
         //  Get the lat/long coordinates
-        let url = `https://www.googleapis.com/geolocation/v1/geolocate?key=${apikey}`;
+        let url = `https://www.googleapis.com/geolocation/v1/geolocate?key=${this.apikey}`;
 
         fetch(url, {mode: 'cors', method: 'post'})
         .then(
             function (response) {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' + response.status);
+                    console.log('Looks like there was a problem: ', response);
                     return;
                 }
 
@@ -44,11 +46,11 @@ class LocationAPIUtils {
         });
     }
 
-    /* Get Yahoo weather for the given coordinates */
+    /* Get Location name for the given coordinates */
     getLocationName(latitude, longitude) {
 
         //  Format the url
-        let url = `https://maps.googleapis.com/maps/api/geocode/json?sensor=false&language=en&latlng=${latitude},${longitude}`
+        let url = `https://maps.googleapis.com/maps/api/geocode/json?sensor=false&language=en&key=${this.apikey}&latlng=${latitude},${longitude}`
 
         fetch(url, {mode: 'cors'})
         .then(
@@ -72,6 +74,15 @@ class LocationAPIUtils {
         .catch(function (err) {
             console.log('Fetch Error :-S', err);
         });
+    }
+
+    /* Gets the formatted google maps static image url for the given latitude and longitude */
+    getGoogleMapsImageUrl(latitude, longitude){
+        let zoomLevel = 3;
+        let size = "175x150";
+        let mapType = "roadmap";
+
+        return `https://maps.googleapis.com/maps/api/staticmap?zoom=${zoomLevel}&size=${size}&maptype=${mapType}&markers=${latitude},${longitude}&key=${this.apikey}`;
     }
 }
 

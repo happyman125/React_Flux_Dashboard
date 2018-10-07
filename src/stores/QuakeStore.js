@@ -3,7 +3,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import DashboardConstants from '../actions/DashboardConstants';
 
 //  API util to get Google maps link
-import QuakeAPIUtils from '../utils/QuakeAPIUtils';
+import LocationAPIUtils from '../utils/LocationAPIUtils';
 
 class QuakeStore extends Store {
 
@@ -27,7 +27,7 @@ class QuakeStore extends Store {
             this.quakeData = action.quakeData.features.map(function (item) {
 
                 //  Get the google maps link:
-                let mapurl = QuakeAPIUtils.getGoogleMapsImageUrl(item.geometry.coordinates[1], item.geometry.coordinates[0]);
+                let mapurl = LocationAPIUtils.getGoogleMapsImageUrl(item.geometry.coordinates[1], item.geometry.coordinates[0]);
 
                 return {
                     mag: item.properties.mag,

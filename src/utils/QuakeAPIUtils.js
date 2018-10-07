@@ -28,20 +28,7 @@ class QuakeAPIUtils {
             console.log('Fetch Error :-S', err);
         });
     }
-
-    //  Gets the formatted google maps static image url for the given latitude and longitude
-    getGoogleMapsImageUrl(latitude, longitude){
-        let zoomLevel = 3;
-        let size = "175x150";
-        let mapType = "roadmap";
-
-        // Your API key can be retrieved from your project in the Google
-        // Developer Console, https://console.developers.google.com
-        let googleMapAPIKey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
-
-        return `https://maps.googleapis.com/maps/api/staticmap?zoom=${zoomLevel}&size=${size}&maptype=${mapType}&markers=${latitude},${longitude}&key=${googleMapAPIKey}`;
-    }
-
+    
 }
 
 export default new QuakeAPIUtils();
