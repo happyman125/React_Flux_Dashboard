@@ -10,7 +10,7 @@ You'll need to enable Google calendar, geolocation, and static maps integration:
 * Next, create an Oauth clientId.  Make sure to [specify the URL for the dashboard in the Javascript Origins](https://developers.google.com/identity/protocols/OAuth2UserAgent#enable-apis) section of the project.
 * Using your new clientId, [update the clientId in the CalendarAPIUtils.js, here](https://github.com/danesparza/Dashboard/blob/master/src/utils/CalendarAPIUtils.js#L20).
 * Then, create a new API key for your project in the Google developer console
-* Using your new API key, update the API key in the [LocationAPIUtil.js](https://github.com/danesparza/Dashboard/blob/master/src/utils/LocationAPIUtils.js#L11) and [QuakeAPIUtils.js](https://github.com/danesparza/Dashboard/blob/master/src/utils/QuakeAPIUtils.js#L40) files.
+* Using your new API key, update the API key in the [LocationAPIUtil.js](https://github.com/danesparza/Dashboard/blob/master/src/utils/LocationAPIUtils.js#L9) file.
 
 ## Building, running
 To build, use:
