@@ -6,6 +6,8 @@ class LocationAPIUtils {
     /* Get the current geolocation coordiates */
     getCurrentLocation(options) {
 
+        // Your API key can be retrieved from your project in the Google
+        // Developer Console, https://console.developers.google.com
         let apikey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
 
         //  Get the lat/long coordinates
@@ -52,7 +54,7 @@ class LocationAPIUtils {
         .then(
             function (response) {
                 if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' + response.status);
+                    console.error('Looks like there was a problem: ', response);
                     return;
                 }
 
@@ -62,7 +64,7 @@ class LocationAPIUtils {
                         //  Call the action to receive the data:
                         LocationActions.recieveLocationInfo(data.results);
                     } else {
-                        console.log("When getting location name info, status was not OK")
+                        console.warn("When getting location name info, status was not OK: ", url, response);
                     }
                 });
             }

@@ -34,7 +34,10 @@ class QuakeAPIUtils {
         let zoomLevel = 3;
         let size = "175x150";
         let mapType = "roadmap";
-        let googleMapAPIKey = "AIzaSyDvYQZRLnesuRRp07bu9qlbL7XJ_TkBYNU";
+
+        // Your API key can be retrieved from your project in the Google
+        // Developer Console, https://console.developers.google.com
+        let googleMapAPIKey = "AIzaSyCHsiUivE8jXyQZdhgElrV_j83VowVtoGM";
 
         return `https://maps.googleapis.com/maps/api/staticmap?zoom=${zoomLevel}&size=${size}&maptype=${mapType}&markers=${latitude},${longitude}&key=${googleMapAPIKey}`;
     }
