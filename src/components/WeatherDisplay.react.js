@@ -42,7 +42,6 @@ class WeatherDisplay extends Component {
 
       windspeed = Math.round(this.props.weather.currently.windspeed);
       formattedHumidity = Math.floor((this.props.weather.currently.humidity * 100));
-      formattedHumidity = formattedHumidity + "%"
       feelslike = Math.round(this.props.weather.currently.apparent_temp);
 
       sunrise = this.props.weather.currently.sunrise;
@@ -98,7 +97,7 @@ class WeatherDisplay extends Component {
         <div id="temp" style={{ color: tempColor }}><WeatherForecastIcon icon={forecasticon} /> {temperature}&deg;</div>
 
         <div id="extended-summary">
-          Wind: <i className={winddirectionicon}/> {windspeed}mph • {formattedHumidity} RH • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span> • UV: <span className={UVClass}>{UVIndex}</span>
+          Wind: <i className={winddirectionicon}/> {windspeed}mph • {formattedHumidity} <i style={{color: "lightblue"}} className="wi wi-humidity"></i> • <span style={feelsLikeStyles}>Feels like: {feelslike} &deg;</span> • UV: <span className={UVClass}>{UVIndex}</span>
         </div>
         <div id="sunrise-sunset">
           <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}

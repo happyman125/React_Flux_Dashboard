@@ -23,6 +23,7 @@ class CalendarAPIUtils {
 
     /* Call the google API to get the list of calendars */
     getCalendarList() {
+        console.log("Getting calendar list");
 
         //  Create the request
         let request = gapi.client.calendar.calendarList.list();
@@ -41,6 +42,7 @@ class CalendarAPIUtils {
 
     /* Call the google API to get the list of events for a calendarid */
     getCalendarEvents(calendarId) {
+        console.log("Getting calendar events for calendarId", calendarId);
 
         //  Set the min/max times for event display:
         let timeMin = (new Date()).toISOString();
@@ -74,6 +76,7 @@ class CalendarAPIUtils {
 
     /* Get authorization from the google API for the given scope(s) */
     authorizeCalendar() {
+        console.log("Attempting to authorize with Google...");
         try{
             gapi.auth.authorize({
                 'client_id': utils.client_id,
@@ -88,6 +91,8 @@ class CalendarAPIUtils {
 
     /* Initiate auth flow in response to user clicking authorize button. */
     handleCalendarAuthClick(event) {
+        console.log("Initiating auth flow", event);
+        
         gapi.auth.authorize({
             'client_id': this.client_id,
             'scope': this.scopes,
@@ -98,6 +103,7 @@ class CalendarAPIUtils {
 
     /* Handle the google API authorization response */
     handleCalendarAuthResult(authResult) {
+        console.log("Auth result", authResult);
 
         if (authResult && !authResult.error) {
             //  Indicate that the auth check is complete:

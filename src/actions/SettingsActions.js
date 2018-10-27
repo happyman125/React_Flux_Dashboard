@@ -9,7 +9,7 @@ class SettingsActions {
             settingsData: settingsData
         });
     }
-
+        
 }
 
 export default new SettingsActions();

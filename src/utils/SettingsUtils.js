@@ -10,6 +10,7 @@ class SettingsUtils {
     }
 
     saveSettings(updatedSettings) {
+        console.log("Saving settings", updatedSettings);
 
         //	Cookie operations to serialize and save
         cookies.set(this.settings_cookie, JSON.stringify(updatedSettings), {
@@ -21,13 +22,24 @@ class SettingsUtils {
     }
 
     getSettings() {
+        console.log("Getting settings...");
 
         //	Cookie operations to read and deserialize
         try {
-            let settings = JSON.parse(cookies.get(this.settings_cookie));
+            let settingsCookie = cookies.get(this.settings_cookie);
 
-            //  Call the action to receive the data:
-            SettingsActions.recieveSettingsData(settings);
+            if(settingsCookie != null)
+            {
+                console.log("The settings cookie", settingsCookie);
+                let settings = JSON.parse(settingsCookie);
+
+                //  Call the action to receive the data:
+                SettingsActions.recieveSettingsData(settings);
+            }
+            else{
+                console.log("The settings cookie is undefined");
+            }
+            
         } catch (ex) {
             console.log("There was a problem reading the cookie: ", ex);
         }

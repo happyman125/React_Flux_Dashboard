@@ -11,6 +11,9 @@ import SettingsUtils from './utils/SettingsUtils';
 import LocationAPIUtils from './utils/LocationAPIUtils';
 import QuakeAPIUtils from './utils/QuakeAPIUtils';
 
+//  The Actions
+import SettingsActions from './actions/SettingsActions';
+
 //  The stores
 import SettingsStore from './stores/SettingsStore';
 
@@ -74,3 +77,19 @@ LocationAPIUtils.getCurrentLocation({
 });
 
 registerServiceWorker();
+
+//	Listen to the websocket:
+let wsprotocol = "ws:";
+if(window.location.protocol === "https:"){ wsprotocol = "wss:"; }
+let ws = new WebSocket(wsprotocol + "//"+ window.location.host + "/ws")
+ws.addEventListener("message", function(e){ 
+	let socketEvent = JSON.parse(e.data);
+
+	switch(socketEvent.type){
+		case "UpdatedSettings":
+            SettingsActions.recieveSettingsData(socketEvent.data);
+			break;
+        default:
+            console.log("Received unknown socket data", socketEvent);
+	}
+})
