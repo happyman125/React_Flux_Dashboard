@@ -157,7 +157,7 @@ class WeatherAPIUtils {
     /* Get pollen counts for the given zipcode */
     getPollen(zipcode) {
         //  The base url for the service - change this to your service location:
-        let baseurl = "https://mbxawsgue8.execute-api.us-east-1.amazonaws.com/v1/";
+        let baseurl = "https://qb9uu1nz2b.execute-api.us-east-1.amazonaws.com/v1/pollen?zip=";
 
         //  Get the pollen for the given zipcode
         let url = baseurl + zipcode;
