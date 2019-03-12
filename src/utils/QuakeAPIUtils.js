@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 import QuakeActions from '../actions/QuakeActions';
 
 class QuakeAPIUtils {
