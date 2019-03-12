@@ -6,8 +6,8 @@ class QuakeAPIUtils {
 
     getQuakeList() {
 
-        let formattedDate = moment().subtract(7, 'days').format("YYYY-MM-DD");
-        let url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${formattedDate}&minmagnitude=6`;
+        //  Get significant earthquakes from the last month
+        let url = `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson`;
 
         fetch(url, {mode: 'cors'})
         .then(
