@@ -2,6 +2,12 @@
 
 Weather and Google calendar dashboard built with [React](http://facebook.github.io/react/) &amp; [Flux](https://facebook.github.io/flux/).  Automatic builds using [Circle CI 2.x](https://circleci.com/gh/danesparza/Dashboard)
 
+* Location & Calendar data from [Google](https://console.developers.google.com)
+* Weather data from [Yahoo weather](https://www.yahoo.com/news/weather/) or [Darksky](https://darksky.net) services
+* Pollen data (by zipcode) from allergy med sites
+* Earthquake data from [USGS](https://earthquake.usgs.gov/) official APIs 
+* Breaking news from [CNN breaking news](https://twitter.com/cnnbrk)
+
 ## Installing / using
 Get the latest release, [here](https://github.com/danesparza/Dashboard/releases/latest) and unzip to the webserver of your choice (including [S3](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html)).  
 
