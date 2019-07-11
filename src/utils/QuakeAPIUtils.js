@@ -1,4 +1,5 @@
 import QuakeActions from '../actions/QuakeActions';
+import * as Sentry from '@sentry/browser';
 
 class QuakeAPIUtils {
 
@@ -23,6 +24,7 @@ class QuakeAPIUtils {
             }
         )
         .catch(function (err) {
+            Sentry.captureException(err);
             console.log('Fetch Error :-S', err);
         });
     }

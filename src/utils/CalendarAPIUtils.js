@@ -1,6 +1,7 @@
 /* global gapi */
 
 import moment from 'moment';
+import * as Sentry from '@sentry/browser';
 
 //  Actions
 import CalendarActions from '../actions/CalendarActions';
@@ -84,6 +85,7 @@ class CalendarAPIUtils {
                 'immediate': true
             }, utils.handleCalendarAuthResult);
         } catch(e){
+            Sentry.captureException(e);
             console.log("There was a problem attempting to authorize the Google calendar.  Reattempting in 10 seconds...");
             window.setTimeout(utils.authorizeCalendar, 10000);
         }

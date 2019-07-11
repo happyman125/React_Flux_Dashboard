@@ -1,4 +1,5 @@
 import NewsActions from '../actions/NewsActions';
+import * as Sentry from '@sentry/browser';
 
 class NewsAPIUtils {
 
@@ -27,6 +28,7 @@ class NewsAPIUtils {
             }
         )
         .catch(function (err) {
+            Sentry.captureException(err);
             console.log('Fetch Error :-S', err);
         });
     }

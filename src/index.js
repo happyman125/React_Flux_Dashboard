@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import * as Sentry from '@sentry/browser';
 
 //	The API utils
 import WeatherAPIUtils from './utils/WeatherAPIUtils';
@@ -16,6 +17,11 @@ import SettingsActions from './actions/SettingsActions';
 
 //  The stores
 import SettingsStore from './stores/SettingsStore';
+
+//  Initialize Sentry
+Sentry.init({
+    dsn: "https://c7d7b7089839472b95cb38ab9a266be2@sentry.io/1437952"
+});
 
 //  'Google client loaded' handler 
 window.handleGoogleClientLoad = function(){

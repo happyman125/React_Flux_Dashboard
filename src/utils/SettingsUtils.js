@@ -1,4 +1,5 @@
 import SettingsActions from '../actions/SettingsActions';
+import * as Sentry from '@sentry/browser';
 
 //  Cookie manager
 import cookies from 'cookies-js';
@@ -41,6 +42,7 @@ class SettingsUtils {
             }
             
         } catch (ex) {
+            Sentry.captureException(ex);
             console.log("There was a problem reading the cookie: ", ex);
         }
     }

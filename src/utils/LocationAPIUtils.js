@@ -1,5 +1,6 @@
 //  Actions
 import LocationActions from '../actions/LocationActions';
+import * as Sentry from '@sentry/browser';
 
 class LocationAPIUtils {
 
@@ -42,6 +43,7 @@ class LocationAPIUtils {
             }
         )
         .catch(function (err) {
+            Sentry.captureException(err);
             console.log('Fetch Error :-S', err);
         });
     }
@@ -72,6 +74,7 @@ class LocationAPIUtils {
             }
         )
         .catch(function (err) {
+            Sentry.captureException(err);
             console.log('Fetch Error :-S', err);
         });
     }

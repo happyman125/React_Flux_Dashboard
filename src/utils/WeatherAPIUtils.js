@@ -1,6 +1,7 @@
 import Moment from 'moment';
 import Rainbow from 'rainbowvis.js';
 import fetchJsonp from 'fetch-jsonp';
+import * as Sentry from '@sentry/browser';
 
 //  Actions
 import WeatherActions from '../actions/WeatherActions';
@@ -29,6 +30,7 @@ class WeatherAPIUtils {
                 //	Call the action to receive the data:
                 WeatherActions.recieveWeatherData(weatherdata);
             }).catch(function (ex) {
+                Sentry.captureException(ex);
                 console.log('parsing failed', ex)
             })
 
@@ -100,6 +102,7 @@ class WeatherAPIUtils {
             }
             )
             .catch(function (err) {
+                Sentry.captureException(err);
                 console.log('Fetch Error :-S', err);
             });
     }
@@ -178,6 +181,7 @@ class WeatherAPIUtils {
             }
             )
             .catch(function (err) {
+                Sentry.captureException(err);
                 console.log('Fetch Error :-S', err);
             });
     }
