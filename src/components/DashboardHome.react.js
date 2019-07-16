@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Sentry from '@sentry/browser';
 
 //  The components
 import DateTimeDisplay from './DateTimeDisplay.react';
@@ -46,33 +47,39 @@ class DashboardHome extends Component {
     }
 
     tick() {
-        //  Get the latest weather:
-        switch (this.state.settings.weathersource) {
-            case "Yahoo":
-                WeatherAPIUtils.getCurrentYahooWeather(this.props.coords.latitude, this.props.coords.longitude);
-                break;
-            case "Forecastio":
-                WeatherAPIUtils.getCurrentForecastIOWeather(this.props.coords.latitude, this.props.coords.longitude);
-                break;
-            default:
-                /* No-op */
-                break;
+
+        try{
+            //  Get the latest weather:
+            switch (this.state.settings.weathersource) {
+                case "Yahoo":
+                    WeatherAPIUtils.getCurrentYahooWeather(this.props.coords.latitude, this.props.coords.longitude);
+                    break;
+                case "Forecastio":
+                    WeatherAPIUtils.getCurrentForecastIOWeather(this.props.coords.latitude, this.props.coords.longitude);
+                    break;
+                default:
+                    /* No-op */
+                    break;
+            }
+
+            //  Get the latest pollen
+            WeatherAPIUtils.getPollen(this.state.settings.zipcode);
+
+            //  Get the latest calendar information if the API is loaded, 
+            //  we're authorized, and we have a calendar selected:
+            if (this.state.cal_authcheckfinished && this.state.cal_authorized && this.state.settings.calendarid !== "") {
+                CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
+            }
+
+            //  Get the latest breaking news:
+            NewsAPIUtils.getTwitterFeed(this.state.settings.newsuser);
+
+            //  Get quake information:
+            QuakeAPIUtils.getQuakeList();
         }
-
-        //  Get the latest pollen
-        WeatherAPIUtils.getPollen(this.state.settings.zipcode);
-
-        //  Get the latest calendar information if the API is loaded, 
-        //  we're authorized, and we have a calendar selected:
-        if (this.state.cal_authcheckfinished && this.state.cal_authorized && this.state.settings.calendarid !== "") {
-            CalendarAPIUtils.getCalendarEvents(this.state.settings.calendarid);
+        catch(ex) {
+            Sentry.captureException(ex);
         }
-
-        //  Get the latest breaking news:
-        NewsAPIUtils.getTwitterFeed(this.state.settings.newsuser);
-
-        //  Get quake information:
-        QuakeAPIUtils.getQuakeList();
     }
 
     componentDidMount() {

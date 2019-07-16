@@ -29,8 +29,9 @@ class WeatherDisplay extends Component {
     let pollendays = [];
     let formattedHumidity = "";
     let formattedStatus = "";
-    let pollenSummary = "";
+    let pollenSummary = "Loading...";
     let winddirectionicon = "";
+    let pollenService = "Unknown pollen service";
 
     let UVIndex = 0;
     let UVClass = "badge";
@@ -78,8 +79,8 @@ class WeatherDisplay extends Component {
       winddirectionicon = WeatherAPIUtils.getWindDirectionIcon(this.props.weather.currently.wind_direction);
 
       //  Set pollen information
-      if (this.props.pollen.PollenCount) {
-        pollendays = this.props.pollen.PollenCount;
+      if (this.props.pollen.data) {
+        pollendays = this.props.pollen.data;
 
         //  Add the pollen data to the forecastdays
         for (var i = pollendays.length - 1; i >= 0; i--) {
@@ -87,7 +88,10 @@ class WeatherDisplay extends Component {
         };
 
         //  Set the pollen summary:
-        pollenSummary = this.props.pollen.PredominantPollen;
+        pollenSummary = this.props.pollen.predominant_pollen;
+
+        //  Set the pollen source:
+        pollenService = "Pollen service: " + this.props.pollen.service;
       }
     }
 
@@ -103,7 +107,7 @@ class WeatherDisplay extends Component {
           <i className="wi wi-horizon"></i> {formattedSunrise} / <i className="wi wi-night-clear"></i> {formattedSunset}
         </div>
 
-        <div className="dashboard-status">{this.props.locationname} / {formattedStatus} <a href='/#/settings'>Settings</a></div>
+        <div className="dashboard-status">{this.props.locationname} / {formattedStatus} / {pollenService} <a href='/#/settings'>Settings</a></div>
         <WeatherForecast forecastdays={forecastdays} />
 
         <div id="pollen-summary">

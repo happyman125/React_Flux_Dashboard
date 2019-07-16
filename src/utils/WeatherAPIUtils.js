@@ -160,12 +160,21 @@ class WeatherAPIUtils {
     /* Get pollen counts for the given zipcode */
     getPollen(zipcode) {
         //  The base url for the service - change this to your service location:
-        let baseurl = "https://qb9uu1nz2b.execute-api.us-east-1.amazonaws.com/v1/pollen?zip=";
+        let url = "https://qb9uu1nz2b.execute-api.us-east-1.amazonaws.com/v1/pollen";
 
-        //  Get the pollen for the given zipcode
-        let url = baseurl + zipcode;
+        let apiHeaders = new Headers({
+            "Content-Type": "application/json; charset=UTF-8",
+        });
 
-        fetch(url, { mode: 'cors' })
+        let params = {};
+        params.zipcode = zipcode;
+
+        fetch(url, {
+                mode: 'cors',
+                method: 'post',
+                headers: apiHeaders,
+                body: JSON.stringify(params)
+            })
             .then(
             function (response) {
                 if (response.status !== 200) {
